@@ -18,12 +18,26 @@ const StatsProduction = () => {
     const calendarRef = useRef(null);
     const [chart,setChart] = useState({})
 
+
     var data = {
       labels: arrayProd && arrayProd.map(data=> data.attributes.name),
       datasets: [{
-        label: '# of Votes',
+        label: 'Cantidad de dispositivos',
         data:  arrayProd && arrayProd.map(data => data.attributes.devices.data.length),
-        borderWidth: 1
+        borderWidth: 1,
+        backgroundColor: [
+          "rgba(109, 191, 82)",
+          "rgb(82, 129, 191)",
+          "rgb(166, 191, 82)",
+          "rgb(191, 149, 82)",
+          "rgb(191, 113, 82)",
+          "rgb(191, 82, 82)",
+          "rgb(82, 191, 129)",
+          "rgb(82, 180, 191)",
+          "rgb(70, 80, 141)",
+          "rgb(82, 129, 191)",
+          "rgb(89, 82, 191)",
+        ],
       }]
     }
 
@@ -60,11 +74,11 @@ const StatsProduction = () => {
   return (
     <>
     <Center>
-      <h4>Dispositivos por Departamento</h4>
+      <h4>Dispositivos por Area de Produccion</h4>
     </Center>
     <div>
         <Bar
-            height={400}
+            height={100}
             data={data}
             options={options}
         />

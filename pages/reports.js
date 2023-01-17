@@ -1,21 +1,25 @@
-import React from 'react'
-import Layout from '../components/Layout'
-import { Group, Tabs } from '@mantine/core';
-import styles from '../styles/Tabs.module.css'
-import { IconCalendarEvent,IconBuilding, IconStatusChange, IconTool } from '@tabler/icons';
-import DepartmentAreaStats from '../components/Lists/DepartmentAreaStats'
+import React from "react";
+import Layout from "../components/Layout";
+import { Group, Tabs } from "@mantine/core";
+import styles from "../styles/Tabs.module.css";
+import {
+  IconCalendarEvent,
+  IconBuilding,
+  IconStatusChange,
+  IconTool,
+} from "@tabler/icons";
+import DepartmentAreaStats from "../components/Lists/DepartmentAreaStats";
 import { signOut, useSession } from "next-auth/react";
-import { getSession } from 'next-auth/react';
+import { getSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import SignIn from "./auth/sign-in";
-import StatsDepartments from '../components/StatsDepartments';
-import ProductionAreaStats from '../components/Lists/ProductionAreaStats'
-import StatsProduction from '../components/StatsProduction';
-import Stats from '../components/Stats';
-
+import StatsDepartments from "../components/StatsDepartments";
+import ProductionAreaStats from "../components/Lists/ProductionAreaStats";
+import StatsProduction from "../components/StatsProduction";
+import Stats from "../components/Stats";
+import QualityStats from "../components/QualityStats";
 
 const reports = () => {
-
   const { data: session } = useSession();
   useEffect(() => {
     if (session == null) return;
@@ -24,71 +28,76 @@ const reports = () => {
 
   return (
     <>
-    <h1>{session ? "" : <SignIn/>}</h1>    
-    <Layout tituloPagina="Reportes"/>
-    
-    {session && (
-    <Tabs defaultValue="mantMes" className={styles.tabs__container}>
-      <Tabs.List>
-        <Tabs.Tab icon={<IconCalendarEvent size={14} />} value="mantMes">
-            Mantenimientos Realizados
-        </Tabs.Tab>
-        
-        <Tabs.Tab icon={<IconBuilding size={14} />} value="mantDep">
-          Equipos por Departamento
-        </Tabs.Tab>
-        <Tabs.Tab icon={<IconBuilding size={14} />} value="mantProd">
-          Equipos por Area de Produccion
-        </Tabs.Tab>
+      <h1>{session ? "" : <SignIn />}</h1>
+      <Layout tituloPagina="Reportes" />
 
-        <Tabs.Tab icon={<IconStatusChange size={14} />} value="quality">
-          Calidad de Atencion
-        </Tabs.Tab>
-      </Tabs.List>
+      {session && (
+        <Tabs defaultValue="mantMes" className={styles.tabs__container}>
+          <Tabs.List>
+            <Tabs.Tab icon={<IconCalendarEvent size={14} />} value="mantMes">
+              Mantenimientos Realizados
+            </Tabs.Tab>
 
-      <Tabs.Panel pt={20} value="mantMes">
-        <Stats/>
-      </Tabs.Panel>
-        
-      <Tabs.Panel pt={20} value="mantDep" className={styles.DepartmentAreaStats}>
-          <DepartmentAreaStats/>
-     
-          <StatsDepartments/>
-        
-      </Tabs.Panel>
+            <Tabs.Tab icon={<IconBuilding size={14} />} value="mantDep">
+              Equipos por Departamento
+            </Tabs.Tab>
+            <Tabs.Tab icon={<IconBuilding size={14} />} value="mantProd">
+              Equipos por Area de Produccion
+            </Tabs.Tab>
 
-      <Tabs.Panel pt={20} value="mantProd" className={styles.DepartmentAreaStats}>
-          <ProductionAreaStats/>
-          <StatsProduction/>
-        
-      </Tabs.Panel>
+            <Tabs.Tab icon={<IconStatusChange size={14} />} value="quality">
+              Calidad de Atencion
+            </Tabs.Tab>
+          </Tabs.List>
 
-      <Tabs.Panel pt={20} value="quality">
-        Calidad
-      </Tabs.Panel>
-    </Tabs>
-    )}
+          <Tabs.Panel pt={20} value="mantMes">
+            <Stats />
+          </Tabs.Panel>
+
+          <Tabs.Panel
+            pt={20}
+            value="mantDep"
+            className={styles.DepartmentAreaStats}
+          >
+            <StatsDepartments />
+            <br/>
+            <DepartmentAreaStats />
+          </Tabs.Panel>
+
+          <Tabs.Panel
+            pt={20}
+            value="mantProd"
+            className={styles.DepartmentAreaStats}
+          > 
+          <StatsProduction />
+            <ProductionAreaStats />
+           
+          </Tabs.Panel>
+
+          <Tabs.Panel pt={20} value="quality">
+            <QualityStats />
+          </Tabs.Panel>
+        </Tabs>
+      )}
     </>
-    
-  )
-}
+  );
+};
 
 export const getServerSideProps = async (context) => {
   const session = await getSession(context);
-  
+
   // Check if session exists or not, if not, redirect
   if (session == null) {
     return {
       redirect: {
-        destination: '/auth/sign-in',
+        destination: "/auth/sign-in",
         permanent: true,
       },
     };
   }
   return {
-    props: {
-    },
+    props: {},
   };
 };
 
-export default reports
+export default reports;

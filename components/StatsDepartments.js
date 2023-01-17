@@ -5,6 +5,7 @@ import { useState, useEffect,useRef } from "react";
 import api from '../services/api'
 import { Button, Center } from '@mantine/core';
 
+
     ChartJS.register(
     CategoryScale,
     BarElement,
@@ -23,9 +24,22 @@ const StatsDepartments = () => {
     var data = {
       labels: arrayDep && arrayDep.map(data=> data.attributes.department_name ),
       datasets: [{
-        label: '# of Votes',
+        label: 'Cantidad de Dispositivos',
         data:  arrayDep && arrayDep.map(data => data.attributes.devices.data.length),
-        borderWidth: 1
+        borderWidth: 1,
+        backgroundColor: [
+          "rgba(109, 191, 82)",
+          "rgb(82, 129, 191)",
+          "rgb(166, 191, 82)",
+          "rgb(191, 149, 82)",
+          "rgb(191, 113, 82)",
+          "rgb(191, 82, 82)",
+          "rgb(82, 191, 129)",
+          "rgb(82, 180, 191)",
+          "rgb(70, 80, 141)",
+          "rgb(82, 129, 191)",
+          "rgb(89, 82, 191)",
+        ],
       }]
     }
 
@@ -71,7 +85,7 @@ const StatsDepartments = () => {
     </Center>
     <div>
         <Bar
-            height={400}
+            height={100}
             data={data}
             options={options}
         />
