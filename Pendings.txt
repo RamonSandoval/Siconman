@@ -1,0 +1,11 @@
+Pendings to fix
+
+Add notifications delete user
+Edit user
+add user
+dont show devices to next maint if there is no main created
+Calendar
+show in modals production area 
+Tambien mostrar por fecha en apartado de mantenimientos?
+
+reports by date range

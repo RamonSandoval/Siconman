@@ -1,0 +1,15 @@
+.hover__link{
+    cursor: pointer;
+}
+.header__container{
+    position: fixed;
+    /*background-color: rgb(241, 241, 241);*/
+    
+}
+.logo{
+    float: left;
+}
+.groupContainer{
+    margin: 0 auto;
+
+}

@@ -1,0 +1,14 @@
+.tabs__container{
+    margin: 5vh 15vw 10vw 15vw;
+}
+.DepartmentAreaStats{
+    justify-content: space-between;
+}
+.left{
+    float: left;
+    width: 45%;
+}
+.right{
+    float: right;
+    width: 45%;
+}

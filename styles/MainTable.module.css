@@ -1,0 +1,39 @@
+.table {
+  min-width: 70vw;
+  padding-top: 3vh;
+}
+.search {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  border-bottom: 0.1rem solid black;
+  align-items: center;
+}
+.icons {
+  display: flex;
+  justify-content: center;
+}
+.table__data {
+  text-align: center;
+  
+}
+.table__columns {
+  text-align: center;
+}
+.table__title {
+  display: flex;
+  align-items: center;
+  vertical-align: middle;
+  gap: 1rem;
+  justify-content: space-between;
+  font-size: 1rem;
+}
+.table__title2 {
+  display: flex;
+  align-items: center;
+  vertical-align: middle;
+  gap: 1rem;
+}
+.searchBar{
+  margin-right: 1rem;
+}

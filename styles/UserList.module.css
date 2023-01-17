@@ -1,0 +1,15 @@
+.icons {
+  display: flex;
+}
+.add__icon {
+  background-color: #002a5b;
+}
+.iconContainer {
+  float: right;
+  display: flex;
+}
+.modal__confirmation {
+  float: right;
+  display: flex;
+  gap: 0.8rem;
+}

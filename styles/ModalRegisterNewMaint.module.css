@@ -1,0 +1,26 @@
+.modal__container{
+    height: auto;
+    display: flex;
+    width: auto;
+    justify-content: space-evenly;
+    
+}
+.modal__lcontainer{
+    width: 40vw;
+}
+.modal__rcontainer{
+    padding-left: 2rem;
+    width: 40vw;
+}
+.modal__solicitant{
+    display: flex;
+}
+.input__name{
+    padding-left: 0.5rem;
+
+}
+.button{
+    float: right;
+    display: flex;
+    padding-top: 5vh;
+}

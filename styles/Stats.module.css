@@ -1,0 +1,24 @@
+.stats__container{
+    text-align: center;
+}
+.stats_info{
+    background-color: rgba(112, 112, 112, 0.021);
+    height: 20rem;
+}
+.hr{
+    width: 50%;
+}
+.table__title {
+    display: flex;
+    align-items: center;
+    vertical-align: middle;
+    gap: 1rem;
+    justify-content: space-between;
+    font-size: 1rem;
+  }
+.table__title2 {
+    display: flex;
+    align-items: center;
+    vertical-align: middle;
+    gap: 1rem;
+  }

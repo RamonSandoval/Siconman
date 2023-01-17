@@ -1,0 +1,20 @@
+.title{
+    text-align: center;
+}
+
+.title hr{
+    background-color: red;
+    width: 50%;
+    border-top: 1.5px solid rgb(0, 0, 0);
+}
+.searchContainer{
+    display: flex;
+    float: right;
+    padding-right: 20rem;
+}
+.icon{
+    background-color: rgb(16, 24, 138);
+}
+.list{
+    margin: 4rem 9rem 0 9rem;
+}

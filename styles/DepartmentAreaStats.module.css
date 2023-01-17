@@ -1,0 +1,11 @@
+.tableDepartments{
+    max-width: 50%;
+}
+.tableProduction{
+    margin-left: 3vh;
+    max-width: 50%;
+}
+.groupContainer{
+    justify-content: center;
+    display: flex;
+}

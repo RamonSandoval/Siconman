@@ -1,0 +1,6 @@
+.containerCalendar{
+    width: 90%;
+}
+.fc-toolbar {
+    text-transform: capitalize;
+}

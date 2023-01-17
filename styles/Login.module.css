@@ -1,0 +1,103 @@
+.loginContainer{
+    border-radius: 1rem;
+    max-width: 40rem;
+    background-color: rgba(255, 255, 255, 0.801);
+  
+}
+.container{
+    padding-top: 8%;
+}
+.loginImage{
+    float:left; 
+    margin-right:20px;
+    display: flex;
+    align-items: center;
+}
+.modal{
+    background-color: rgba(0, 0, 0, 0.671)
+}
+.carousel{
+    border-radius: 1rem;
+}
+.inputs{
+    width: 80%;
+    
+}
+.text h2{
+    font-size: 1rem;
+    justify-content: center;
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: 600;
+
+}
+.text{
+    margin: 0 2rem 0 2rem;
+    padding-left: 1.3rem;
+    padding-right: 1.5rem;
+}
+.text p{
+    font-size: 1rem;
+    justify-content: center;
+    text-align: center;
+}
+.stack{
+    width: 80%;
+    height: auto;
+    background-color: transparent;
+    margin: 0 4rem 0rem 4rem;
+}
+.helpIcon{
+    justify-content: right;
+    align-items: right;
+    display: flex;
+    vertical-align: middle;
+    margin: 0.4rem 1rem 0 0rem;
+}
+.register{
+    display: flex;
+    align-items: center;
+    gap: 0.3rem
+}
+.register p{
+    font-size: 0.8rem;
+}
+.register a{
+    font-size: 0.8rem;
+    color: rgb(40, 36, 94);
+    text-decoration: underline;
+
+}
+.registerLink{
+    text-decoration: underline;
+    color: red;
+}
+
+@media screen and (min-width: 768px) {
+    .loginContainer{
+        align-items: center;
+        margin: 0rem;
+    }
+    .stack{
+        margin: 3rem;
+    }
+    .center{
+        padding-top: 0;
+    }
+    
+}
+.recover{
+    font-size: 0.8rem;
+    border-bottom: 1px solid #000;
+    padding-bottom: 3px;
+}
+.login__button{
+    background-color: #002a5b;
+}
+.login__button:hover{
+    background-color: #647da4;
+}
+.siconmanLogo{
+    float: right;
+    align-items: flex-end;
+}

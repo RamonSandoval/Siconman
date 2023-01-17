@@ -1,0 +1,49 @@
+.table {
+  min-width: 70%;
+  padding-top: 3vh;
+}
+.icons {
+  display: flex;
+}
+.table__title {
+  display: flex;
+  align-items: center;
+  vertical-align: middle;
+  gap: 1rem;
+  justify-content: space-between;
+  font-size: 1rem;
+}
+.table__title2{
+  display: flex;
+  align-items: center;
+  vertical-align: middle;
+  gap: 1rem;
+}
+.tableBody{
+  max-height: 1rem;
+}
+.center {
+  margin: 0 auto;
+}
+.icon {
+  color: #002a5b;
+}
+.add__icon{
+  background-color: #002a5b;
+}
+
+@media screen and (max-width: 900px) {
+  .table__title {
+    display: flex;
+    gap: 1rem;
+    font-size: 1rem;
+  }
+}
+.modal__confirmation{
+  float: right;
+  display: flex;
+  gap: 0.8rem;
+}
+.containerMain{
+  height: auto;
+}
