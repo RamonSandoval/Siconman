@@ -9,7 +9,6 @@ const main = () => {
   return (
     <>
     <Layout tituloPagina="Inicio"/>
-   <TableDevices/>
     </>
       
   )

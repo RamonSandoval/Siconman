@@ -357,7 +357,7 @@ export const getServerSideProps = async (context) => {
   if (session == null) {
     return {
       redirect: {
-        destination: '/auth/not-authenticated',
+        destination: '/auth/sign-in',
         permanent: true,
       },
     };

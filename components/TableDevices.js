@@ -167,7 +167,7 @@ const TableDevices = () => {
                 {deviceList &&
                   deviceList.sort(compare_date).map(
                     (data, index) =>
-                      index < 10 && (
+                      index < 14 && (
                         <tr className={styles.table__data} key={data.device_id}>
                           <td>
                             <Center>{data.attributes.device_id}</Center>

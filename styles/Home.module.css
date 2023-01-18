@@ -127,3 +127,13 @@
     filter: invert(1);
   }
 }
+.statsDepartmentsContainer{
+}
+.statsProductionContainer{
+}
+.statsContainer{
+  height: auto;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
