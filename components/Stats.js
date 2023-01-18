@@ -10,6 +10,7 @@ import {
   Loader,
   Divider,
   Button,
+  Text
 } from "@mantine/core";
 import { useState, useEffect } from "react";
 import { ThemeIcon } from "@mantine/core";
@@ -40,6 +41,7 @@ const Stats = () => {
   const [maintToPostpone, setMaintToPostPone] = useState([]);
   const [openedMaint, setOpenedMaint] = useState(false);
   const [deviceToMaint, setDeviceToMaint] = useState({});
+  const [errorDateNull, setErrorDateNull] = useState("");
 
   useEffect(() => {
     init();
@@ -51,6 +53,7 @@ const Stats = () => {
     const list2 = await api.devicesList(2);
     setarrayDevices(list.data.concat(list2.data));
     setarrayDataDev(list.data.concat(list2.data));
+    
   }
 
   const closeModal = () => {
@@ -65,53 +68,30 @@ const Stats = () => {
 
   const min = (e) => {
     setSearch(e.target.value);
-    filtrar(e.target.value);
   };
 
   const max = (e) => {
     setSearch2(e.target.value);
-    filtrar(e.target.value);
   };
 
-
-
-  const filtrar = (search,search2) => {
-    var resultado = arrayDataDev.filter((f) => {if (
-        (
-        f.attributes.maintenance?.data?.attributes.maintenance_date
-          ?.toString()
-          .includes(search)
-        )
-        >=
-        (
-        f.attributes.maintenance?.data?.attributes.maintenance_date
-        ?.toString()
-        .includes(search2)
-        )
-        &&
-        (
-          f.attributes.maintenance?.data?.attributes.maintenance_date
-            ?.toString()
-            .includes(search)
-          )
-          <=
-          (
-          f.attributes.maintenance?.data?.attributes.maintenance_date
-          ?.toString()
-          .includes(search2)
-          )
-        ) {
-        return f;
-      }
-    });
-    setarrayDevices(resultado);
-  };
-
-  const deviceList = arrayDevices.map((d) => {
-    return(
-      d
+  const filtrar = () => {
+    if (search != "" && search2!="") {
+      setErrorDateNull("")
+      const resultado = arrayDataDev.filter((f) => 
+      f.attributes.maintenance?.data?.attributes.maintenance_date >= search && f.attributes.maintenance?.data?.attributes.maintenance_date <= search2
     );
-  });
+    setarrayDevices(resultado);
+    }
+    else{
+      setErrorDateNull("Ingrese valores correctos")
+    }
+    
+    
+  };
+
+
+
+
 
   const filterList = arrayDevices.map((d) => {
     return(
@@ -159,6 +139,14 @@ const Stats = () => {
               value={search2}
               onChange={max}
               />
+              <Button onClick={()=>filtrar()}>
+                filtrar
+              </Button>
+              {errorDateNull != "" && (
+                  
+                    <Text color="red">{errorDateNull}</Text>
+                  
+                )}
             </div>
           </div>
           <ScrollArea>
@@ -191,8 +179,8 @@ const Stats = () => {
                 </tr>
               </thead>
               <tbody>
-                {deviceList &&
-                  deviceList.sort(compare_date).map(
+                {arrayDevices &&
+                  arrayDevices.sort(compare_date).map(
                     (data, index) =>
                       index < 10 && (
                         <tr className={styles.table__data} key={data.device_id}>

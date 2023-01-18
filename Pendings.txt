@@ -2,15 +2,16 @@ Add notifications delete user
 Edit user
 add user
 Calendar
-show in modals production area 
-Tambien mostrar por fecha en apartado de mantenimientos?
+
 
 
 
 Mantenimientos realizados por departmento
-Mantenimientos por rango de fecha
-Equipos por departamento
-Equipos por produccion
+
+Verificar que se muestrencorrectamente en todos los modulos
+
+
+
 
 Agregar en tabla de mantenimiento el tipo de
 fallo de la computadora (RAM,PSU,GPU,Software,
