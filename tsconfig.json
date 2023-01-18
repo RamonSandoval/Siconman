@@ -23,7 +23,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "components/TableSort.tsx", "components/Stats.js", "components/Stats.js", "components/Calendar.js", "components/CalendarAnt.js", "pages/reports.js", "components/StatsDepartments.js", "components/CalendarIndicator.jsx", "components/ChartMaint.js"  ],
+, "components/TableSort.tsx", "components/StatsByDateRange.js", "components/StatsByDateRange.js", "components/Calendar.js", "components/CalendarAnt.js", "pages/reports.js", "components/StatsDepartments.js", "components/CalendarIndicator.jsx", "components/ChartMaint.js"  ],
   "exclude": [
     "node_modules"
   ]

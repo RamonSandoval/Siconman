@@ -21,7 +21,7 @@ const maintenance = () => {
   return (
     <>
     <h1>{session ? "" : <SignIn/>}</h1>
-    <Layout tituloPagina="Inventario" />
+    <Layout tituloPagina="Mantenimientos" />
     {session && (
     <MaintTableAll/>
     )}

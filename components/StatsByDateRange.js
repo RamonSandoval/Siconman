@@ -1,6 +1,8 @@
 import React, { createContext } from "react";
 import api from "../services/api";
 import stylesModal from "../styles/ModalRegisterNewMaint.module.css";
+import Notifications from "./Notifications";
+
 import {
   ScrollArea,
   Table,
@@ -10,19 +12,21 @@ import {
   Loader,
   Divider,
   Button,
-  Text
+  Text,
 } from "@mantine/core";
 import { useState, useEffect } from "react";
 import { ThemeIcon } from "@mantine/core";
 import {
   IconCalendar,
   IconCalendarDue,
+  IconDatabase,
+  IconFilter,
   IconListDetails,
   IconRotateClockwise2,
   IconSearch,
   IconTool,
 } from "@tabler/icons";
-import styles from "../styles/MainTable.module.css";
+import styles from "../styles/StatsByDateRange.module.css";
 import { ActionIcon } from "@mantine/core";
 import Layout from "./Layout";
 import { Fecha } from "../helpers";
@@ -53,7 +57,6 @@ const Stats = () => {
     const list2 = await api.devicesList(2);
     setarrayDevices(list.data.concat(list2.data));
     setarrayDataDev(list.data.concat(list2.data));
-    
   }
 
   const closeModal = () => {
@@ -75,45 +78,42 @@ const Stats = () => {
   };
 
   const filtrar = () => {
-    if (search != "" && search2!="") {
-      setErrorDateNull("")
-      const resultado = arrayDataDev.filter((f) => 
-      f.attributes.maintenance?.data?.attributes.maintenance_date >= search && f.attributes.maintenance?.data?.attributes.maintenance_date <= search2
-    );
-    setarrayDevices(resultado);
+    if (search != "" && search2 != "") {
+      setErrorDateNull("");
+      const resultado = arrayDataDev.filter(
+        (f) =>
+          f.attributes.maintenance?.data?.attributes.maintenance_date >=
+            search &&
+          f.attributes.maintenance?.data?.attributes.maintenance_date <= search2
+      );
+      setarrayDevices(resultado);
+    } else {
+      setErrorDateNull("Ingrese valores correctos");
     }
-    else{
-      setErrorDateNull("Ingrese valores correctos")
-    }
-    
-    
   };
 
-
-
-
-
   const filterList = arrayDevices.map((d) => {
-    return(
-      d.attributes.maintenance?.data?.attributes?.next_maintenance
-    );
+    return d.attributes.maintenance?.data?.attributes?.next_maintenance;
   });
 
-  function compare_date(a,b){
-    if(a.attributes.maintenance?.data?.attributes?.next_maintenance < b.attributes.maintenance?.data?.attributes?.next_maintenance){
+  function compare_date(a, b) {
+    if (
+      a.attributes.maintenance?.data?.attributes?.next_maintenance <
+      b.attributes.maintenance?.data?.attributes?.next_maintenance
+    ) {
       return -1;
     }
-    if(a.attributes.maintenance?.data?.attributes?.next_maintenance > b.attributes.maintenance?.data?.attributes?.next_maintenance){
+    if (
+      a.attributes.maintenance?.data?.attributes?.next_maintenance >
+      b.attributes.maintenance?.data?.attributes?.next_maintenance
+    ) {
       return 1;
     }
     return 0;
-
   }
 
-  
   return (
     <>
-      <Layout tituloPagina="Inicio" />
       <Center>
         <div className={styles.table}>
           <div className={styles.table__title}>
@@ -123,30 +123,24 @@ const Stats = () => {
                 color="dark"
                 variant="transparent"
               >
-                <IconListDetails />
+                <IconFilter />
               </ThemeIcon>
-              <p>Proximos Mantenimientos</p>
+              <p>Filtrar mantenimientos por rango de fechas</p>
             </div>
             <div className={styles.searchBar}>
-              <input
-              type="date"
-              value={search}
-              onChange={min}
-              />
-              <Center pt={10}></Center>
-              <input
-              type="date"
-              value={search2}
-              onChange={max}
-              />
-              <Button onClick={()=>filtrar()}>
-                filtrar
+              <Center pr={5}>Desde:</Center>
+              <input title="ss" type="date" value={search} onChange={min} />
+              <Center pl={2} pr={5}>al: </Center>
+              <input type="date" value={search2} onChange={max} />
+              <Button
+                onClick={() => filtrar()}
+                leftIcon={<IconFilter />}
+                color="blue"
+              >
+                Filtrar
               </Button>
-              {errorDateNull != "" && (
-                  
-                    <Text color="red">{errorDateNull}</Text>
-                  
-                )}
+
+              {errorDateNull != "" && <Text color="red">{errorDateNull}</Text>}
             </div>
           </div>
           <ScrollArea>
@@ -173,9 +167,9 @@ const Stats = () => {
                   <th>
                     <Center>Tipo de Mantenimiento</Center>
                   </th>
-                  <th>
+                  {/* <th>
                     <Center>Acciones</Center>
-                  </th>
+                  </th> */}
                 </tr>
               </thead>
               <tbody>
@@ -222,7 +216,7 @@ const Stats = () => {
                                 .maintenance_type_next
                             }
                           </td>
-                          <td>
+                          {/* <td>
                             <div className={styles.icons}>
                               <ActionIcon
                                 color="indigo"
@@ -244,7 +238,7 @@ const Stats = () => {
                                 <IconRotateClockwise2 color="green" size={18} />
                               </ActionIcon>
                             </div>
-                          </td>
+                          </td> */}
                         </tr>
                       )
                   )}

@@ -194,7 +194,6 @@ const inventory = () => {
                 <IconList />
               </ThemeIcon>
               <h3>Inventario</h3>
-              <p>{devicesLength}</p>
             </div>
 
             <TextInput
@@ -291,8 +290,8 @@ const inventory = () => {
               </tbody>
             </Table>
           </ScrollArea>
-          <Center pt={20} > 
-          <Pagination
+          <Center>
+         <Pagination
           grow
             page={activePage}
             initialPage={1}
@@ -300,10 +299,8 @@ const inventory = () => {
             onClick={()=> actualizar()} 
             total={7}
             />
-          </Center>
-         
+            </Center>
         </div>
-        
       </Center>
 )};
 

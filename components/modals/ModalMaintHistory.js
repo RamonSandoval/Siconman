@@ -8,7 +8,7 @@ import {
   Button,
   Checkbox,
 } from "@mantine/core";
-import {Fecha2} from '../../helpers'
+import {Fecha} from '../../helpers'
 import { DatePicker } from "@mantine/dates";
 import { useState, useEffect } from "react";
 import stylesModal from "../../styles/ModalRegisterNewMaint.module.css";
@@ -71,8 +71,8 @@ const ModalMaintHistory = ({deviceToMaintHistory}) => {
       motive: deviceToMaintHistory.attributes?.maintenance?.data?.attributes.motive,
       user_request: deviceToMaintHistory.attributes?.maintenance?.data?.attributes.user_request,
       notes: deviceToMaintHistory.attributes?.maintenance?.data?.attributes.notes,
-      maintenance_date: Fecha2(deviceToMaintHistory.attributes?.maintenance?.data?.attributes.maintenance_date),
-      next_maintenance: Fecha2(deviceToMaintHistory.attributes?.maintenance?.data?.attributes.next_maintenance),
+      maintenance_date: Fecha(deviceToMaintHistory.attributes?.maintenance?.data?.attributes.maintenance_date),
+      next_maintenance: Fecha(deviceToMaintHistory.attributes?.maintenance?.data?.attributes.next_maintenance),
       maintenance_eval: deviceToMaintHistory.attributes?.maintenance?.data?.attributes.maintenance_eval,
       maintenance_type_next: deviceToMaintHistory.attributes?.maintenance?.data?.attributes.maintenance_type_next,
       user_request_name: deviceToMaintHistory.attributes?.maintenance?.data?.attributes.user_request_name,

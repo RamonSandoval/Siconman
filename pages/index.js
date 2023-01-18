@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useEffect } from "react";
 import styles from "../styles/Home.module.css";
 import TableDevices from "../components/TableDevices";
-import Stats from "../components/Stats";
 import SignIn from "./auth/sign-in";
 import { getSession } from 'next-auth/react';
 

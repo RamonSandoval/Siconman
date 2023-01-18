@@ -7,21 +7,19 @@ import {
   TextInput,
   Modal,
   Center,
-  Loader,
   Divider,
-  Button,
+  Pagination
 } from "@mantine/core";
+import { usePagination } from '@mantine/hooks';
+
 import { useState, useEffect } from "react";
 import {
   IconCirclePlus,
-  IconClock,
   IconHistory,
   IconListDetails,
-  IconRotateClockwise,
   IconRotateClockwise2,
   IconSearch,
   IconTool,
-  IconTools,
 } from "@tabler/icons";
 import styles from "../../styles/TableMaint.module.css";
 import { ActionIcon, ThemeIcon, createStyles } from "@mantine/core";
@@ -48,6 +46,8 @@ const MaintTableAll = () => {
   const [deviceToMaint, setDeviceToMaint] = useState({});
   const [openedMaintNew, setOpenedMaintNew] = useState(false);
   const [maintColor, setMaintColor] = useState();
+  const pagination = usePagination({total:10, initialPage: 1})
+  const [activePage, setPage] = useState(1)
 
   const useStyles = createStyles((theme) => ({
     header: {
@@ -81,11 +81,9 @@ const MaintTableAll = () => {
   }, []);
 
   async function init() {
-    setLoading(true);
-    const list = await api.devicesList(1);
-    const list2 = await api.devicesList(2);
-    setarrayDevices(list.data.concat(list2.data));
-    setarrayDataDev(list.data.concat(list2.data));
+    const list = await api.devicesList(activePage);
+    setarrayDevices(list.data);
+    setarrayDataDev(list.data);
   }
 
   function compare_date(a, b) {
@@ -150,10 +148,13 @@ const MaintTableAll = () => {
     });
     setarrayDevices(resultado);
   };
+  function actualizar (){
+    console.log(activePage+1)
+    init()
+  }
 
   return (
     <>
-      <Layout tituloPagina="Inicio" />
       <Center>
         <div className={styles.table}>
           <div className={styles.table__title}>
@@ -230,17 +231,17 @@ const MaintTableAll = () => {
                       </td>
                       <td>
                         <Center>
-                          {
+                          {Fecha(
                             data.attributes.maintenance?.data?.attributes
                               .maintenance_date
-                          }
+                          )}
                         </Center>
                       </td>
                       <td>
-                        {
+                      {Fecha(
                           data.attributes.maintenance?.data?.attributes
                             .next_maintenance
-                        }
+                            )}
                       </td>
                       <td>
                         {
@@ -296,6 +297,16 @@ const MaintTableAll = () => {
               </tbody>
             </Table>
           </ScrollArea>
+          <Center pt={30}>
+          <Pagination
+          grow
+            page={activePage}
+            initialPage={1}
+            onChange={setPage}
+            onClick={()=> actualizar()} 
+            total={7}
+            />
+            </Center>
         </div>
       </Center>
 

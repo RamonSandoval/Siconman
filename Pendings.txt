@@ -8,7 +8,12 @@ Calendar
 
 Mantenimientos realizados por departmento
 
-Verificar que se muestrencorrectamente en todos los modulos
+
+Mostar nombre de las ventanas
+
+
+
+Verificar que se muestre correctamente la fecha en todos los modulos
 
 
 

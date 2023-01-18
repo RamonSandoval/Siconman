@@ -53,6 +53,7 @@ const QualityStats = () => {
   };
 
   var options = {
+    cutout: 200,
     maintainAspectRatio: false,
     scales: {
       y: {
@@ -63,6 +64,7 @@ const QualityStats = () => {
       labels: {
         fontSize: 26,
       },
+      
     },
   };
 
@@ -75,8 +77,13 @@ const QualityStats = () => {
       <div>
         <Doughnut data={data} height={900} options={options} />
       </div>
+      <p>Se realizaron {deviceList==='yes'.length} mantenimientos en tiempo y forma</p>
+      <p>Se realizaron {deviceList='no'.length} mantenimientos en tiempo y forma</p>
+
     </>
   );
 };
 
 export default QualityStats;
+
+

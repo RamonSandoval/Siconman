@@ -16,7 +16,7 @@ import SignIn from "./auth/sign-in";
 import StatsDepartments from "../components/StatsDepartments";
 import ProductionAreaStats from "../components/Lists/ProductionAreaStats";
 import StatsProduction from "../components/StatsProduction";
-import Stats from "../components/Stats";
+import StatsByDateRange from "../components/StatsByDateRange";
 import QualityStats from "../components/QualityStats";
 
 const reports = () => {
@@ -51,7 +51,7 @@ const reports = () => {
           </Tabs.List>
 
           <Tabs.Panel pt={20} value="mantMes">
-            <Stats />
+            <StatsByDateRange />
           </Tabs.Panel>
 
           <Tabs.Panel
