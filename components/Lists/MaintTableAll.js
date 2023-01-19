@@ -8,9 +8,10 @@ import {
   Modal,
   Center,
   Divider,
-  Pagination
+  Pagination,
+  Button
 } from "@mantine/core";
-import { usePagination } from '@mantine/hooks';
+import { usePagination, useSetState } from '@mantine/hooks';
 
 import { useState, useEffect } from "react";
 import {
@@ -76,7 +77,9 @@ const MaintTableAll = () => {
 
   const { classes, cx } = useStyles();
 
+
   useEffect(() => {
+  
     init();
   }, []);
 
@@ -85,6 +88,16 @@ const MaintTableAll = () => {
     setarrayDevices(list.data);
     setarrayDataDev(list.data);
   }
+  const [maintState,setMaintState] = useState(true)
+
+  const comp = arrayDevices.map((d) => {
+    if(d.attributes?.maintenance.data === null){
+      setMaintState = false
+    }
+    if(d.attributes?.maintenance.data != null){
+     setMaintState = true
+    }
+  });
 
   function compare_date(a, b) {
     if (a.date < b.date) {
@@ -168,6 +181,7 @@ const MaintTableAll = () => {
               </ThemeIcon>
               <p>Mantenimientos</p>
             </div>
+            <Button onClick={()=> console.log(comp)}/>
             <div className={styles.searchBar}>
               <TextInput
                 placeholder="Buscar"
@@ -207,6 +221,11 @@ const MaintTableAll = () => {
                   </th>
                   <th>
                     <Center>Acciones</Center>
+                  </th>
+                  <th>
+                    <Center>
+                      Manteniemiento?
+                    </Center>
                   </th>
                 </tr>
               </thead>
@@ -283,15 +302,18 @@ const MaintTableAll = () => {
                           <ActionIcon
                             variant="light"
                             color="green"
+                            disabled={maintState}
                             onClick={() => {
                               setOpenedMaintNew(true);
                               setDeviceToMaintNew(data);
+                            
                             }}
                           >
                             <IconCirclePlus size={18} />
                           </ActionIcon>
                         </div>
                       </td>
+                      <td>{}</td>
                     </tr>
                   ))}
               </tbody>

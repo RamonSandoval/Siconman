@@ -13,13 +13,17 @@ import { Doughnut } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const QualityStats = () => {
+const MaintPerDepProd = () => {
   const [arrayDevices, setarrayDevices] = useState([]);
+  const [arrayProd, setArrayProd] = useState([]);
+
   useEffect(() => {
     init();
   }, []);
 
   async function init() {
+    const listProduction = await api.productionList(1);
+    setArrayProd(listProduction.data);
     const list = await api.devicesList(1);
     const list2 = await api.devicesList(2);
     setarrayDevices(list.data.concat(list2.data));
@@ -36,15 +40,26 @@ const QualityStats = () => {
   
 
   var data = {
-    labels: ["Se realizaron a tiempo", "No se realizaron a tiempo"],
+    labels:  arrayProd && arrayProd.map(data=> data.attributes.name),
     datasets: [
       {
         label: "Total de equipos",
-        data: [deviceList='yes'.length,deviceList='no'.length,],
+        data: arrayProd && arrayProd.map(data => data.attributes.devices.data.length),
         borderWidth: 1,
         backgroundColor: [
-          "rgba(81, 100, 219)",
-          "rgb(232, 65, 65)"
+            "rgba(128,0,0)",
+            "rgb(220,20,60)",
+            "rgb(240,128,128)",
+            "rgb(255,69,0)",
+            "rgb(255,215,0)",
+            "rgb(154,205,50)",
+            "rgb(0,255,255)",
+            "rgb(138,43,226)",
+            "rgb(139,0,139)",
+            "rgb(255,182,193)",
+            "rgb(245,245,220)",
+            "rgb(124,252,0)",
+            "rgb(220,220,220)"
           
         ],
       },
@@ -71,19 +86,25 @@ const QualityStats = () => {
   return (
     <>
     <Center>
-        <h4>Cantidad de mantenimientos realizados en tiempo y forma</h4>
+        <h4>Mantenimientos realizados por departamento</h4>
     </Center>
       <div>
         <Doughnut data={data} height={900} options={options} />
       </div>
       <Button onClick={()=>console.log(deviceList)}/>
-      <p>Se realizaron {deviceList='yes'.length} mantenimientos en tiempo y forma</p>
-      <p>Se realizaron {deviceList='no'.length} mantenimientos en tiempo y forma</p>
 
+
+    <Center>
+        <h4>Mantenimientos realizados por Area de Produccion</h4>
+    </Center>
+      <div>
+        <Doughnut data={data} height={900} options={options} />
+      </div>
+      <Button onClick={()=>console.log(deviceList)}/>
     </>
   );
 };
 
-export default QualityStats;
+export default MaintPerDepProd;
 
 
