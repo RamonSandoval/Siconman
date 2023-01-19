@@ -18,7 +18,7 @@ import ProductionAreaStats from "../components/Lists/ProductionAreaStats";
 import StatsProduction from "../components/StatsProduction";
 import StatsByDateRange from "../components/StatsByDateRange";
 import QualityStats from "../components/QualityStats";
-import MaintPerDepProd from '../components/MaintPerDepProd.js'
+import MaintPerDep from '../components/MaintPerDep.js'
 const reports = () => {
   const { data: session } = useSession();
   useEffect(() => {
@@ -48,9 +48,7 @@ const reports = () => {
             <Tabs.Tab icon={<IconStatusChange size={14} />} value="quality">
               Calidad de Atencion
             </Tabs.Tab>
-            <Tabs.Tab icon={<IconStatusChange size={14} />} value="maintPerDepProd">
-              Mantenimientos por Departamento/Produccion
-            </Tabs.Tab>
+            
           </Tabs.List>
 
           <Tabs.Panel pt={20} value="mantMes">
@@ -81,9 +79,7 @@ const reports = () => {
             <QualityStats />
           </Tabs.Panel>
 
-          <Tabs.Panel pt={20} value="maintPerDepProd">
-            <MaintPerDepProd/>
-          </Tabs.Panel>
+          
         </Tabs>
       )}
     </>

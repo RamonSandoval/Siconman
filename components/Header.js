@@ -123,12 +123,12 @@ export function Nav() {
   const [opened, setOpened] = useState(false);
 
   const [openedMaint, setOpenedMaint] = useState(false);
-  const { data: session } = useSession();
+ //const { data: session } = useSession();
 
   useEffect(() => {
-    if (session == null) return;
-    console.log("session.jwt", session.jwt);
-  }, [session]); 
+   /*  if (session == null) return;
+    console.log("session.jwt", session.jwt); */
+  }, /* [session] */); 
   return (
     <>
       <Box pb={70}>
@@ -191,7 +191,6 @@ export function Nav() {
             </Group>
             </div>
             <Group className={classes.hiddenMobile}>
-              <p></p>
             </Group>
 
             <Burger
@@ -264,33 +263,7 @@ export function Nav() {
           </ScrollArea>
         </Drawer>
       </Box>
-      <Modal
-        className={stylesModal.modal__container}
-        transition="fade"
-        size={850}
-        transitionDuration={400}
-        transitionTimingFunction="ease"
-        opened={opened}
-        onClose={() => setOpened(false)}
-        title="Registrar Nuevo Mantenimiento"
-      >
-        <hr />
-        <ModalNewMaint />
-      </Modal>
-
-      <Modal
-        className={stylesModal.modal__container}
-        transition="fade"
-        size={850}
-        transitionDuration={400}
-        transitionTimingFunction="ease"
-        opened={openedMaint}
-        onClose={() => setOpenedMaint(false)}
-        title="Realizar Mantenimiento"
-      >
-        <hr />
-        <ModalMaint />
-      </Modal>
+      
     </>
   );
 }

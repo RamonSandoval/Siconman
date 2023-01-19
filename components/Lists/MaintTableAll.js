@@ -49,6 +49,7 @@ const MaintTableAll = () => {
   const [maintColor, setMaintColor] = useState();
   const pagination = usePagination({total:10, initialPage: 1})
   const [activePage, setPage] = useState(1)
+  const [maintCompare,setMaintCompare] = useSetState('')
 
   const useStyles = createStyles((theme) => ({
     header: {
@@ -79,7 +80,6 @@ const MaintTableAll = () => {
 
 
   useEffect(() => {
-  
     init();
   }, []);
 
@@ -91,12 +91,15 @@ const MaintTableAll = () => {
   const [maintState,setMaintState] = useState(true)
 
   const comp = arrayDevices.map((d) => {
-    if(d.attributes?.maintenance.data === null){
-      setMaintState = false
+    if((d.attributes?.maintenance.data) === 0 ){
+      setMaintState(true)
     }
+    return setMaintState
     if(d.attributes?.maintenance.data != null){
-     setMaintState = true
+     setMaintState(false)
     }
+    return setMaintState
+
   });
 
   function compare_date(a, b) {
@@ -165,6 +168,7 @@ const MaintTableAll = () => {
     console.log(activePage+1)
     init()
   }
+  
 
   return (
     <>
@@ -181,7 +185,6 @@ const MaintTableAll = () => {
               </ThemeIcon>
               <p>Mantenimientos</p>
             </div>
-            <Button onClick={()=> console.log(comp)}/>
             <div className={styles.searchBar}>
               <TextInput
                 placeholder="Buscar"
@@ -231,9 +234,9 @@ const MaintTableAll = () => {
               </thead>
               <tbody className={styles.tbody}>
                 {arrayDevices &&
-                  arrayDevices.sort(compare_date).map((data, index) => (
+                  arrayDevices.sort(compare_date).map((data) => (
                     <tr className={styles.table__data} key={data.device_id}>
-                      <td>
+                      <td bgcolor={maintCompare}>
                         <Center>{data.attributes.device_id}</Center>
                       </td>
                       <td>

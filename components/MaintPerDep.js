@@ -34,13 +34,12 @@ import Postpone from "./modals/ModalPostpone";
 import ModalMaint from "./modals/ModalMaint";
 import { DatePicker, DateRangePicker } from "@mantine/dates";
 
-const Stats = () => {
+const MaintPerDep = () => {
   const [isLoading, setLoading] = useState(false);
   const [opened, setOpened] = useState(false);
   const [search, setSearch] = useState("");
   const [search2, setSearch2] = useState("");
   const [search3, setSearch3] = useState("");
-  const [search4, setSearch4] = useState("");
   const [arrayDataDev, setarrayDataDev] = useState([]);
   const [arrayDevices, setarrayDevices] = useState([]);
   const [maintToPostpone, setMaintToPostPone] = useState([]);
@@ -82,10 +81,6 @@ const Stats = () => {
     setSearch3(e.target.value);
   };
 
-  const prod = (e) => {
-    setSearch4(e.target.value);
-  };
-
   const filtrar = () => {
     if (search != "" && search2 != "") {
       setErrorDateNull("");
@@ -95,20 +90,15 @@ const Stats = () => {
             search &&
           f.attributes.maintenance?.data?.attributes.maintenance_date <= search2 &&
 
-          ((f.attributes.department?.data?.attributes.department_name),(f.attributes.production?.data?.attributes.name))
+          f.attributes.department?.data?.attributes.department_name
           .toString()
           .toLowerCase()
-          .includes(search3.toLowerCase()) /* ||
-          
-          f.attributes.production?.data?.attributes.name 
-          .toString()
-          .toLowerCase()
-          .includes(search3.toLowerCase()) */
+          .includes(search3.toLowerCase()) 
 
       );
       setarrayDevices(resultado);
     } else {
-      Notifications.error('Ingrese un rango de fecha ')
+      setErrorDateNull("Ingrese valores correctos");
     }
   };
 
@@ -151,13 +141,6 @@ const Stats = () => {
                 onChange={dep}
                 icon={<IconSearch />}
               />
-              {/* <TextInput
-                label="Area de Produccion"
-                placeholder="Buscar"
-                value={search4}
-                onChange={prod}
-                icon={<IconSearch />}
-              /> */}
               </Center>
               <Center pr={5}>Desde:</Center>
               <input title="ss" type="date" value={search} onChange={min} />
@@ -316,4 +299,4 @@ const Stats = () => {
   );
 };
 
-export default Stats;
+export default MaintPerDep;

@@ -16,7 +16,7 @@ const MaintCalendar = () => {
   const [arrayDevices, setarrayDevices] = useState([]);
   const calendarRef = useRef(null);
   const [opened,setOpened] = useState(false);
-  const [maintToPostponeC, setMaintToPostPoneC] = useState([]);
+  const [maintToPostpone, setMaintToPostPone] = useState();
   useEffect(() => {
     init();
   }, []);
@@ -30,13 +30,21 @@ const MaintCalendar = () => {
 
 
   const handleEventClick = (clickInfo) => {
-    setMaintToPostPoneC(clickInfo.event.title)
-    console.log(clickInfo.event.title)
+    setMaintToPostPone(clickInfo.event.id)
     setOpened(true)
     /* if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
       clickInfo.event.remove()
     } */
   }
+  const dates = arrayDevices.map((f) => {
+    return {
+      title: f.attributes.device_id,
+      date: f.attributes.maintenance?.data?.attributes?.next_maintenance,
+      id: f.attributes.device_id,
+      groupId: f.attributes.maintenance?.data?.attributes?.next_maintenance,
+    };
+  })
+
   return (
     <>
     <Container className={styles}>
@@ -46,23 +54,17 @@ const MaintCalendar = () => {
         weekends={false}
         selectable={true}
         footerToolbar
-        eventColor="#022b4a"
+        eventColor="green"
         plugins={[dayGridPlugin]}
         initialView="dayGridMonth"
-        events={arrayDevices.map((f) => {
-          return {
-            title: f.attributes.device_id,
-            date: f.attributes.maintenance?.data?.attributes?.next_maintenance,
-          };
-        })}
+        events={dates}
         eventClick={handleEventClick}
         // eventClick={() => {setOpened(true); console.log(f.attributes.device_id)}}
       />
-      <Button onClick={()=> console.log(deviceList)}/>
       </Container>
       
       
-      {maintToPostponeC && (
+      {maintToPostpone &&  (
       <Modal
         opened={opened}
         centered
@@ -70,7 +72,7 @@ const MaintCalendar = () => {
         onClose={() => setOpened(false)}
         title="Acciones para realizar a Dispositivo"
       >
-        <PostponeCalendar maintToPostponeC={{ ...maintToPostponeC }}/>
+        <PostponeCalendar maintToPostpone={maintToPostpone}/>
       </Modal>
       )}
     </>

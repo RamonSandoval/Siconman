@@ -19,13 +19,13 @@ const maintenance = () => {
 
   async function init(){}
   return (
-    <>
+    <div>
     <h1>{session ? "" : <SignIn/>}</h1>
     <Layout tituloPagina="Mantenimientos" />
     {session && (
     <MaintTableAll/>
     )}
-    </>
+    </div>
   )
 }
 export const getServerSideProps = async (context) => {

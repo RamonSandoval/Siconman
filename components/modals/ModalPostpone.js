@@ -10,7 +10,7 @@ import stylesModal from "../../styles/ModalRegisterNewMaint.module.css";
 import { useForm } from "@mantine/form";
 import api from "../../services/api";
 import Notifications from "../Notifications";
-const Postpone = ({maintToPostpone,maintToPostone2,closeModal}) => {
+const Postpone = ({maintToPostpone,closeModal}) => {
 
   const id_postPone = maintToPostpone.attributes?.maintenance?.data?.id
 
