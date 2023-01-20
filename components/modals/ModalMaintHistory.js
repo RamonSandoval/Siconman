@@ -21,6 +21,7 @@ const ModalMaintHistory = ({deviceToMaintHistory}) => {
   const [arrayDataDev,setArrayDataDev] = useState([]);
   
   const id_maint = deviceToMaintHistory?.attributes?.maintenance?.data?.id
+  const faults = deviceToMaintHistory?.attributes?.maintenance?.data?.fault
   useEffect(() => {
     init();
   }, []);
@@ -78,7 +79,9 @@ const ModalMaintHistory = ({deviceToMaintHistory}) => {
       user_request_name: deviceToMaintHistory.attributes?.maintenance?.data?.attributes.user_request_name,
       user_request_department: deviceToMaintHistory.attributes?.maintenance?.data?.attributes.user_request_department,
       user_maintenance: deviceToMaintHistory.attributes?.maintenance?.data?.attributes.user_maintenance,
+      fault: deviceToMaintHistory.attributes?.maintenance?.data?.fault,
       name:  deviceToMaintHistory.attributes?.production?.data?.attributes.name,
+      
     },
     validate:{
 
@@ -138,7 +141,7 @@ const ModalMaintHistory = ({deviceToMaintHistory}) => {
 
         <div className={stylesModal.modal__solicitant}>
           <TextInput
-          readOnly
+            readOnly
             label="Departamento / Area"
 
             {...form.getInputProps("user_request_department")}
@@ -206,6 +209,7 @@ const ModalMaintHistory = ({deviceToMaintHistory}) => {
           </Button>
         </div> */}
       </div>
+      <Button onClick={()=> console.log(faults)}/>
     </div>
     </form>
   );

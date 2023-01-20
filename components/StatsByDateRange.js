@@ -95,15 +95,15 @@ const Stats = () => {
             search &&
           f.attributes.maintenance?.data?.attributes.maintenance_date <= search2 &&
 
-          ((f.attributes.department?.data?.attributes.department_name),(f.attributes.production?.data?.attributes.name))
+          f.attributes.department?.data?.attributes.department_name
           .toString()
           .toLowerCase()
-          .includes(search3.toLowerCase()) /* ||
+          .includes(search3.toLowerCase()) ||
           
           f.attributes.production?.data?.attributes.name 
           .toString()
           .toLowerCase()
-          .includes(search3.toLowerCase()) */
+          .includes(search3.toLowerCase()) 
 
       );
       setarrayDevices(resultado);

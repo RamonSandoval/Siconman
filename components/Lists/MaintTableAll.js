@@ -88,19 +88,7 @@ const MaintTableAll = () => {
     setarrayDevices(list.data);
     setarrayDataDev(list.data);
   }
-  const [maintState,setMaintState] = useState(true)
-
-  const comp = arrayDevices.map((d) => {
-    if((d.attributes?.maintenance.data) === 0 ){
-      setMaintState(true)
-    }
-    return setMaintState
-    if(d.attributes?.maintenance.data != null){
-     setMaintState(false)
-    }
-    return setMaintState
-
-  });
+ 
 
   function compare_date(a, b) {
     if (a.date < b.date) {
@@ -225,11 +213,6 @@ const MaintTableAll = () => {
                   <th>
                     <Center>Acciones</Center>
                   </th>
-                  <th>
-                    <Center>
-                      Manteniemiento?
-                    </Center>
-                  </th>
                 </tr>
               </thead>
               <tbody className={styles.tbody}>
@@ -305,7 +288,7 @@ const MaintTableAll = () => {
                           <ActionIcon
                             variant="light"
                             color="green"
-                            disabled={maintState}
+                            disabled={false}
                             onClick={() => {
                               setOpenedMaintNew(true);
                               setDeviceToMaintNew(data);
@@ -316,7 +299,6 @@ const MaintTableAll = () => {
                           </ActionIcon>
                         </div>
                       </td>
-                      <td>{}</td>
                     </tr>
                   ))}
               </tbody>
