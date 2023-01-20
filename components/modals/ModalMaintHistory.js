@@ -7,6 +7,7 @@ import {
   Textarea,
   Button,
   Checkbox,
+  Group,
 } from "@mantine/core";
 import {Fecha} from '../../helpers'
 import { DatePicker } from "@mantine/dates";
@@ -108,13 +109,20 @@ const ModalMaintHistory = ({deviceToMaintHistory}) => {
         label="Modelo"
         {...form.getInputProps("model")}
         />
+        <Group>
+          <TextInput
+            disabled
+            label="Departamento"
+            {...form.getInputProps("department_name")}
+          />
+          <TextInput 
+            disabled
+            label="Area" 
+            {...form.getInputProps("name")} 
+          />
+          </Group>
 
-        <TextInput
-        disabled
-        label="Departamento / Area" 
-        {...form.getInputProps("department_name")}
-        {...form.getInputProps("name")}
-        />
+       
         <TextInput
         readOnly
         label="Tipo de mantenimiento previo realizado"
@@ -201,15 +209,7 @@ const ModalMaintHistory = ({deviceToMaintHistory}) => {
           label="Realizo Manteniemiento"
           {...form.getInputProps("user_maintenance")}
         />
-        {/* <div className={stylesModal.button}>
-          <Button color="red" type="submit">
-          {" "}
-          Cerrar{" "}
-          
-          </Button>
-        </div> */}
       </div>
-      <Button onClick={()=> console.log(faults)}/>
     </div>
     </form>
   );

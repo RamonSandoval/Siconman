@@ -221,9 +221,9 @@ const inventory = () => {
                 className={cx(classes.header, { [classes.scrolled]: scrolled })}
               >
                 <tr className={styles.table__titles}>
-                  <th>
+                  {/* <th>
                     <Center>#</Center>
-                  </th>
+                  </th> */}
                   <th>
                     <Center>ID Equipo</Center>
                   </th>
@@ -242,9 +242,9 @@ const inventory = () => {
                 {arrayDevices &&
                   arrayDevices.map((data) => (
                     <tr key={data.device_id}>
-                      <td>
+                      {/* <td>
                         <Center>{data.id}</Center>
-                      </td>
+                      </td> */}
                       <td>
                         <Center>{data.attributes.device_id}</Center>
                       </td>
@@ -253,7 +253,7 @@ const inventory = () => {
                           {
                             data.attributes.department?.data?.attributes
                               .department_name
-                          }
+                          } 
                           {data.attributes.production?.data?.attributes.name}
                         </Center>
                       </td>

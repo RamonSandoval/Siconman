@@ -14,9 +14,22 @@ import PostponeCalendar from './modals/ModalPostponeCalendar'
 const MaintCalendar = () => {
   const [arrayDataDev, setarrayDataDev] = useState([]);
   const [arrayDevices, setarrayDevices] = useState([]);
-  const calendarRef = useRef(null);
   const [opened,setOpened] = useState(false);
-  const [maintToPostpone, setMaintToPostPone] = useState();
+  const [color1,setColor1] = useState('')
+
+   /* DATE SUBSTRACTION */
+  //Normal Date
+  const date = new Date().toLocaleDateString("en-CA");
+  // Minus 3 days
+  var d3 = new Date();
+  d3.setDate(d3.getDate()+3);
+  var date3 = d3.toLocaleDateString('en-CA')
+  //Minus 7 days
+  var d7 = new Date();
+  d7.setDate(d7.getDate()+7);
+  var date7 = d7.toLocaleDateString('en-CA')
+  /* */
+
   useEffect(() => {
     init();
   }, []);
@@ -29,19 +42,12 @@ const MaintCalendar = () => {
   }
 
 
-  const handleEventClick = (clickInfo) => {
-    setMaintToPostPone(clickInfo.event.id)
-    setOpened(true)
-    /* if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
-      clickInfo.event.remove()
-    } */
-  }
   const dates = arrayDevices.map((f) => {
     return {
       title: f.attributes.device_id,
       date: f.attributes.maintenance?.data?.attributes?.next_maintenance,
-      id: f.attributes,
-      groupId: f.attributes.maintenance?.data?.attributes?.next_maintenance,
+      
+      color: f.attributes.maintenance?.data?.attributes?.next_maintenance < date ? 'red' : 'g'
     };
   })
 
@@ -54,17 +60,17 @@ const MaintCalendar = () => {
         weekends={false}
         selectable={true}
         footerToolbar
-        eventColor="green"
+        eventColor={dates.color}
         plugins={[dayGridPlugin]}
         initialView="dayGridMonth"
         events={dates}
-        eventClick={handleEventClick}
         // eventClick={() => {setOpened(true); console.log(f.attributes.device_id)}}
       />
       </Container>
       
+    
       
-      {maintToPostpone &&  (
+     
       <Modal
         opened={opened}
         centered
@@ -72,9 +78,8 @@ const MaintCalendar = () => {
         onClose={() => setOpened(false)}
         title="Acciones para realizar a Dispositivo"
       >
-        <PostponeCalendar maintToPostpone={maintToPostpone}/>
+        <PostponeCalendar/>
       </Modal>
-      )}
     </>
 
     

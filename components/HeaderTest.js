@@ -114,7 +114,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export function Nav() {
+export function NavTest() {
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
     useDisclosure(false);
   const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
@@ -170,98 +170,28 @@ export function Nav() {
               <Link href="/config" className={classes.link}>
                 Configuracion
               </Link>
-             
+              <Link href="/test" className={classes.link}>
+                Test
+              </Link>
               <Menu shadow="md" width={290}>
                 <Menu.Target>
                     <ActionIcon>
                       <IconLogout color="black"/>
                     </ActionIcon>
-                    {/* {session.user.email} */}
                 </Menu.Target>
 
-                <Menu.Dropdown>
-                  <Menu.Label>Opciones</Menu.Label>
-                  <Menu.Item onClick={signOut} icon={<IconLogout size={14} />}>
-                    Cerrar Sesion
-                  </Menu.Item>
-                  
-                </Menu.Dropdown>
+                
               </Menu>
             </Group>
             </div>
-            <Group className={classes.hiddenMobile}>
-            </Group>
 
-            <Burger
-              opened={drawerOpened}
-              onClick={toggleDrawer}
-              className={classes.hiddenDesktop}
-            />
+            
           </Group>
           
         </Header>
 
-        <Drawer
-          opened={drawerOpened}
-          onClose={closeDrawer}
-          size="100%"
-          padding="md"
-          title="Opciones"
-          className={classes.hiddenDesktop}
-          zIndex={1000000}
-        >
-          <ScrollArea sx={{ height: "calc(100vh - 60px)" }} mx="-md">
-            <Divider
-              my="sm"
-              color={theme.colorScheme === "dark" ? "dark.5" : "gray.1"}
-            />
-
-            <a href="/" className={classes.link}>
-              Inicio
-            </a>
-            <a href="/maintenance" className={classes.link}>
-              Mantenimientos
-            </a>
-
-            <a href="/calendarmaintenance" className={classes.link}>
-              <Box component="span" mr={5}>
-                Calendario
-              </Box>
-            </a>
-            <a href="/inventory" className={classes.link}>
-              Inventario
-            </a>
-            <a href="reports" className={classes.link}>
-              Reportes
-            </a>
-            <a href="/config" className={classes.link}>
-              Configuracion
-            </a>
-
-            <Divider
-              my="sm"
-              color={theme.colorScheme === "dark" ? "dark.5" : "gray.1"}
-            />
-            <Menu shadow="md" width={290}>
-                <Menu.Target>
-                  <Button color="dark" variant="transparent">
-                      {/* {session.user.email}  */}
-                  </Button>
-                </Menu.Target>
-
-                <Menu.Dropdown>
-                  <Menu.Label>Opciones</Menu.Label>
-                  <Menu.Item onClick={signOut} icon={<IconLogout size={14} />}>
-                    Cerrar Sesion
-                  </Menu.Item>
-                  
-                </Menu.Dropdown>
-              </Menu>
-          </ScrollArea>
-        </Drawer>
       </Box>
       
     </>
   );
 }
-export default Header

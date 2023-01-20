@@ -41,14 +41,6 @@ const ModalMaint = ({ deviceToMaint, closeModal2 }) => {
     setArrayDataDev(list.data.concat(list2.data));
   }
 
-  var devicesListSelect = arrayDataDev.map((d) => {
-    return d.attributes.device_id;
-  });
-
-  var usersList = arrayUsers.map((d) => {
-    return d.username;
-  });
-
   async function updateMaintenance() {
     const body = {
       data: {
@@ -91,14 +83,12 @@ const ModalMaint = ({ deviceToMaint, closeModal2 }) => {
         value === null ? console.log("No tiene departamento") : null,
     },
   });
-  var departmentsListSelect = arrayDep.map((d) => {
-    return d.attributes.department_name;
-  });
 
   return (
     <form onSubmit={form.onSubmit(updateMaintenance)}>
       <div className={stylesModal.modal__container}>
         <div className={stylesModal.modal__lcontainer}>
+          
           <TextInput
             disabled
             searchable
@@ -107,25 +97,26 @@ const ModalMaint = ({ deviceToMaint, closeModal2 }) => {
             {...form.getInputProps("device_id")}
             withAsterisk
           />
-
           <TextInput
             disabled
             placeholder="HP-X"
             label="Modelo"
             {...form.getInputProps("model")}
           />
+          <Group>
           <TextInput
             disabled
             label="Departamento"
             {...form.getInputProps("department_name")}
-            
           />
           <TextInput 
-            disabled 
+            disabled
             label="Area" 
-            {...form.getInputProps("name")} />
+            {...form.getInputProps("name")} 
+          />
+          </Group>
           <Select
-            data={["Interno", "Externo", "Interno/Externo"]}
+            data={["Hardware", "Software", "Hardware/Software"]}
             {...form.getInputProps("maintenance_type")}
             label="Tipo de mantenimiento a realizar"
           />
@@ -135,21 +126,16 @@ const ModalMaint = ({ deviceToMaint, closeModal2 }) => {
             {...form.getInputProps("motive")}
             data={[]}
           />
-          <Radio.Group
-            label="Solicito Usuario?"
-            {...form.getInputProps("user_request".valueOf(Radio))}
-          >
-            <Radio onClick={() => setActive(false)} value="yes" label="Si" />
-            <Radio onClick={() => setActive(true)} value="no" label="No" />
-          </Radio.Group>
-
           <div className={stylesModal.modal__solicitant}>
-            <Select
-              disabled={active}
-              label="Departamento / Area"
-              data={departmentsListSelect}
-              {...form.getInputProps("user_request_department")}
-            />
+            <Radio.Group
+              pr={20}
+              label="Solicito Usuario?"
+              {...form.getInputProps("user_request".valueOf(Radio))}
+            >
+              <Radio onClick={() => setActive(false)} value="yes" label="Si" />
+              <Radio onClick={() => setActive(true)} value="no" label="No" />
+            </Radio.Group>
+
             <TextInput
               disabled={active}
               className={stylesModal.input__name}
@@ -175,19 +161,10 @@ const ModalMaint = ({ deviceToMaint, closeModal2 }) => {
           <Select
             label="Tipo de Mantenimiento proximo"
             searchable
-            data={["Interno", "Externo", "Interno/Externo"]}
+            data={["Hardware", "Software", "Hardware/Software"]}
             {...form.getInputProps("maintenance_type_next")}
           />
-          {/* <Checkbox.Group
           
-          label="Tipo de Mantenimiento proximo"
-          withAsterisk
-          {...form.getInputProps("maintenance_type_next".toString())}
-        >
-          <Checkbox value="Interno" label="Interno" />
-          <Checkbox value="Externo" label="Externo" />
-          <Checkbox value="Interno/Externo" label="Interno/Externo" />
-        </Checkbox.Group> */}
           <DatePicker
             allowFreeInput
             placeholder="Elegir fecha"
@@ -207,10 +184,12 @@ const ModalMaint = ({ deviceToMaint, closeModal2 }) => {
           <Select
             label="Realizo Manteniemiento"
             {...form.getInputProps("user_maintenance")}
-            data={usersList}
+            data={arrayUsers.map((f) => {
+              return { value: f.id, label: f.username };
+            })}
           />
           <div className={stylesModal.button}>
-            <Button color="orange" type="submit">
+            <Button color="#04245c" type="submit">
               {" "}
               Registrar{" "}
             </Button>

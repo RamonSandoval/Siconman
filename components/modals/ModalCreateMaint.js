@@ -8,6 +8,7 @@ import {
   Textarea,
   Button,
   Text,
+  Group,
 } from "@mantine/core";
 
 import { DatePicker } from "@mantine/dates";
@@ -33,11 +34,8 @@ const ModalCreateMaint = ({deviceToMaintNew,closeModal3,maintIndicator}) => {
       Notifications.error("Ya se ha creado un mantenimiento");
       closeModal3()
     } 
-    
+    init()
   }, []);
-
-  
-  
 
 
   async function init() {
@@ -45,7 +43,7 @@ const ModalCreateMaint = ({deviceToMaintNew,closeModal3,maintIndicator}) => {
     const list2 = await api.devicesList(2);
     const listDepartment = await api.departmentsList(1);
     const listUsers = await api.usersList(1);
-    setarrayUsers(listUsers)
+    setarrayUsers(listUsers);
     setarrayDep(listDepartment.data);
     setarrayDevices(list.data.concat(list2.data));
     setArrayDataDev(list.data.concat(list2.data));
@@ -98,6 +96,7 @@ const ModalCreateMaint = ({deviceToMaintNew,closeModal3,maintIndicator}) => {
     initialValues:{
       device_id: deviceToMaintNew.attributes.device_id,
       department_name: deviceToMaintNew.attributes?.department?.data?.attributes.department_name,
+      name: deviceToMaintNew.attributes?.production?.data?.attributes.name,
       model: deviceToMaintNew.attributes.model,
       maintenance_type:deviceToMaintNew.attributes?.maintenance?.data?.attributes.maintenance_type,
     },
@@ -131,15 +130,22 @@ const ModalCreateMaint = ({deviceToMaintNew,closeModal3,maintIndicator}) => {
         {...form.getInputProps("model")}
         />
 
-        <TextInput
-        disabled
-        label="Departamento / Area" 
-        {...form.getInputProps("department_name")}
-        />
+        <Group>
+          <TextInput
+            disabled
+            label="Departamento"
+            {...form.getInputProps("department_name")}
+          />
+          <TextInput 
+            disabled
+            label="Area" 
+            {...form.getInputProps("name")} 
+          />
+          </Group>
          <Select
         label="Tipo de Mantenimiento a realizar"
         searchable
-        data={['Interno','Externo','Interno/Externo']}
+        data={['Hardware','Software','Hardware/Software']}
         {...form.getInputProps("maintenance_type")}
         />
 
@@ -150,7 +156,8 @@ const ModalCreateMaint = ({deviceToMaintNew,closeModal3,maintIndicator}) => {
             
           ]}
         />
-        <Radio.Group
+         <div className={stylesModal.modal__solicitant}>
+        <Radio.Group pr={20}
           label="Solicito Usuario?"
           
           {...form.getInputProps("user_request".valueOf(Checkbox.valueOf(Radio)))}
@@ -159,13 +166,8 @@ const ModalCreateMaint = ({deviceToMaintNew,closeModal3,maintIndicator}) => {
           <Radio onClick={()=> setActive(true)}value="no" label="No" />
         </Radio.Group>
 
-        <div className={stylesModal.modal__solicitant}>
-          <Select
-            disabled={active}
-            label="Departamento / Area"
-            data={departmentsListSelect}
-            {...form.getInputProps("user_request_department")}
-          />
+       
+         
           <TextInput
 
             disabled={active}
@@ -196,19 +198,10 @@ const ModalCreateMaint = ({deviceToMaintNew,closeModal3,maintIndicator}) => {
         <Select
         label="Tipo de Mantenimiento proximo"
         searchable
-        data={['Interno','Externo','Interno/Externo']}
+        data={['Hardware','Software','Hardware/Software']}
         {...form.getInputProps("maintenance_type_next")}
         />
-        {/* <Checkbox.Group
-          
-          label="Tipo de Mantenimiento proximo"
-          withAsterisk
-          {...form.getInputProps("maintenance_type_next".toString())}
-        >
-          <Checkbox value="Interno" label="Interno" />
-          <Checkbox value="Externo" label="Externo" />
-          <Checkbox value="Interno/Externo" label="Interno/Externo" />
-        </Checkbox.Group> */}
+        
         <DatePicker
           allowFreeInput
           placeholder="Elegir fecha"
@@ -226,15 +219,14 @@ const ModalCreateMaint = ({deviceToMaintNew,closeModal3,maintIndicator}) => {
           <Radio value="no" label="No"/>
         </Radio.Group>
         <Select
-          label="Realizo Manteniemiento"
-          placeholder=" - "
-          {...form.getInputProps("user_maintenance")}
-          data={usersList}
-        />
+            label="Realizo Manteniemiento"
+            {...form.getInputProps("user_maintenance")}
+            data={usersList}
+          />
        
         <div className={stylesModal.button}>
           
-          <Button color="orange" type="submit">
+          <Button color="#04245c" type="submit">
           {" "}
           Registrar{" "}
           

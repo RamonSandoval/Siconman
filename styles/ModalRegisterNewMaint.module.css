@@ -6,11 +6,11 @@
     
 }
 .modal__lcontainer{
-    width: 40vw;
+    width: 60vw;
 }
 .modal__rcontainer{
     padding-left: 2rem;
-    width: 40vw;
+    width: 50vw;
 }
 .modal__solicitant{
     display: flex;
@@ -22,5 +22,5 @@
 .button{
     float: right;
     display: flex;
-    padding-top: 5vh;
+    padding-top: 2vh;
 }

@@ -76,10 +76,7 @@ const QualityStats = () => {
       <div>
         <Doughnut data={data} height={900} options={options} />
       </div>
-      <Button onClick={()=>console.log(deviceList)}/>
-      <p>Se realizaron {deviceList='yes'.length} mantenimientos en tiempo y forma</p>
-      <p>Se realizaron {deviceList='no'.length} mantenimientos en tiempo y forma</p>
-
+      
     </>
   );
 };

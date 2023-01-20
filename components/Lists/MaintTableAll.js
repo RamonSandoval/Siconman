@@ -10,6 +10,7 @@ import {
   Divider,
   Pagination,
   Button,
+  Tooltip,
 } from "@mantine/core";
 import { usePagination, useSetState } from "@mantine/hooks";
 
@@ -31,6 +32,7 @@ import { IconList } from "@tabler/icons";
 import ModalMaint from "../modals/ModalMaint";
 import ModalMaintHistory from "../modals/ModalMaintHistory";
 import ModalCreateMaint from "../modals/ModalCreateMaint";
+import { Ce } from "tabler-icons-react";
 
 const MaintTableAll = () => {
   const [isLoading, setLoading] = useState(false);
@@ -252,13 +254,17 @@ const MaintTableAll = () => {
                             )}
                       </td>
                       <td>
-                        {
-                          data.attributes.maintenance?.data?.attributes
-                            .maintenance_type_next
-                        }
+                      {data.attributes.maintenance?.data?.attributes
+                          .maintenance_type_next == null
+                          ? " Por asignar"
+                          : 
+                              data.attributes.maintenance?.data?.attributes
+                                .maintenance_type_next
+                          }
                       </td>
                       <td>
                         <div className={styles.icons}>
+                        <Tooltip label="Realizar Mantenimiento">
                           <ActionIcon
                             color="dark"
                             variant="transparent"
@@ -269,7 +275,8 @@ const MaintTableAll = () => {
                           >
                             <IconTool size={18} />
                           </ActionIcon>
-
+                          </Tooltip>
+                          <Tooltip label="Historial Mantenimiento">
                           <ActionIcon
                             color="yellow"
                             onClick={() => {
@@ -279,6 +286,9 @@ const MaintTableAll = () => {
                           >
                             <IconHistory size={18} />
                           </ActionIcon>
+                          </Tooltip>
+
+                          <Tooltip label="Posponer Fecha">
                           <ActionIcon
                             onClick={() => {
                               setMaintToPostPone(data);
@@ -288,6 +298,7 @@ const MaintTableAll = () => {
                           >
                             <IconRotateClockwise2 color="green" size={18} />
                           </ActionIcon>
+                          </Tooltip>
 
                           {data.attributes.maintenance?.data == null ? (
                             <ActionIcon

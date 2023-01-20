@@ -1,46 +1,32 @@
 Add notifications delete user
 Edit user
 add user
-Calendar
 
-
+Ignore white Spaces at the end
 
 Maint Modal add Production Area List of user request
 
-
-
+Do not show in TableDevices if dates are null
 
 Add input type calendar in ModalPostpone
 
+Set active page on header
 
+Borrar fecha y que se muestre nuevamente la lista
 
+No mostrar campo de "Mantenimiento realizado el" cuando se haga el mantenimiento por primera vaz
 
+Ordenar tablas de departamentos y produccion por mas a menos equipos por departamentos
 
-Se paso Rojo csm
-3 dias Naranja
-7 dias Amarillo
-
-
-
+Color en Calendario por fechas 
 
 Radio button seleccinar departmento o produccion al agregar 
 dispositivo
 
+Produccion como departamento y que se despliegue la lista de produccion
 
-
-
-
+Agragar tooltips en todos los Action Icons y Botones en general
 
 
 cookie duration
-
-
-
-
-
-
-
-Agregar en tabla de mantenimiento el tipo de
-fallo de la computadora (RAM,PSU,GPU,Software,
-Updates, etc)
 

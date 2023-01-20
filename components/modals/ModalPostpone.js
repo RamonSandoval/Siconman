@@ -66,6 +66,8 @@ const Postpone = ({maintToPostpone,closeModal}) => {
           withAsterisk
           {...form.getInputProps("next_maintenance")}
         />
+        
+        
 
         <div className={stylesModal.button}>
           <Button color="orange" o type="submit">

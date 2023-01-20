@@ -10,6 +10,7 @@ import {
   Loader,
   Divider,
   Button,
+  Tooltip,
 } from "@mantine/core";
 import { useState, useEffect } from "react";
 import { ThemeIcon } from "@mantine/core";
@@ -37,7 +38,20 @@ const TableDevices = () => {
   const [openedMaint, setOpenedMaint] = useState(false);
   const [deviceToMaint, setDeviceToMaint] = useState({});
 
+
+  /* DATE SUBSTRACTION */
+  //Normal Date
   const date = new Date().toLocaleDateString("en-CA");
+  // Minus 3 days
+  var d3 = new Date();
+  d3.setDate(d3.getDate()+3);
+  var date3 = d3.toLocaleDateString('en-CA')
+  //Minus 7 days
+  var d7 = new Date();
+  d7.setDate(d7.getDate()+7);
+  var date7 = d7.toLocaleDateString('en-CA')
+  /* */
+
 
 
   useEffect(() => {
@@ -173,23 +187,37 @@ const TableDevices = () => {
                   deviceList.sort(compare_date).map(
                     (data, index) =>
                       index < 14 && (
-                        <tr
-                          className={styles.table__data}
-                          key={data.device_id}
-                        >
-
-                              {data.attributes.maintenance?.data?.attributes
+                        <tr className={styles.table__data} key={data.device_id}>
+                              {(data.attributes.maintenance?.data?.attributes
                               .next_maintenance < date
                               ? 
                               <td>
+                                <Tooltip label="Mantenimiento Atrasado">
                                 <ThemeIcon variant="transparent">
                                 <IconAlertCircle color="red" />
                               </ThemeIcon>
-                              </td> :
+                              </Tooltip>
+                              </td> : (data.attributes.maintenance?.data?.attributes
+                              .next_maintenance < date3
+                              ?
                               <td>
-                            </td> }
+                                <Tooltip label="Realizar Matenimiento">
+                                <ThemeIcon variant="transparent">
+                                <IconAlertCircle color="#ff6f00" />
+                              </ThemeIcon> 
+                              </Tooltip>
+                              </td> : (data.attributes.maintenance?.data?.attributes
+                              .next_maintenance < date7
+                              ?
+                              <td>
+                                <Tooltip label="Mantenimiento Proximo">
+                                <ThemeIcon variant="transparent">
+                                <IconAlertCircle color="#ffbb00" />
+                              </ThemeIcon> 
+                              </Tooltip>
+                              </td>: <td></td>)))}
 
-                          <td>
+                              <td>
                             <Center>{data.attributes.device_id}</Center>
                           </td>
                           <td>
@@ -209,27 +237,37 @@ const TableDevices = () => {
                           </td>
                           <td>
                             <Center>
-                              {Fecha(
+                            {data.attributes.maintenance?.data?.attributes
+                            .maintenance_date == null
+                            ? " Por asignar"
+                            : Fecha(
                                 data.attributes.maintenance?.data?.attributes
                                   .maintenance_date
                               )}
                             </Center>
                           </td>
                           <td>
-                            {Fecha(
+                          {data.attributes.maintenance?.data?.attributes
+                          .next_maintenance == null
+                          ? " Por asignar"
+                          : Fecha(
                               data.attributes.maintenance?.data?.attributes
                                 .next_maintenance
                             )}
                           </td>
 
                           <td>
-                            {
+                          {data.attributes.maintenance?.data?.attributes
+                          .maintenance_type_next == null
+                          ? " Por asignar"
+                          : 
                               data.attributes.maintenance?.data?.attributes
                                 .maintenance_type_next
                             }
                           </td>
                           <td>
                             <div className={styles.icons}>
+                            <Tooltip label="Realizar Mantenimiento">
                               <ActionIcon
                                 color="indigo"
                                 variant="transparent"
@@ -240,6 +278,9 @@ const TableDevices = () => {
                               >
                                 <IconTool size={18} />
                               </ActionIcon>
+                              </Tooltip>
+
+                              <Tooltip label="Posponer Fecha">
                               <ActionIcon
                                 onClick={() => {
                                   setMaintToPostPone(data);
@@ -249,6 +290,7 @@ const TableDevices = () => {
                               >
                                 <IconRotateClockwise2 color="green" size={18} />
                               </ActionIcon>
+                              </Tooltip>
                             </div>
                           </td>
                         </tr>
