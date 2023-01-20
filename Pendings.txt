@@ -7,10 +7,6 @@ Calendar
 
 
 
-
-
-
-
 Mantenimientos realizados por departmento
 
 
@@ -18,7 +14,7 @@ Mantenimientos realizados por departmento
 Maint Modal add Production Area List of user request
 
 
-
+Add input type calendar in ModalPostpone
 
 
 
@@ -27,3 +23,16 @@ Maint Modal add Production Area List of user request
 Agregar en tabla de mantenimiento el tipo de
 fallo de la computadora (RAM,PSU,GPU,Software,
 Updates, etc)
+
+
+
+
+Se paso Rojo csm
+3 dias Naranja
+7 dias Amarillo
+
+
+
+
+Radio button seleccinar departmento o produccion al agregar 
+dispositivo

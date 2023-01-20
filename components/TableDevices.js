@@ -14,6 +14,7 @@ import {
 import { useState, useEffect } from "react";
 import { ThemeIcon } from "@mantine/core";
 import {
+  IconAlertCircle,
   IconListDetails,
   IconRotateClockwise2,
   IconSearch,
@@ -35,6 +36,9 @@ const TableDevices = () => {
   const [maintToPostpone, setMaintToPostPone] = useState([]);
   const [openedMaint, setOpenedMaint] = useState(false);
   const [deviceToMaint, setDeviceToMaint] = useState({});
+
+  const date = new Date().toLocaleDateString("en-CA");
+
 
   useEffect(() => {
     init();
@@ -86,29 +90,29 @@ const TableDevices = () => {
   };
 
   const deviceList = arrayDevices.map((d) => {
-    return(
-      d
-    );
+    return d;
   });
 
   const filterList = arrayDevices.map((d) => {
-    return(
-      d.attributes.maintenance?.data?.attributes?.next_maintenance
-    );
+    return d.attributes.maintenance?.data?.attributes?.next_maintenance;
   });
 
-  function compare_date(a,b){
-    if(a.attributes.maintenance?.data?.attributes?.next_maintenance < b.attributes.maintenance?.data?.attributes?.next_maintenance){
+  function compare_date(a, b) {
+    if (
+      a.attributes.maintenance?.data?.attributes?.next_maintenance <
+      b.attributes.maintenance?.data?.attributes?.next_maintenance
+    ) {
       return -1;
     }
-    if(a.attributes.maintenance?.data?.attributes?.next_maintenance > b.attributes.maintenance?.data?.attributes?.next_maintenance){
+    if (
+      a.attributes.maintenance?.data?.attributes?.next_maintenance >
+      b.attributes.maintenance?.data?.attributes?.next_maintenance
+    ) {
       return 1;
     }
     return 0;
-
   }
 
-  
   return (
     <>
       <Layout tituloPagina="Inicio" />
@@ -140,6 +144,7 @@ const TableDevices = () => {
             <Table highlightOnHover>
               <thead className={styles.table__columns}>
                 <tr>
+                  <th></th>
                   <th>
                     <Center>ID Equipo</Center>
                   </th>
@@ -168,7 +173,22 @@ const TableDevices = () => {
                   deviceList.sort(compare_date).map(
                     (data, index) =>
                       index < 14 && (
-                        <tr className={styles.table__data} key={data.device_id}>
+                        <tr
+                          className={styles.table__data}
+                          key={data.device_id}
+                        >
+
+                              {data.attributes.maintenance?.data?.attributes
+                              .next_maintenance < date
+                              ? 
+                              <td>
+                                <ThemeIcon variant="transparent">
+                                <IconAlertCircle color="red" />
+                              </ThemeIcon>
+                              </td> :
+                              <td>
+                            </td> }
+
                           <td>
                             <Center>{data.attributes.device_id}</Center>
                           </td>
@@ -201,6 +221,7 @@ const TableDevices = () => {
                                 .next_maintenance
                             )}
                           </td>
+
                           <td>
                             {
                               data.attributes.maintenance?.data?.attributes

@@ -52,8 +52,8 @@ const ModalAddDevice = ({ closeModal}) => {
     initialValues: {
       device_id: "",
       model: "",
-      department_name: "35",
-      name:"26",
+      department_name: null,
+      name:null,
 
     },
     validate: {

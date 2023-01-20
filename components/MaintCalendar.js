@@ -40,7 +40,7 @@ const MaintCalendar = () => {
     return {
       title: f.attributes.device_id,
       date: f.attributes.maintenance?.data?.attributes?.next_maintenance,
-      id: f.attributes.device_id,
+      id: f.attributes,
       groupId: f.attributes.maintenance?.data?.attributes?.next_maintenance,
     };
   })

@@ -9,9 +9,9 @@ import {
   Center,
   Divider,
   Pagination,
-  Button
+  Button,
 } from "@mantine/core";
-import { usePagination, useSetState } from '@mantine/hooks';
+import { usePagination, useSetState } from "@mantine/hooks";
 
 import { useState, useEffect } from "react";
 import {
@@ -47,9 +47,9 @@ const MaintTableAll = () => {
   const [deviceToMaint, setDeviceToMaint] = useState({});
   const [openedMaintNew, setOpenedMaintNew] = useState(false);
   const [maintColor, setMaintColor] = useState();
-  const pagination = usePagination({total:10, initialPage: 1})
-  const [activePage, setPage] = useState(1)
-  const [maintCompare,setMaintCompare] = useSetState('')
+  const pagination = usePagination({ total: 10, initialPage: 1 });
+  const [activePage, setPage] = useState(1);
+  const [maintCompare, setMaintCompare] = useSetState("");
 
   const useStyles = createStyles((theme) => ({
     header: {
@@ -78,7 +78,6 @@ const MaintTableAll = () => {
 
   const { classes, cx } = useStyles();
 
-
   useEffect(() => {
     init();
   }, []);
@@ -88,7 +87,6 @@ const MaintTableAll = () => {
     setarrayDevices(list.data);
     setarrayDataDev(list.data);
   }
- 
 
   function compare_date(a, b) {
     if (a.date < b.date) {
@@ -138,11 +136,11 @@ const MaintTableAll = () => {
           ?.toString()
           .toLowerCase()
           .includes(search.toLowerCase()) ||
-          e.attributes.production?.data?.attributes.name
+        e.attributes.production?.data?.attributes.name
           ?.toString()
           .toLowerCase()
-          .includes(search.toLowerCase())||
-          e.attributes.maintenance?.data?.attributes?.maintenance_type_next
+          .includes(search.toLowerCase()) ||
+        e.attributes.maintenance?.data?.attributes?.maintenance_type_next
           ?.toString()
           .toLowerCase()
           .includes(search.toLowerCase())
@@ -152,11 +150,10 @@ const MaintTableAll = () => {
     });
     setarrayDevices(resultado);
   };
-  function actualizar (){
-    console.log(activePage+1)
-    init()
+  function actualizar() {
+    console.log(activePage + 1);
+    init();
   }
-  
 
   return (
     <>
@@ -236,16 +233,22 @@ const MaintTableAll = () => {
                       </td>
                       <td>
                         <Center>
-                          {Fecha(
-                            data.attributes.maintenance?.data?.attributes
-                              .maintenance_date
-                          )}
+                          {data.attributes.maintenance?.data?.attributes
+                            .maintenance_date == null
+                            ? " Por asignar"
+                            : Fecha(
+                                data.attributes.maintenance?.data?.attributes
+                                  .maintenance_date
+                              )}
                         </Center>
                       </td>
                       <td>
-                      {Fecha(
-                          data.attributes.maintenance?.data?.attributes
-                            .next_maintenance
+                        {data.attributes.maintenance?.data?.attributes
+                          .next_maintenance == null
+                          ? " Por asignar"
+                          : Fecha(
+                              data.attributes.maintenance?.data?.attributes
+                                .next_maintenance
                             )}
                       </td>
                       <td>
@@ -285,18 +288,31 @@ const MaintTableAll = () => {
                           >
                             <IconRotateClockwise2 color="green" size={18} />
                           </ActionIcon>
-                          <ActionIcon
-                            variant="light"
-                            color="green"
-                            disabled={false}
-                            onClick={() => {
-                              setOpenedMaintNew(true);
-                              setDeviceToMaintNew(data);
-                            
-                            }}
-                          >
-                            <IconCirclePlus size={18} />
-                          </ActionIcon>
+
+                          {data.attributes.maintenance?.data == null ? (
+                            <ActionIcon
+                              variant="light"
+                              color="red"
+                              onClick={() => {
+                                setOpenedMaintNew(true);
+                                setDeviceToMaintNew(data);
+                              }}
+                            >
+                              <IconCirclePlus size={18} />
+                            </ActionIcon>
+                          ) : (
+                            <ActionIcon
+                              variant="light"
+                              disabled
+                              color="red"
+                              onClick={() => {
+                                setOpenedMaintNew(true);
+                                setDeviceToMaintNew(data);
+                              }}
+                            >
+                              <IconCirclePlus size={18} />
+                            </ActionIcon>
+                          )}
                         </div>
                       </td>
                     </tr>
@@ -305,15 +321,15 @@ const MaintTableAll = () => {
             </Table>
           </ScrollArea>
           <Center pt={30}>
-          <Pagination
-          grow
-            page={activePage}
-            initialPage={1}
-            onChange={setPage}
-            onClick={()=> actualizar()} 
-            total={7}
+            <Pagination
+              grow
+              page={activePage}
+              initialPage={1}
+              onChange={setPage}
+              onClick={() => actualizar()}
+              total={7}
             />
-            </Center>
+          </Center>
         </div>
       </Center>
 
