@@ -22,7 +22,7 @@ const StatsProduction = () => {
     var data = {
       labels: arrayProd && arrayProd.map(data=> data.attributes.name),
       datasets: [{
-        label: 'Cantidad de dispositivos',
+        label: 'Cantidad de Equipos',
         data:  arrayProd && arrayProd.map(data => data.attributes.devices.data.length),
         borderWidth: 1,
         backgroundColor: [
@@ -76,7 +76,7 @@ const StatsProduction = () => {
   return (
     <>
     <Center>
-      <h4>Dispositivos por Area de Produccion</h4>
+      <h4>Equipos por Area de Produccion</h4>
     </Center>
     <div>
         <Bar

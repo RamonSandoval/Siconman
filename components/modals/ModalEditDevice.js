@@ -99,8 +99,8 @@ const ModalEditDevice = ({ deviceToEdit, closeModal2 }) => {
         <Select
           label="Departamento / Area"
           icon={<IconPin />}
-          clearable
           disabled={activeDep}
+          clearable
           searchable
           {...form.getInputProps("department_name")}
           //data={departmentsListSelect}

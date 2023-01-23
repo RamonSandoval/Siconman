@@ -187,7 +187,7 @@ const TableDevices = () => {
                 {deviceList &&
                   deviceList.sort(compare_date).map(
                     (data, index) =>
-                      index < 14 && (
+                      index < 14 && data.attributes.maintenance?.data?.attributes.next_maintenance != null ? (
                         <tr className={styles.table__data} key={data.device_id}>
                               {(data.attributes.maintenance?.data?.attributes
                               .next_maintenance < date 
@@ -297,7 +297,7 @@ const TableDevices = () => {
                             </div>
                           </td>
                         </tr>
-                      )
+                      ) : null
                   )}
               </tbody>
             </Table>

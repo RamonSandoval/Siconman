@@ -81,6 +81,27 @@ const ModalAddDevice = ({ closeModal }) => {
       setActiveDep(true);
     }
 
+    function compare_nameDep(a, b) {
+      if (a.attributes.department_name.toLowerCase() < b.attributes.department_name.toLowerCase()) {
+        return -1;
+      }
+      if (a.attributes.department_name.toLowerCase() > b.attributes.department_name.toLowerCase()) {
+        return 1;
+      }
+      return 0;
+    }
+    
+    function compare_nameProd(a, b) {
+      if (a.attributes.name.toLowerCase() < b.attributes.name.toLowerCase()) {
+        return -1;
+      }
+      if (a.attributes.name.toLowerCase() > b.attributes.name.toLowerCase()) {
+        return 1;
+      }
+      return 0;
+    }
+
+
   return (
     <form onSubmit={form.onSubmit(createDevice)}>
       <TextInput
@@ -120,7 +141,7 @@ const ModalAddDevice = ({ closeModal }) => {
         disabled={activeDep}
         searchable
         {...form.getInputProps("department_name")}
-        data={arrayDep.map((d) => {
+        data={arrayDep && arrayDep.sort(compare_nameDep).map((d) => {
           return { value: d.id, label: d.attributes.department_name };
         })}
       />
@@ -131,7 +152,7 @@ const ModalAddDevice = ({ closeModal }) => {
         disabled={activeProd}
         searchable
         {...form.getInputProps("name")}
-        data={arrayProd.map((f) => {
+        data={arrayProd && arrayProd.sort(compare_nameProd).map((f) => {
           return { value: f.id, label: f.attributes.name };
         })}
       />

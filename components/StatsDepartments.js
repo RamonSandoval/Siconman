@@ -24,7 +24,7 @@ const StatsDepartments = () => {
     var data = {
       labels: arrayDep && arrayDep.map(data=> data.attributes.department_name ),
       datasets: [{
-        label: 'Cantidad de Dispositivos',
+        label: 'Cantidad de Equipos',
         data:  arrayDep && arrayDep.map(data => data.attributes.devices.data.length),
         borderWidth: 1,
         backgroundColor: [
@@ -83,7 +83,7 @@ const StatsDepartments = () => {
   return (
     <>
     <Center>
-      <h4>Dispositivos por Departamento</h4>
+      <h4>Equipos por Departamento</h4>
     </Center>
     <div>
         <Bar

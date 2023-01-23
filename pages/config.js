@@ -100,7 +100,25 @@ const config = () => {
     var remove0  = arrayProd.map((a) => {
       return 
 })
-      
+function compare_nameDep(a, b) {
+  if (a.attributes.department_name.toLowerCase() < b.attributes.department_name.toLowerCase()) {
+    return -1;
+  }
+  if (a.attributes.department_name.toLowerCase() > b.attributes.department_name.toLowerCase()) {
+    return 1;
+  }
+  return 0;
+}
+
+function compare_nameProd(a, b) {
+  if (a.attributes.name.toLowerCase() < b.attributes.name.toLowerCase()) {
+    return -1;
+  }
+  if (a.attributes.name.toLowerCase() > b.attributes.name.toLowerCase()) {
+    return 1;
+  }
+  return 0;
+}
 
   return (
     <>
@@ -154,7 +172,7 @@ const config = () => {
               </thead>
               <tbody className={styles.tableBody}>
                 {arrayDep &&
-                  arrayDep.map((data) => (
+                  arrayDep.sort(compare_nameDep).map((data) => (
                     <tr key={data.department_name}>
                       <td>
                         <Center>{data.id}</Center>
@@ -223,7 +241,7 @@ const config = () => {
               </thead>
               <tbody className={styles.tableBody}>
                 {arrayProd && 
-                  arrayProd.map((data) => (
+                  arrayProd.sort(compare_nameProd).map((data) => (
                     <tr key={data.department_name}>
                       <td>
                         <Center>{data.id}</Center>

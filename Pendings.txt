@@ -10,13 +10,13 @@ Ignore white Spaces at the end (Done)
 Maint Modal add Production Area List of user request (Done)
 
 
-Do not show in TableDevices if dates are null
+Do not show in TableDevices if dates are null (Done)
 
 
 Add input type calendar in ModalPostpone (Done)
 
 
-Set active page on header
+Set active page on header (Pendig)
 
 
 Borrar fecha y que se muestre nuevamente la lista (Semi Done)
@@ -30,7 +30,7 @@ Ordenar tablas de departamentos y produccion por mas a menos equipos por departa
 Color en Calendario por fechas (Done)
 
 Radio button seleccinar departmento o produccion al agregar 
-dispositivo
+dispositivo (Done)
 
 Produccion como departamento y que se despliegue la lista de produccion (Evaluar la posiblidad)
 
@@ -40,7 +40,13 @@ Tooltip to create maint (Done)
 
 Change button color to #00255b (Done)
 
-Cambiar dispositivo a equipo
+Cambiar dispositivo a equipo (Done)
+
+Se ordenaron listas por odren alfabetico (Done)
+
+Agregar mas colores hex a las graficas
+
+if condition white space on creating anything
 
 <Tooltip label="Filtrar Mantenimientos">
 

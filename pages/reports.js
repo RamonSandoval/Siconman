@@ -1,6 +1,6 @@
 import React from "react";
 import Layout from "../components/Layout";
-import { Group, Tabs } from "@mantine/core";
+import { Center, Container, Group, Tabs } from "@mantine/core";
 import styles from "../styles/Tabs.module.css";
 import {
   IconCalendarEvent,
@@ -61,8 +61,10 @@ const reports = () => {
             className={styles.DepartmentAreaStats}
           >
             <StatsDepartments />
-            <br/>
-            <DepartmentAreaStats />
+            <Center pt={50}>
+            <h4>Listado de Equipos por Departamento</h4>
+          </Center>
+            <DepartmentAreaStats  />
           </Tabs.Panel>
 
           <Tabs.Panel
@@ -71,6 +73,9 @@ const reports = () => {
             className={styles.DepartmentAreaStats}
           > 
           <StatsProduction />
+          <Center pt={50}>
+            <h4>Listado de Equipos por Area de Produccion</h4>
+          </Center>
             <ProductionAreaStats />
            
           </Tabs.Panel>
