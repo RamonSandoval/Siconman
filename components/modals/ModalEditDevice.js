@@ -5,6 +5,7 @@ import api from "../../services/api";
 import { useForm } from "@mantine/form";
 import Notifications from "../Notifications";
 import { useState, useEffect } from "react";
+import { useSetState } from "@mantine/hooks";
 
 const ModalEditDevice = ({ deviceToEdit, closeModal2 }) => {
   const id_edit = deviceToEdit.id;
@@ -47,12 +48,13 @@ const ModalEditDevice = ({ deviceToEdit, closeModal2 }) => {
     }
   }
 
+  const [depValue,setDepValue] = useState(deviceToEdit.attributes.department.data?.id)
   const form = useForm({
     initialValues: {
       device_id: deviceToEdit.attributes.device_id,
-      department_name: null,
+      department_name: depValue,
       model: deviceToEdit.attributes.model,
-      name: null
+      name:  deviceToEdit.attributes.production.data?.id,
     },
     validate: {
       /* device_id: (value) => 
@@ -63,10 +65,13 @@ const ModalEditDevice = ({ deviceToEdit, closeModal2 }) => {
   function departmentAdd() {
     setActiveDep(false);
     setActiveProd(true);
+
   }
   function productionAdd() {
     setActiveProd(false);
     setActiveDep(true);
+    setDepValue(null)
+   
   }
 
   return (

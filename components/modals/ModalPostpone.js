@@ -19,7 +19,6 @@ const Postpone = ({maintToPostpone,closeModal}) => {
     const body = {
       data: {
         next_maintenance: form.values.next_maintenance2,
-        
       }
     }
     try {
@@ -48,12 +47,21 @@ const Postpone = ({maintToPostpone,closeModal}) => {
          {...form.getInputProps("device_id")} 
          label="ID Equipo" 
          />
+
+      {maintToPostpone.attributes.maintenance?.data?.attributes
+                            .maintenance_date == null
+                            ? <TextInput 
+                            disabled
+                            placeholder="Por asignar"
+                            label="Ultimo Manteniemiento" 
+                            autosize 
+                            /> :
         <TextInput 
         disabled
         {...form.getInputProps("maintenance_date")}
         label="Ultimo Manteniemiento" 
         autosize 
-        />
+        />}
         <TextInput 
         disabled
         label="Proximo Manteniemiento" 

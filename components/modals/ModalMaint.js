@@ -15,15 +15,15 @@ import { useState, useEffect } from "react";
 import stylesModal from "../../styles/ModalRegisterNewMaint.module.css";
 import api from "../../services/api";
 import Notifications from "../Notifications";
+import { Fecha, FechaUS } from "../../helpers";
 const ModalMaint = ({ deviceToMaint, closeModal2 }) => {
-  const [opened, setOpened] = useState(false);
   const [arrayDevices, setarrayDevices] = useState([]);
   const [arrayDataDev, setArrayDataDev] = useState([]);
   const [arrayDep, setarrayDep] = useState([]);
   const [active, setActive] = useState(true);
   const [arrayUsers, setarrayUsers] = useState([]);
   const id_maint = deviceToMaint.attributes?.maintenance?.data?.id;
-
+  const dateToday = new Date()
   useEffect(() => {
     init();
   }, []);
@@ -55,6 +55,7 @@ const ModalMaint = ({ deviceToMaint, closeModal2 }) => {
         maintenance_type_next: form.values.maintenance_type_next,
         user_request_name: form.values.user_request_name,
         user_request_department: form.values.user_request_department,
+        type_maint: form.values.type_maint
       },
     };
     try {
@@ -74,9 +75,7 @@ const ModalMaint = ({ deviceToMaint, closeModal2 }) => {
       department_name:
         deviceToMaint.attributes?.department?.data?.attributes.department_name,
       model: deviceToMaint.attributes.model,
-      name: deviceToMaint.attributes?.production?.data?.attributes.name,
-
-      //maintenance_type:deviceToMaint.attributes?.maintenance?.data?.attributes.maintenance_type,
+      name: "Produccion - " + deviceToMaint.attributes?.production?.data?.attributes.name,
     },
     validate: {
       department_name: (value) =>
@@ -88,39 +87,41 @@ const ModalMaint = ({ deviceToMaint, closeModal2 }) => {
     <form onSubmit={form.onSubmit(updateMaintenance)}>
       <div className={stylesModal.modal__container}>
         <div className={stylesModal.modal__lcontainer}>
-          
           <TextInput
-            disabled
+            readOnly
             searchable
-            limit={8}
             label="ID Equipo"
             {...form.getInputProps("device_id")}
-            withAsterisk
           />
           <TextInput
-            disabled
+            readOnly
             placeholder="HP-X"
             label="Modelo"
             {...form.getInputProps("model")}
           />
           <Group>
-          <TextInput
-            disabled
-            label="Departamento"
-            {...form.getInputProps("department_name")}
-          />
-          <TextInput 
-            disabled
-            label="Area" 
-            {...form.getInputProps("name")} 
-          />
+            {deviceToMaint.attributes.production?.data?.attributes.name == null ? 
+            <TextInput
+              readOnly
+              autosize
+              label="Departamento"
+              {...form.getInputProps("department_name")}
+            /> :
+            <TextInput readOnly label="Departamento" {...form.getInputProps("name")} />
+}
           </Group>
           <Select
             data={["Hardware", "Software", "Hardware/Software"]}
             {...form.getInputProps("maintenance_type")}
             label="Tipo de mantenimiento a realizar"
           />
-
+          <Radio.Group
+            {...form.getInputProps("type_maint".valueOf(Radio))}
+            withAsterisk
+          >
+            <Radio value="Correctivo" label="Correctivo" />
+            <Radio value="Preventivo" label="Preventivo" />
+          </Radio.Group>
           <TextInput
             label="Motivo de Mantenimiento"
             {...form.getInputProps("motive")}
@@ -149,28 +150,15 @@ const ModalMaint = ({ deviceToMaint, closeModal2 }) => {
           <Textarea
             label="Notas"
             {...form.getInputProps("notes")}
-            withAsterisk
           />
           <DatePicker
             allowFreeInput
             placeholder="Elegir fecha"
+            locale="es"
             label="Mantenimiento Realizado el: "
+            defaultValue={dateToday}
             withAsterisk
             {...form.getInputProps("maintenance_date")}
-          />
-          <Select
-            label="Tipo de Mantenimiento proximo"
-            searchable
-            data={["Hardware", "Software", "Hardware/Software"]}
-            {...form.getInputProps("maintenance_type_next")}
-          />
-          
-          <DatePicker
-            allowFreeInput
-            placeholder="Elegir fecha"
-            label="Proximo Mantenimiento "
-            {...form.getInputProps("next_maintenance")}
-            withAsterisk
           />
           <Radio.Group
             name="tiempo"
@@ -182,14 +170,34 @@ const ModalMaint = ({ deviceToMaint, closeModal2 }) => {
             <Radio value="no" label="No" />
           </Radio.Group>
           <Select
-            label="Realizo Manteniemiento"
+            label="Realizo Mantenimiento"
             {...form.getInputProps("user_maintenance")}
             data={arrayUsers.map((f) => {
-              return { value: f.id, label: f.username };
+              return { label: f.username };
             })}
           />
+          <Select
+            label="Tipo de Mantenimiento proximo"
+            searchable
+            data={["Hardware", "Software", "Hardware/Software"]}
+            {...form.getInputProps("maintenance_type_next")}
+          />
+
+          <DatePicker
+            allowFreeInput
+            placeholder="Elegir fecha"
+            label="Proximo Mantenimiento "
+            {...form.getInputProps("next_maintenance")}
+            withAsterisk
+          />
+          
+          
           <div className={stylesModal.button}>
-            <Button variant="gradient" gradient={{ from: '#00255b', to: '#00255b', deg:75 }} type="submit">
+            <Button
+              variant="gradient"
+              gradient={{ from: "#00255b", to: "#00255b", deg: 75 }}
+              type="submit"
+            >
               {" "}
               Registrar{" "}
             </Button>

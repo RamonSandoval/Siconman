@@ -1,15 +1,11 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import api from "../services/api";
-import { useRef } from "react";
 import FullCalendar from "@fullcalendar/react";
-import interactionPlugin from "@fullcalendar/interaction";
-import timeGridPlugin from "@fullcalendar/timegrid";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import esLocale from '@fullcalendar/core/locales/es';
-import { Button, Container, Modal, Text } from "@mantine/core";
+import { Container, Modal,} from "@mantine/core";
 import styles from '../styles/MaintCalendar.module.css'
-import MaintCalendarOptions from '../components/modals/ModalCalendarOptions'
 import PostponeCalendar from './modals/ModalPostponeCalendar'
 const MaintCalendar = () => {
   const [arrayDataDev, setarrayDataDev] = useState([]);

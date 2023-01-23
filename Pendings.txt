@@ -2,28 +2,19 @@ Add notifications delete user
 Edit user
 add user
 
-
-
-
 Ignore white Spaces at the end (Done)
 
 Maint Modal add Production Area List of user request (Done)
 
-
 Do not show in TableDevices if dates are null (Done)
-
 
 Add input type calendar in ModalPostpone (Done)
 
-
 Set active page on header (Pendig)
-
 
 Borrar fecha y que se muestre nuevamente la lista (Semi Done)
 
-
 No mostrar campo de "Mantenimiento realizado el" cuando se haga el mantenimiento por primera vaz (Done)
-
 
 Ordenar tablas de departamentos y produccion por mas a menos equipos por departamentos (Done)
 
@@ -46,7 +37,30 @@ Se ordenaron listas por odren alfabetico (Done)
 
 Agregar mas colores hex a las graficas
 
-if condition white space on creating anything
+if condition white space on creating anything (Done)
 
+Validaciones espacios en blanco (Done)
+
+Show default value on device edit
+
+Show in text area department area only one value if condition (Done)
+
+Agregar abajo de tipo de mantenimiento si es correctivo o preventivo  (Done)
+
+Cambiar Realizar Mantenimiento por Registrar Mantenimiento (Done)
+
+defaultValue on Mantenimiento realizado el, que jale la fecha de proximo mantenimiento (Done)
+
+remove asther (Done)
+
+acentos y signos de interrogacion
+
+Documentar todo el codigo 
+
+Crear manual de usuario
+
+Agregar pie chart de Mantenimientos correctivos y preventivos
+
+show in table next to production area "Produccion - Area Light"
 <Tooltip label="Filtrar Mantenimientos">
 

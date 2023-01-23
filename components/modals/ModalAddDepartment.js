@@ -1,3 +1,4 @@
+/* Importing the components that are going to be used in the component. */
 import { Center, TextInput, Button } from "@mantine/core";
 import { IconPin } from "@tabler/icons";
 import Notifications from "../Notifications";
@@ -5,12 +6,15 @@ import { useForm } from "@mantine/form";
 import React from "react";
 import api from "../../services/api";
 
-const ModalAddDepartment = ({closeModal2}) => {
-  
+const ModalAddDepartment = ({ /* A function that closes the modal. */ closeModal2 }) => {
+  /**
+   * It takes the value of the input field and sends it to the API.
+   * </code>
+   */
   async function createDepartment() {
     const body = {
       data: {
-        department_name: form.values.department_name.replace(/ /g,''),
+        department_name: form.values.department_name.replace(/ /g, ""),
       },
     };
     try {
@@ -23,15 +27,19 @@ const ModalAddDepartment = ({closeModal2}) => {
     }
   }
 
+  /* A form that is being submitted to the function createDepartment. */
   const form = useForm({
     initialValues: {
       department_name: "",
     },
     validate: {
       department_name: (value) =>
-        value.length === 0 ? "Ingrese el nombre del departamento" : null,
+        /^\s+/.test(value) === true || value.length === 0
+          ? "Ingrese el nombre del departamento"
+          : null,
     },
   });
+  /* A form that is being submitted to the function createDepartment. */
   return (
     <form onSubmit={form.onSubmit(createDepartment)}>
       <TextInput
@@ -40,7 +48,11 @@ const ModalAddDepartment = ({closeModal2}) => {
         icon={<IconPin />}
       />
       <Center pt={10}>
-        <Button variant="gradient" gradient={{ from: '#00255b', to: '#00255b', deg:75 }} type="submit">
+        <Button
+          variant="gradient"
+          gradient={{ from: "#00255b", to: "#00255b", deg: 75 }}
+          type="submit"
+        >
           Agregar
         </Button>
       </Center>
@@ -48,4 +60,5 @@ const ModalAddDepartment = ({closeModal2}) => {
   );
 };
 
+/* Exporting the component. */
 export default ModalAddDepartment;

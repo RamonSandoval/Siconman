@@ -28,7 +28,7 @@ const QualityStats = () => {
 
 
   const deviceList = arrayDevices.map((d) => {
-        return (d.attributes?.maintenance.data?.attributes.name)
+        return (d.attributes?.maintenance.data?.attributes.maintenance_eval)
       
         
   });
@@ -40,7 +40,7 @@ const QualityStats = () => {
     datasets: [
       {
         label: "Total de equipos",
-        data: [deviceList='yes'.length,deviceList='no'.length,],
+        data: [12,30],
         borderWidth: 1,
         backgroundColor: [
           "rgba(81, 100, 219)",
@@ -82,5 +82,4 @@ const QualityStats = () => {
 };
 
 export default QualityStats;
-
 

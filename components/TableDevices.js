@@ -270,7 +270,7 @@ const TableDevices = () => {
                           </td>
                           <td>
                             <div className={styles.icons}>
-                            <Tooltip label="Realizar Mantenimiento">
+                            <Tooltip label="Registrar Mantenimiento">
                               <ActionIcon
                                 color="indigo"
                                 variant="transparent"
@@ -329,7 +329,7 @@ const TableDevices = () => {
           transitionTimingFunction="ease"
           opened={openedMaint}
           onClose={() => setOpenedMaint(false)}
-          title="Realizar Mantenimiento"
+          title="Registrar Mantenimiento"
         >
           <hr />
           <ModalMaint

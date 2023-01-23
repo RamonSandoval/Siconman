@@ -9,7 +9,6 @@ import {
   Center,
   Divider,
   Pagination,
-  Button,
   Tooltip,
 } from "@mantine/core";
 import { usePagination, useSetState } from "@mantine/hooks";
@@ -35,7 +34,6 @@ import ModalCreateMaint from "../modals/ModalCreateMaint";
 import { Ce } from "tabler-icons-react";
 
 const MaintTableAll = () => {
-  const [isLoading, setLoading] = useState(false);
   const [opened, setOpened] = useState(false);
   const [search, setSearch] = useState("");
   const [deviceToMaintNew, setDeviceToMaintNew] = useState({});
@@ -53,6 +51,7 @@ const MaintTableAll = () => {
   const [activePage, setPage] = useState(1);
   const [maintCompare, setMaintCompare] = useSetState("");
 
+  /* Creating a style object that will be used by the Header component. */
   const useStyles = createStyles((theme) => ({
     header: {
       position: "sticky",
@@ -80,15 +79,30 @@ const MaintTableAll = () => {
 
   const { classes, cx } = useStyles();
 
+ /* Calling the init() function when the component mounts. */
   useEffect(() => {
     init();
   }, []);
 
+ /**
+  * When the page loads, get the list of devices from the API and store it in the arrayDevices
+  * variable.
+  */
   async function init() {
     const list = await api.devicesList(activePage);
     setarrayDevices(list.data);
     setarrayDataDev(list.data);
   }
+/**
+ * If the date of the first object is less than the date of the second object, return -1. If the date
+ * of the first object is greater than the date of the second object, return 1. If the dates are equal,
+ * return 0.
+ * 
+ * @param a The first object to be compared.
+ * @param b the current item in the array
+ * 
+ * @return the result of the comparison.
+ */
 
   function compare_date(a, b) {
     if (a.date < b.date) {
@@ -100,6 +114,9 @@ const MaintTableAll = () => {
     return 0;
   }
 
+  /**
+   * When the user clicks the close button, the modal is closed and the init function is called.
+   */
   const closeModal = () => {
     setOpened(false);
     init();
@@ -123,6 +140,11 @@ const MaintTableAll = () => {
     filtrar(e.target.value);
   };
 
+  /**
+   * It filters the arrayDataDev array and returns the result to the setarrayDevices function.
+   * 
+   * @param search is the value of the input
+   */
   const filtrar = (search) => {
     var resultado = arrayDataDev.filter((e) => {
       if (
@@ -152,11 +174,17 @@ const MaintTableAll = () => {
     });
     setarrayDevices(resultado);
   };
+
+ /**
+  * The function is called when the user clicks the button. It then calls the init() function, which is
+  * the function that creates the pagination.
+  */
   function actualizar() {
     console.log(activePage + 1);
     init();
   }
 
+  /* A React component that renders a table. */
   return (
     <>
       <Center>
@@ -254,78 +282,76 @@ const MaintTableAll = () => {
                             )}
                       </td>
                       <td>
-                      {data.attributes.maintenance?.data?.attributes
+                        {data.attributes.maintenance?.data?.attributes
                           .maintenance_type_next == null
                           ? " Por asignar"
-                          : 
-                              data.attributes.maintenance?.data?.attributes
-                                .maintenance_type_next
-                          }
+                          : data.attributes.maintenance?.data?.attributes
+                              .maintenance_type_next}
                       </td>
                       <td>
                         <div className={styles.icons}>
-                        <Tooltip label="Realizar Mantenimiento">
-                          <ActionIcon
-                            color="dark"
-                            variant="transparent"
-                            onClick={() => {
-                              setOpenedMaint(true);
-                              setDeviceToMaint(data);
-                            }}
-                          >
-                            <IconTool size={18} />
-                          </ActionIcon>
+                          <Tooltip label="Registrar Mantenimiento">
+                            <ActionIcon
+                              color="dark"
+                              variant="transparent"
+                              onClick={() => {
+                                setOpenedMaint(true);
+                                setDeviceToMaint(data);
+                              }}
+                            >
+                              <IconTool size={18} />
+                            </ActionIcon>
                           </Tooltip>
                           <Tooltip label="Historial Mantenimiento">
-                          <ActionIcon
-                            color="yellow"
-                            onClick={() => {
-                              setOpenedMaintHistory(true);
-                              setDeviceToMaintHistory(data);
-                            }}
-                          >
-                            <IconHistory size={18} />
-                          </ActionIcon>
+                            <ActionIcon
+                              color="yellow"
+                              onClick={() => {
+                                setOpenedMaintHistory(true);
+                                setDeviceToMaintHistory(data);
+                              }}
+                            >
+                              <IconHistory size={18} />
+                            </ActionIcon>
                           </Tooltip>
 
                           <Tooltip label="Posponer Fecha">
-                          <ActionIcon
-                            onClick={() => {
-                              setMaintToPostPone(data);
-                              setOpened(true);
-                            }}
-                            variant="transparent"
-                          >
-                            <IconRotateClockwise2 color="green" size={18} />
-                          </ActionIcon>
+                            <ActionIcon
+                              onClick={() => {
+                                setMaintToPostPone(data);
+                                setOpened(true);
+                              }}
+                              variant="transparent"
+                            >
+                              <IconRotateClockwise2 color="green" size={18} />
+                            </ActionIcon>
                           </Tooltip>
 
                           {data.attributes.maintenance?.data == null ? (
                             <Tooltip label="Crear Nuevo Mantenimiento">
-                            <ActionIcon
-                              variant="light"
-                              color="red"
-                              onClick={() => {
-                                setOpenedMaintNew(true);
-                                setDeviceToMaintNew(data);
-                              }}
-                            >
-                              <IconCirclePlus size={18} />
-                            </ActionIcon>
+                              <ActionIcon
+                                variant="light"
+                                color="red"
+                                onClick={() => {
+                                  setOpenedMaintNew(true);
+                                  setDeviceToMaintNew(data);
+                                }}
+                              >
+                                <IconCirclePlus size={18} />
+                              </ActionIcon>
                             </Tooltip>
                           ) : (
                             <Tooltip label="Crear Nuevo Mantenimiento">
-                            <ActionIcon
-                              variant="light"
-                              disabled
-                              color="red"
-                              onClick={() => {
-                                setOpenedMaintNew(true);
-                                setDeviceToMaintNew(data);
-                              }}
-                            >
-                              <IconCirclePlus size={18} />
-                            </ActionIcon>
+                              <ActionIcon
+                                variant="light"
+                                disabled
+                                color="red"
+                                onClick={() => {
+                                  setOpenedMaintNew(true);
+                                  setDeviceToMaintNew(data);
+                                }}
+                              >
+                                <IconCirclePlus size={18} />
+                              </ActionIcon>
                             </Tooltip>
                           )}
                         </div>
@@ -348,6 +374,7 @@ const MaintTableAll = () => {
         </div>
       </Center>
 
+      /* A modal that is opened when the user clicks on the postpone button. */
       {maintToPostpone && (
         <Modal
           centered
@@ -362,6 +389,7 @@ const MaintTableAll = () => {
         </Modal>
       )}
 
+      /* A modal that opens when a button is clicked. */
       {deviceToMaint && (
         <Modal
           centered
@@ -372,7 +400,7 @@ const MaintTableAll = () => {
           transitionTimingFunction="ease"
           opened={openedMaint}
           onClose={() => setOpenedMaint(false)}
-          title="Realizar Mantenimiento"
+          title="Registrar Mantenimiento"
         >
           <hr />
           <ModalMaint
@@ -382,6 +410,7 @@ const MaintTableAll = () => {
         </Modal>
       )}
 
+      /* A modal that is opened when the user clicks on a button. */
       {deviceToMaintHistory && (
         <Modal
           centered
@@ -402,6 +431,7 @@ const MaintTableAll = () => {
         </Modal>
       )}
 
+      /* A modal that is opened when the user clicks on a button. */
       {deviceToMaintNew && (
         <Modal
           centered

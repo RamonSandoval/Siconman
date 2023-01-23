@@ -6,7 +6,7 @@
     
 }
 .modal__lcontainer{
-    width: 60vw;
+    width: 50vw;
 }
 .modal__rcontainer{
     padding-left: 2rem;
@@ -20,7 +20,9 @@
 
 }
 .button{
-    float: right;
-    display: flex;
-    padding-top: 2vh;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding-right: 1rem;
+    padding-bottom: 1rem;
 }

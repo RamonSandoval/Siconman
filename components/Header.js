@@ -22,6 +22,7 @@ import {
 import React, { useEffect, useState } from "react";
 import styles from "../styles/NavBar.module.css";
 import { signOut, useSession } from "next-auth/react";
+import { getSession } from 'next-auth/react';
 
 const useStyles = createStyles((theme) => ({
 
@@ -103,6 +104,8 @@ export function Nav() {
   const [opened, setOpened] = useState(false);
 
   const [openedMaint, setOpenedMaint] = useState(false);
+  const { data: session } = useSession();
+
  //const { data: session } = useSession();
 
   useEffect(() => {
@@ -160,7 +163,7 @@ export function Nav() {
                     <ActionIcon>
                       <IconLogout color="black"/>
                     </ActionIcon>
-                    {/* {session.user.email} */}
+                    
                 </Menu.Target>
 
                 <Menu.Dropdown>
@@ -248,4 +251,23 @@ export function Nav() {
     </>
   );
 }
+
+export const getServerSideProps = async (context) => {
+  const session = await getSession(context);
+  // Check if session exists or not, if not, redirect
+  if (session == null) {
+    return {
+      redirect: {
+        destination: '/auth/sign-in',
+        permanent: true,
+      },
+    };
+  }
+  return {
+    props: {
+    },
+  };
+};
+
+
 export default Header
