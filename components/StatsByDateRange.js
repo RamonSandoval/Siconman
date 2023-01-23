@@ -13,6 +13,7 @@ import {
   Divider,
   Button,
   Text,
+  Tooltip,
 } from "@mantine/core";
 import { useState, useEffect } from "react";
 import { ThemeIcon } from "@mantine/core";
@@ -22,6 +23,7 @@ import {
   IconDatabase,
   IconFilter,
   IconListDetails,
+  IconRefresh,
   IconRotateClockwise2,
   IconSearch,
   IconTool,
@@ -91,24 +93,22 @@ const Stats = () => {
       setErrorDateNull("");
       const resultado = arrayDataDev.filter(
         (f) =>
-          f.attributes.maintenance?.data?.attributes.maintenance_date >=
+          (f.attributes.maintenance?.data?.attributes.maintenance_date >=
             search &&
-          f.attributes.maintenance?.data?.attributes.maintenance_date <= search2 &&
-
-          f.attributes.department?.data?.attributes.department_name
-          .toString()
-          .toLowerCase()
-          .includes(search3.toLowerCase()) ||
-          
-          f.attributes.production?.data?.attributes.name 
-          .toString()
-          .toLowerCase()
-          .includes(search3.toLowerCase()) 
-
+            f.attributes.maintenance?.data?.attributes.maintenance_date <=
+              search2 &&
+            f.attributes.department?.data?.attributes.department_name
+              .toString()
+              .toLowerCase()
+              .includes(search3.toLowerCase())) ||
+          f.attributes.production?.data?.attributes.name
+            .toString()
+            .toLowerCase()
+            .includes(search3.toLowerCase())
       );
       setarrayDevices(resultado);
     } else {
-      Notifications.error('Ingrese un rango de fecha ')
+      Notifications.error("Ingrese un rango de fecha ");
     }
   };
 
@@ -145,13 +145,14 @@ const Stats = () => {
             </div>
             <div className={styles.searchBar}>
               <Center>
-              <TextInput pr={10}
-                placeholder="Buscar"
-                value={search3}
-                onChange={dep}
-                icon={<IconSearch />}
-              />
-              {/* <TextInput
+                <TextInput
+                  pr={10}
+                  placeholder="Buscar"
+                  value={search3}
+                  onChange={dep}
+                  icon={<IconSearch />}
+                />
+                {/* <TextInput
                 label="Area de Produccion"
                 placeholder="Buscar"
                 value={search4}
@@ -160,17 +161,30 @@ const Stats = () => {
               /> */}
               </Center>
               <Center pr={5}>Desde:</Center>
-              <input title="ss" type="date" value={search} onChange={min} />
-              <Center pl={2} pr={5}>al: </Center>
+              <input  type="date" value={search} onChange={min}  />
+              <Center pl={2} pr={5}>
+                al:{" "}
+              </Center>
               <input type="date" value={search2} onChange={max} />
-              <Button
-                onClick={() => filtrar()}
-                leftIcon={<IconFilter />}
-                color="blue"
+              <Tooltip label="Filtrar Mantenimientos">
+                <Button
+                  onClick={() => filtrar()}
+                  leftIcon={<IconFilter />}
+                  variant="gradient"
+                  gradient={{ from: "#00255b", to: "#00255b", deg: 75 }}
+                >
+                  Filtrar
+                </Button>
+              </Tooltip>
+              <Center>
+              <ActionIcon
+                onClick={() => init()}
+                className={styles.refresh__icon}
+                variant="filled"
               >
-                Filtrar
-              </Button>
-
+                <IconRefresh size={30} />
+              </ActionIcon>
+              </Center>
               {errorDateNull != "" && <Text color="red">{errorDateNull}</Text>}
             </div>
           </div>

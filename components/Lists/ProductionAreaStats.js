@@ -22,7 +22,24 @@ const  ProductionAreaStats = () => {
     const listProduction = await api.productionList(1);
     setArrayProd(listProduction.data);
   }
-  
+
+  function minMax(a, b) {
+    if (
+      a.attributes?.devices.data.length >
+      b.attributes?.devices.data.length
+    ) {
+      return -1;
+    }
+    if (
+      a.attributes?.devices.data.length <
+      b.attributes?.devices.data.length
+    ) {
+      return 1;
+    }
+    return 0;
+
+    
+  }
 
   return (
     <>
@@ -40,7 +57,7 @@ const  ProductionAreaStats = () => {
         </thead>
         <tbody>
           {arrayProd &&
-            arrayProd.map((data) => (
+            arrayProd.sort(minMax).map((data) => (
               <tr key={data.name}>
                 <td>
                   <Center>{data.attributes.name}</Center>

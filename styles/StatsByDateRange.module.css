@@ -45,3 +45,8 @@
   .stack{
     width: 20%;
   }
+  .refresh__icon{
+    background-color: rgb(3, 170, 3);
+    margin-left: 0.7rem;
+    height: a;
+  }

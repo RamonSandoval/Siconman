@@ -5,47 +5,27 @@ import {
   Menu,
   Group,
   Button,
-  UnstyledButton,
   Divider,
-  Center,
   Box,
   Burger,
   Drawer,
   ScrollArea,
   Image,
-  Collapse,
-  Modal,
   Text,
   ActionIcon,
 } from "@mantine/core";
-/* Importing the hook useDisclosure from the library @mantine/hooks. */
 import { useDisclosure } from "@mantine/hooks";
-/* Importing the Link component from the next/link package. */
 import Link from "next/link";
-/* Importing the icon from the library @tabler/icons. */
 import {
-  IconChevronDown,
-  IconClipboard,
-  IconInfoCircle,
   IconLogout,
 } from "@tabler/icons";
-/* Importing the useEffect and useState hooks from the react library. */
 import React, { useEffect, useState } from "react";
-/* Importing the styles for the modal. */
-import stylesModal from "../styles/ModalRegisterNewMaint.module.css";
-/* Importing the styles for the navbar. */
 import styles from "../styles/NavBar.module.css";
-/* Importing the component ModalNewMaint from the file ModalNewMaint.js. */
-import ModalNewMaint from "./ModalNewMaint";
-/* Importing the component ModalMaint from the file ModalMaint.js. */
-import ModalMaint from "./modals/ModalMaint";
-import {
-  IconSettings,
-} from "@tabler/icons";
 import { signOut, useSession } from "next-auth/react";
 
-/* A function that returns a hook that alldows you to use styles in a functional component. */
 const useStyles = createStyles((theme) => ({
+
+  
   link: {
     display: "flex",
     alignItems: "center",
@@ -129,6 +109,10 @@ export function Nav() {
    /*  if (session == null) return;
     console.log("session.jwt", session.jwt); */
   }, /* [session] */); 
+
+  const [active, setActive] = useState(0);
+
+  
   return (
     <>
       <Box pb={70}>
@@ -150,9 +134,9 @@ export function Nav() {
               spacing={30}
               className={classes.hiddenMobile}
             >
-              <Link href="/" className={classes.link}>
+              <a href="/" className={styles.link}>
                 Inicio
-              </Link>
+              </a>
               
               <Link href="/maintenance" className={classes.link}>
                 Mantenimientos

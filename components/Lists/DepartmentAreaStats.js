@@ -52,6 +52,23 @@ const DepartmentStats = () => {
     }
   }
 
+  function minMax(a, b) {
+    if (
+      a.attributes?.devices.data.length >
+      b.attributes?.devices.data.length
+    ) {
+      return -1;
+    }
+    if (
+      a.attributes?.devices.data.length <
+      b.attributes?.devices.data.length
+    ) {
+      return 1;
+    }
+    return 0;
+
+    
+  }
   return (
     <>
       <div className={styles.groupContainer}>
@@ -67,8 +84,7 @@ const DepartmentStats = () => {
           </tr>
         </thead>
         <tbody>
-          {arrayDep &&
-            arrayDep.map((data) => (
+          {arrayDep && arrayDep.sort(minMax).map((data) => (
               <tr key={data.department_name}>
                 <td>
                   <Center>{data.attributes.department_name}</Center>

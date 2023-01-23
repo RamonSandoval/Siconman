@@ -10,7 +10,7 @@ const ModalAddProduction = ({closeModal3}) => {
   async function createProduction() {
     const body = {
       data: {
-        name: form.values.name,
+        name: form.values.name.replace(/ /g,''),
       },
     };
     try {
@@ -40,7 +40,7 @@ const ModalAddProduction = ({closeModal3}) => {
         icon={<IconPin />}
       />
       <Center pt={10}>
-        <Button color="#002a5b" type="submit">
+        <Button variant="gradient" gradient={{ from: '#00255b', to: '#00255b', deg:75 }}type="submit">
           Agregar
         </Button>
       </Center>

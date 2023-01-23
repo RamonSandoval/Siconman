@@ -1,4 +1,4 @@
-import { ActionIcon, Button, Center, Modal, Table, Text } from "@mantine/core";
+import { ActionIcon, Button, Center, Modal, Table, Text, Tooltip } from "@mantine/core";
 import { IconEdit, IconPlus, IconTrash } from "@tabler/icons";
 import React from "react";
 import styles from "../styles/UserList.module.css";
@@ -41,6 +41,7 @@ const UsersList = () => {
   return (
     <>
     <div className={styles.iconContainer}>
+              <Tooltip label="Crear Nuevo Usuario">
               <ActionIcon
                 onClick={() => {setOpened(true)}}
                 className={styles.add__icon}
@@ -48,6 +49,7 @@ const UsersList = () => {
               >
                 <IconPlus size={30} />
               </ActionIcon>
+              </Tooltip>
             </div>
       <Table highlightOnHover>
         <thead>
@@ -94,9 +96,13 @@ const UsersList = () => {
                 <td>
                   <Center>
                     <div className={styles.icons}>
+                    <Tooltip label="Editar">
                       <ActionIcon color="indigo" onClick={() => {setOpened2(true); setUserToEdit(data)}}>
                         <IconEdit size={18} />
                       </ActionIcon>
+                      </Tooltip>
+
+                      <Tooltip label="Eliminar">
                       <ActionIcon
                         color="red"
                         onClick={() => {
@@ -106,6 +112,7 @@ const UsersList = () => {
                       >
                         <IconTrash size={18} />
                       </ActionIcon>
+                      </Tooltip>
                     </div>
                   </Center>
                 </td>

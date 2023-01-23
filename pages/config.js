@@ -1,6 +1,6 @@
 import React from "react";
 import Layout from "../components/Layout";
-import { Button, Modal, Select, Text } from "@mantine/core";
+import { Button, Modal, Select, Text, Tooltip } from "@mantine/core";
 import styles from "../styles/Config.module.css";
 import { signOut, useSession } from "next-auth/react";
 import { getSession } from 'next-auth/react';
@@ -128,6 +128,7 @@ const config = () => {
 
           <Tabs.Panel value="departments" pt="xs">
             <div className={styles.iconContainer}>
+            <Tooltip label="Crear nuevo Departamento">
               <ActionIcon
                 onClick={() => setOpened(true)}
                 className={styles.add__icon}
@@ -135,6 +136,7 @@ const config = () => {
               >
                 <IconPlus size={30} />
               </ActionIcon>
+              </Tooltip>
             </div>
             <Table highlightOnHover>
               <thead>
@@ -163,6 +165,7 @@ const config = () => {
                       <td>
                         <Center>
                           <div className={styles.icons}>
+                          <Tooltip label="Editar">
                             <ActionIcon 
                             color="indigo" 
                             onClick={() => {
@@ -171,6 +174,8 @@ const config = () => {
                               }}>
                               <IconEdit size={18} />
                             </ActionIcon>
+                            </Tooltip>
+                            <Tooltip label="Eliminar">
                             <ActionIcon
                               color="red"
                               onClick={() => {
@@ -180,6 +185,7 @@ const config = () => {
                             >
                               <IconTrash size={18} />
                             </ActionIcon>
+                            </Tooltip>
                           </div>
                         </Center>
                       </td>
@@ -191,6 +197,7 @@ const config = () => {
 
           <Tabs.Panel value="production" pt="xs">
            <div className={styles.iconContainer}>
+           <Tooltip label="Crear nueva area de Produccion">
               <ActionIcon
                 onClick={() => setOpened5(true)}
                 className={styles.add__icon}
@@ -198,6 +205,7 @@ const config = () => {
               >
                 <IconPlus size={30} />
               </ActionIcon>
+              </Tooltip>
             </div>
             <Table highlightOnHover>
               <thead>
@@ -226,6 +234,7 @@ const config = () => {
                       <td>
                         <Center>
                           <div className={styles.icons}>
+                          <Tooltip label="Editar">
                             <ActionIcon 
                             color="indigo" 
                             onClick={() => {
@@ -234,6 +243,9 @@ const config = () => {
                               }}>
                               <IconEdit size={18} />
                             </ActionIcon>
+                            </Tooltip>
+
+                            <Tooltip label="Eliminar">
                             <ActionIcon
                               color="red"
                               onClick={() => {
@@ -244,6 +256,7 @@ const config = () => {
                             >
                               <IconTrash size={18} />
                             </ActionIcon>
+                            </Tooltip>
                           </div>
                         </Center>
                       </td>

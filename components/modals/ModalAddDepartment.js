@@ -10,7 +10,7 @@ const ModalAddDepartment = ({closeModal2}) => {
   async function createDepartment() {
     const body = {
       data: {
-        department_name: form.values.department_name,
+        department_name: form.values.department_name.replace(/ /g,''),
       },
     };
     try {
@@ -40,7 +40,7 @@ const ModalAddDepartment = ({closeModal2}) => {
         icon={<IconPin />}
       />
       <Center pt={10}>
-        <Button color="#002a5b" type="submit">
+        <Button variant="gradient" gradient={{ from: '#00255b', to: '#00255b', deg:75 }} type="submit">
           Agregar
         </Button>
       </Center>

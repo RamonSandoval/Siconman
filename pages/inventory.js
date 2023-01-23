@@ -1,6 +1,6 @@
 import React from "react";
 import Notifications from "../components/Notifications";
-import { Loader, Pagination } from "@mantine/core";
+import { Loader, Pagination, Tooltip } from "@mantine/core";
 import { signOut, useSession } from "next-auth/react";
 import { getSession } from 'next-auth/react';
 import SignIn from "./auth/sign-in";
@@ -202,7 +202,7 @@ const inventory = () => {
               onChange={handleChange}
               icon={<IconSearch />}
             />
-
+            <Tooltip label="Agregar">
             <ActionIcon
               onClick={() => setOpened(true)}
               className={styles.add__icon}
@@ -210,6 +210,7 @@ const inventory = () => {
             >
               <IconPlus size={30} />
             </ActionIcon>
+            </Tooltip>
           </div>
           <Divider variant="dashed" size="sm" my="sm" />
           <ScrollArea
@@ -263,6 +264,7 @@ const inventory = () => {
                       <td>
                         <Center>
                           <div className={styles.icons}>
+                          <Tooltip label="Editar">
                             <ActionIcon
                               color="indigo"
                               onClick={() => {
@@ -273,6 +275,8 @@ const inventory = () => {
                             >
                               <IconEdit size={18} />
                             </ActionIcon>
+                            </Tooltip>
+                            <Tooltip label="Eliminar">
                             <ActionIcon
                               color="red"
                               onClick={() => {
@@ -282,6 +286,7 @@ const inventory = () => {
                             >
                               <IconTrash size={18} />
                             </ActionIcon>
+                            </Tooltip>
                           </div>
                         </Center>
                       </td>
@@ -309,7 +314,7 @@ const inventory = () => {
         centered
         opened={opened}
         onClose={() => setOpened(false)}
-        title="Agregar dispositivos"
+        title="Agregar Equipo"
       >
         {/* <ModalAddDeviceSteps/> */}
         <ModalAddDevice closeModal={closeModal} />
@@ -318,7 +323,7 @@ const inventory = () => {
       {deviceToEdit && (
         <Modal
           centered
-          title={"Editar dispositivo"}
+          title={"Editar Equipo"}
           opened={opened2}
           onClose={() => setOpened2(false)}
         >

@@ -2,31 +2,45 @@ Add notifications delete user
 Edit user
 add user
 
-Ignore white Spaces at the end
 
-Maint Modal add Production Area List of user request
+
+
+Ignore white Spaces at the end (Done)
+
+Maint Modal add Production Area List of user request (Done)
+
 
 Do not show in TableDevices if dates are null
 
-Add input type calendar in ModalPostpone
+
+Add input type calendar in ModalPostpone (Done)
+
 
 Set active page on header
 
-Borrar fecha y que se muestre nuevamente la lista
 
-No mostrar campo de "Mantenimiento realizado el" cuando se haga el mantenimiento por primera vaz
+Borrar fecha y que se muestre nuevamente la lista (Semi Done)
 
-Ordenar tablas de departamentos y produccion por mas a menos equipos por departamentos
 
-Color en Calendario por fechas 
+No mostrar campo de "Mantenimiento realizado el" cuando se haga el mantenimiento por primera vaz (Done)
+
+
+Ordenar tablas de departamentos y produccion por mas a menos equipos por departamentos (Done)
+
+Color en Calendario por fechas (Done)
 
 Radio button seleccinar departmento o produccion al agregar 
 dispositivo
 
-Produccion como departamento y que se despliegue la lista de produccion
+Produccion como departamento y que se despliegue la lista de produccion (Evaluar la posiblidad)
 
-Agragar tooltips en todos los Action Icons y Botones en general
+Agragar tooltips en todos los Action Icons y Botones en general (Done)
 
+Tooltip to create maint (Done)
 
-cookie duration
+Change button color to #00255b (Done)
+
+Cambiar dispositivo a equipo
+
+<Tooltip label="Filtrar Mantenimientos">
 

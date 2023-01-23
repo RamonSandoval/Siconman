@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, TextInput, Center, Select } from "@mantine/core";
+import { Button, TextInput, Center, Select, Radio } from "@mantine/core";
 import { IconClipboardList, IconId, IconPin, IconWorld } from "@tabler/icons";
 import api from "../../services/api";
 import { useForm } from "@mantine/form";
@@ -10,6 +10,8 @@ const ModalEditDevice = ({ deviceToEdit, closeModal2 }) => {
   const id_edit = deviceToEdit.id;
   const [arrayDep, setarrayDep] = useState([]);
   const [arrayProd, setarrayProd] = useState([])
+  const [activeProd, setActiveProd] = useState(true);
+  const [activeDep, setActiveDep] = useState(true);
 
 
   
@@ -29,7 +31,7 @@ const ModalEditDevice = ({ deviceToEdit, closeModal2 }) => {
       data: {
         device_id: form.values.device_id,
         department: form.values.department_name,
-        model: form.values.model,
+        model: form.values.model.replace(/ /g,''),
         production: form.values.name
       },
     };
@@ -48,16 +50,24 @@ const ModalEditDevice = ({ deviceToEdit, closeModal2 }) => {
   const form = useForm({
     initialValues: {
       device_id: deviceToEdit.attributes.device_id,
-      department_name:
-      deviceToEdit.attributes?.department?.data?.id,
+      department_name: null,
       model: deviceToEdit.attributes.model,
-      name: deviceToEdit.attributes?.production?.data?.id
+      name: null
     },
     validate: {
       /* device_id: (value) => 
       value.length === 0 ? "Escriba el ID del Dispositivo" : null, */
     },
   });
+
+  function departmentAdd() {
+    setActiveDep(false);
+    setActiveProd(true);
+  }
+  function productionAdd() {
+    setActiveProd(false);
+    setActiveDep(true);
+  }
 
   return (
     <>
@@ -68,10 +78,29 @@ const ModalEditDevice = ({ deviceToEdit, closeModal2 }) => {
           {...form.getInputProps("device_id")}
           icon={<IconId />}
         />
-
+        <Center>
+        <Radio.Group
+          pt={12}
+          label="Selecciona la nueva ubicacion del equipo"
+          {...form.getInputProps("user_request".valueOf(Radio))}
+        >
+          <Radio
+            onClick={() => departmentAdd()}
+            value="yes"
+            label="Departamento"
+          />
+          <Radio
+            onClick={() => productionAdd()}
+            value="no"
+            label="Produccion"
+          />
+        </Radio.Group>
+      </Center>
         <Select
           label="Departamento / Area"
           icon={<IconPin />}
+          clearable
+          disabled={activeDep}
           searchable
           {...form.getInputProps("department_name")}
           //data={departmentsListSelect}
@@ -79,14 +108,16 @@ const ModalEditDevice = ({ deviceToEdit, closeModal2 }) => {
             return { value: d.id, label: d.attributes.department_name };
           })}
         />
-      <Select
-      label="Area de Produccion"
-      icon={<IconWorld/>}
-      searchable
-      {...form.getInputProps("name")}
-      data={arrayProd.map((f) => {
-        return { value: f.id, label: f.attributes.name }})}
-      /> 
+        <Select
+        label="Area de Produccion"
+        icon={<IconWorld/>}
+        disabled={activeProd}
+        clearable
+        searchable
+        {...form.getInputProps("name")}
+        data={arrayProd.map((f) => {
+          return { value: f.id, label: f.attributes.name }})}
+        /> 
         <TextInput
           pb={20}
           label="Modelo"

@@ -189,7 +189,7 @@ const ModalMaint = ({ deviceToMaint, closeModal2 }) => {
             })}
           />
           <div className={stylesModal.button}>
-            <Button color="#04245c" type="submit">
+            <Button variant="gradient" gradient={{ from: '#00255b', to: '#00255b', deg:75 }} type="submit">
               {" "}
               Registrar{" "}
             </Button>

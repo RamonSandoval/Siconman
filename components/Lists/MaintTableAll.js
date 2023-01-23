@@ -301,6 +301,7 @@ const MaintTableAll = () => {
                           </Tooltip>
 
                           {data.attributes.maintenance?.data == null ? (
+                            <Tooltip label="Crear Nuevo Mantenimiento">
                             <ActionIcon
                               variant="light"
                               color="red"
@@ -311,7 +312,9 @@ const MaintTableAll = () => {
                             >
                               <IconCirclePlus size={18} />
                             </ActionIcon>
+                            </Tooltip>
                           ) : (
+                            <Tooltip label="Crear Nuevo Mantenimiento">
                             <ActionIcon
                               variant="light"
                               disabled
@@ -323,6 +326,7 @@ const MaintTableAll = () => {
                             >
                               <IconCirclePlus size={18} />
                             </ActionIcon>
+                            </Tooltip>
                           )}
                         </div>
                       </td>

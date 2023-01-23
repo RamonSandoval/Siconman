@@ -27,6 +27,7 @@ import Layout from "./Layout";
 import { Fecha } from "../helpers";
 import Postpone from "./modals/ModalPostpone";
 import ModalMaint from "./modals/ModalMaint";
+import Notifications from "./Notifications";
 
 const TableDevices = () => {
   const [isLoading, setLoading] = useState(false);
@@ -189,15 +190,16 @@ const TableDevices = () => {
                       index < 14 && (
                         <tr className={styles.table__data} key={data.device_id}>
                               {(data.attributes.maintenance?.data?.attributes
-                              .next_maintenance < date
+                              .next_maintenance < date 
                               ? 
                               <td>
                                 <Tooltip label="Mantenimiento Atrasado">
                                 <ThemeIcon variant="transparent">
                                 <IconAlertCircle color="red" />
                               </ThemeIcon>
-                              </Tooltip>
-                              </td> : (data.attributes.maintenance?.data?.attributes
+                              </Tooltip> 
+                              </td>: 
+                              (data.attributes.maintenance?.data?.attributes
                               .next_maintenance < date3
                               ?
                               <td>
@@ -215,7 +217,8 @@ const TableDevices = () => {
                                 <IconAlertCircle color="#ffbb00" />
                               </ThemeIcon> 
                               </Tooltip>
-                              </td>: <td></td>)))}
+                              </td>: <td></td>
+                             )))}
 
                               <td>
                             <Center>{data.attributes.device_id}</Center>

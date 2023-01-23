@@ -13,7 +13,7 @@ import {
 
 import { DatePicker } from "@mantine/dates";
 import { useState, useEffect } from "react";
-import stylesModal from "../../styles/ModalRegisterNewMaint.module.css";
+import stylesModal from "../../styles/ModalCreateMaint.module.css";
 import api from "../../services/api";
 import Notifications from '../Notifications';
 const ModalCreateMaint = ({deviceToMaintNew,closeModal3,maintIndicator}) => {
@@ -65,12 +65,12 @@ const ModalCreateMaint = ({deviceToMaintNew,closeModal3,maintIndicator}) => {
       data:{
         motive: form.values.motive,
         user_request: form.values.user_request,
-        user_maintenance: form.values.user_maintenance,
+        user_maintenance: null,/* form.values.user_maintenance, */
         maintenance_type: form.values.maintenance_type,
         notes: form.values.notes,
-        maintenance_date: form.values.maintenance_date,
+        maintenance_date: null, /* form.values.maintenance_date, */
         next_maintenance: form.values.next_maintenance,
-        maintenance_eval: form.values.maintenance_eval,
+        maintenance_eval: null, /* form.values.maintenance_eval, */
         maintenance_type_next: form.values.maintenance_type_next,
         user_request_name: form.values.user_request_name,
         user_request_department: form.values.user_request_department,
@@ -188,13 +188,13 @@ const ModalCreateMaint = ({deviceToMaintNew,closeModal3,maintIndicator}) => {
         label="Notas"
         {...form.getInputProps("notes")}
         withAsterisk />
-        <DatePicker
+        {/* <DatePicker
           allowFreeInput
           placeholder="Elegir fecha"
           label="Mantenimiento Realizado el: "
           withAsterisk
           {...form.getInputProps("maintenance_date")}
-        />
+        /> */}
         <Select
         label="Tipo de Mantenimiento proximo"
         searchable
@@ -209,7 +209,7 @@ const ModalCreateMaint = ({deviceToMaintNew,closeModal3,maintIndicator}) => {
           {...form.getInputProps("next_maintenance")}
           withAsterisk
         />
-        <Radio.Group
+        {/* <Radio.Group
           name="tiempo"
           label="Se atendio en tiempo y forma?"
           {...form.getInputProps("maintenance_eval".valueOf(Radio))}
@@ -217,16 +217,16 @@ const ModalCreateMaint = ({deviceToMaintNew,closeModal3,maintIndicator}) => {
         >
           <Radio value="yes" label="Si" />
           <Radio value="no" label="No"/>
-        </Radio.Group>
-        <Select
+        </Radio.Group> */}
+        {/* <Select
             label="Realizo Manteniemiento"
             {...form.getInputProps("user_maintenance")}
             data={usersList}
-          />
+          /> */}
        
         <div className={stylesModal.button}>
           
-          <Button color="#04245c" type="submit">
+          <Button variant="gradient" gradient={{ from: '#00255b', to: '#00255b', deg:75 }} type="submit">
           {" "}
           Registrar{" "}
           

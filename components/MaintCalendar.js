@@ -46,8 +46,7 @@ const MaintCalendar = () => {
     return {
       title: f.attributes.device_id,
       date: f.attributes.maintenance?.data?.attributes?.next_maintenance,
-      
-      color: f.attributes.maintenance?.data?.attributes?.next_maintenance < date ? 'red' : 'g'
+      color: f.attributes.maintenance?.data?.attributes?.next_maintenance < date ? 'red' : '#00255b'
     };
   })
 
@@ -59,7 +58,7 @@ const MaintCalendar = () => {
         updateSize
         weekends={false}
         selectable={true}
-        footerToolbar
+        footerToolba
         eventColor={dates.color}
         plugins={[dayGridPlugin]}
         initialView="dayGridMonth"
