@@ -64,6 +64,8 @@ Documentar todo el codigo
 
 Crear manual de usuario
 
+fix user_maint not working 
+
 Agregar pie chart de Mantenimientos correctivos y preventivos (Done)
 
 show in table next to production area "Produccion - Area Light" (Done)

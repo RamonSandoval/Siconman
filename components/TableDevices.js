@@ -142,7 +142,7 @@ const TableDevices = () => {
               >
                 <IconListDetails />
               </ThemeIcon>
-              <p>Proximos Mantenimientos</p>
+              <p>Próximos Mantenimientos</p>
             </div>
             <div className={styles.searchBar}>
               <TextInput
@@ -173,7 +173,7 @@ const TableDevices = () => {
                     <Center>Ultimo Mantenimiento</Center>
                   </th>
                   <th>
-                    <Center>Proximo Mantenimiento</Center>
+                    <Center>Próximo Mantenimiento</Center>
                   </th>
                   <th>
                     <Center>Tipo de Mantenimiento</Center>

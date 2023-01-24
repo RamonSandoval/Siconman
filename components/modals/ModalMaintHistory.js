@@ -137,7 +137,7 @@ const ModalMaintHistory = ({deviceToMaintHistory}) => {
             
           ]}
         />
-
+ <div className={stylesModal.modal__solicitant}>
         <Radio.Group
         disabled
         label="Solicitio Usuario?"
@@ -146,20 +146,15 @@ const ModalMaintHistory = ({deviceToMaintHistory}) => {
         <Radio readOnly disabled value="yes"label="Si"/>
         <Radio readOnly disabled value="no" label="No"/>
         </Radio.Group> 
-
-        <div className={stylesModal.modal__solicitant}>
-          <TextInput
-            readOnly
-            label="Departamento / Area"
-
-            {...form.getInputProps("user_request_department")}
-          />
-          <TextInput
+        <TextInput
           readOnly
             className={stylesModal.input__name}
             label="Nombre"
             {...form.getInputProps("user_request_name")}
           />
+       
+          
+         
           
         </div>
         

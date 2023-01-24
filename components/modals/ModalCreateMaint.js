@@ -67,6 +67,7 @@ const ModalCreateMaint = ({ deviceToMaintNew, closeModal3 }) => {
         maintenance_type_next: form.values.maintenance_type_next,
         user_request_name: form.values.user_request_name,
         user_request_department: form.values.user_request_department,
+        type_maint: form.values.type_maint,
         device: id_maint,
       },
     };
@@ -148,6 +149,14 @@ const ModalCreateMaint = ({ deviceToMaintNew, closeModal3 }) => {
             {...form.getInputProps("maintenance_type")}
           />
 
+<Radio.Group
+            {...form.getInputProps("type_maint".valueOf(Radio))}
+            withAsterisk
+          >
+            <Radio value="Correctivo" label="Correctivo" />
+            <Radio value="Preventivo" label="Preventivo" />
+          </Radio.Group>
+
           <TextInput
             label="Motivo de Mantenimiento"
             {...form.getInputProps("motive")}
@@ -156,7 +165,7 @@ const ModalCreateMaint = ({ deviceToMaintNew, closeModal3 }) => {
           <div className={stylesModal.modal__solicitant}>
             <Radio.Group
               pr={20}
-              label="Solicito Usuario?"
+              label="Solicitó Usuario?"
               {...form.getInputProps(
                 "user_request".valueOf(Checkbox.valueOf(Radio))
               )}
@@ -184,7 +193,7 @@ const ModalCreateMaint = ({ deviceToMaintNew, closeModal3 }) => {
           {...form.getInputProps("maintenance_date")}
         /> */}
           <Select
-            label="Tipo de Mantenimiento proximo"
+            label="Tipo de Mantenimiento próximo"
             searchable
             data={["Hardware", "Software", "Hardware/Software"]}
             {...form.getInputProps("maintenance_type_next")}
@@ -193,7 +202,7 @@ const ModalCreateMaint = ({ deviceToMaintNew, closeModal3 }) => {
           <DatePicker
             allowFreeInput
             placeholder="Elegir fecha"
-            label="Proximo Mantenimiento "
+            label="Próximo Mantenimiento "
             {...form.getInputProps("next_maintenance")}
             withAsterisk
           />

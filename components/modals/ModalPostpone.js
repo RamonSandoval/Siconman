@@ -2,11 +2,12 @@ import React from "react";
 import {
   TextInput,
   Button,
+  Center,
 } from "@mantine/core";
 import { DatePicker } from "@mantine/dates";
 import { Fecha, FechaUS } from "../../helpers";
 import { useState, useEffect } from "react";
-import stylesModal from "../../styles/ModalRegisterNewMaint.module.css";
+import stylesModal from "../../styles/ModalPostpone.module.css";
 import { useForm } from "@mantine/form";
 import api from "../../services/api";
 import Notifications from "../Notifications";
@@ -78,12 +79,12 @@ const Postpone = ({maintToPostpone,closeModal}) => {
         {...form.getInputProps("next_maintenance2")}
       />
         
-        <div className={stylesModal.button}>
+          <Center pt={15}>
           <Button variant="gradient" gradient={{ from: '#00255b', to: '#00255b', deg:75 }} o type="submit">
             {" "}
             Posponer{" "}
           </Button>
-        </div>
+          </Center>
       </form>
     </>
   );

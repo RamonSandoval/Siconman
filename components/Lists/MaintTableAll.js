@@ -232,10 +232,10 @@ const MaintTableAll = () => {
                     <Center>Ultimo Mantenimiento</Center>
                   </th>
                   <th>
-                    <Center>Proximo Mantenimiento</Center>
+                    <Center>Próximo Mantenimiento</Center>
                   </th>
                   <th>
-                    <Center>Tipo de Manteniemiento</Center>
+                    <Center>Tipo de Mantenimiento</Center>
                   </th>
                   <th>
                     <Center>Acciones</Center>
@@ -374,7 +374,6 @@ const MaintTableAll = () => {
         </div>
       </Center>
 
-      /* A modal that is opened when the user clicks on the postpone button. */
       {maintToPostpone && (
         <Modal
           centered
@@ -389,7 +388,6 @@ const MaintTableAll = () => {
         </Modal>
       )}
 
-      /* A modal that opens when a button is clicked. */
       {deviceToMaint && (
         <Modal
           centered
@@ -410,7 +408,6 @@ const MaintTableAll = () => {
         </Modal>
       )}
 
-      /* A modal that is opened when the user clicks on a button. */
       {deviceToMaintHistory && (
         <Modal
           centered
@@ -431,7 +428,6 @@ const MaintTableAll = () => {
         </Modal>
       )}
 
-      /* A modal that is opened when the user clicks on a button. */
       {deviceToMaintNew && (
         <Modal
           centered

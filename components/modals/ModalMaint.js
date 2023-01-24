@@ -173,7 +173,7 @@ const ModalMaint = ({ deviceToMaint, closeModal2 }) => {
             label="Realizo Mantenimiento"
             {...form.getInputProps("user_maintenance")}
             data={arrayUsers.map((f) => {
-              return { label: f.username };
+              return { value: f.id,label: f.username };
             })}
           />
           <Select

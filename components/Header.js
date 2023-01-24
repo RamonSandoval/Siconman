@@ -155,7 +155,7 @@ export function Nav() {
                 Reportes
               </Link>
               <Link href="/config" className={classes.link}>
-                Configuracion
+              Configuración
               </Link>
              
               <Menu shadow="md" width={290}>
@@ -222,7 +222,7 @@ export function Nav() {
               Reportes
             </a>
             <a href="/config" className={classes.link}>
-              Configuracion
+            Configuración
             </a>
 
             <Divider

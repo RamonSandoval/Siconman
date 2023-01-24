@@ -78,14 +78,14 @@ const ModalAddDevice = ({ closeModal }) => {
     validate: {
       device_id: (value) =>
         /^\s+/.test(value) === true || value.length === 0
-          ? "Ingrese el Identificador del Dispositivo"
+          ? "Ingrese el Identificador del equipo"
           : null,
       /* department_name: (value) =>
         value.length === 0
           ? "Ingrese el departamento donde se encuentra el dispositivo"
           : null,  */
       model: (value) =>
-        value.length === 0 ? "Ingrese el modelo o marca del dispositivo" : null,
+      /^\s+/.test(value) === true || value.length === 0 ? "Ingrese el modelo o marca del equipo" : null,
     },
   });
 
@@ -168,7 +168,7 @@ const ModalAddDevice = ({ closeModal }) => {
       <Center>
         <Radio.Group
           pt={12}
-          label="Selecciona la ubicacion del equipo"
+          label="Selecciona la ubicación del equipo"
           {...form.getInputProps("user_request".valueOf(Radio))}
         >
           <Radio
@@ -179,7 +179,7 @@ const ModalAddDevice = ({ closeModal }) => {
           <Radio
             onClick={() => productionAdd()}
             value="no"
-            label="Produccion"
+            label="Producción"
           />
         </Radio.Group>
       </Center>
@@ -198,7 +198,7 @@ const ModalAddDevice = ({ closeModal }) => {
       />
 
       <Select
-        label="Area de Produccion"
+        label="Área de Producción"
         icon={<IconWorld />}
         disabled={activeProd}
         searchable

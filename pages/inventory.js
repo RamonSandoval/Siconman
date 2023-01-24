@@ -229,7 +229,7 @@ const inventory = () => {
                     <Center>ID Equipo</Center>
                   </th>
                   <th>
-                    <Center>Departamento / Area</Center>
+                    <Center>Departamento / Área</Center>
                   </th>
                   <th>
                     <Center>Modelo</Center>
