@@ -13,7 +13,7 @@ import { Doughnut } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const QualityStats = () => {
+const MaintStats = () => {
   const [arrayDevices, setarrayDevices] = useState([]);
   var contadorYes = 0
   var contadorNo = 0
@@ -31,15 +31,15 @@ const QualityStats = () => {
 
 
     //opcion #1 
-    var cantidadYes = arrayDevices.filter(data => data.attributes.maintenance?.data?.attributes.maintenance_eval == "yes")
-    var cantidadNo = arrayDevices.filter(data => data.attributes.maintenance?.data?.attributes.maintenance_eval == "no")
+    var cantidadYes = arrayDevices.filter(data => data.attributes.maintenance?.data?.attributes.type_maint == "Correctivo")
+    var cantidadNo = arrayDevices.filter(data => data.attributes.maintenance?.data?.attributes.type_maint == "Preventivo")
     //opcion #2
     arrayDevices.map((data) => {
-      data.attributes.maintenance?.data?.attributes.maintenance_eval == "yes" ? contadorYes++ : (data.attributes.maintenance?.data?.attributes.maintenance_eval === "no" ? contadorNo++ : null)})
+      data.attributes.maintenance?.data?.attributes.type_maint == "Correctivo" ? contadorYes++ : (data.attributes.maintenance?.data?.attributes.type_maint=== "Preventivo" ? contadorNo++ : null)})
     
       
   var data = {
-    labels: [contadorYes+ " Se realizaron a tiempo", contadorNo+ " No se realizaron a tiempo"],
+    labels: [contadorYes+ " Mantenimientos Correctivos", contadorNo+ " Mantenimientos Preventivos"],
     datasets: [
       {
         label: "Total de equipos",
@@ -75,7 +75,7 @@ const QualityStats = () => {
     <>
     
     <Center>
-        <h4>Cantidad de mantenimientos realizados en tiempo y forma</h4>
+        <h4>Tipos de Mantenimientos realizados </h4>
     </Center>
       <div>
         <Doughnut data={data} height={900} options={options} />
@@ -85,4 +85,4 @@ const QualityStats = () => {
   );
 };
 
-export default QualityStats;
+export default MaintStats;

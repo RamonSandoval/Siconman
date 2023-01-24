@@ -19,6 +19,8 @@ import StatsProduction from "../components/StatsProduction";
 import StatsByDateRange from "../components/StatsByDateRange";
 import QualityStats from "../components/QualityStats";
 import MaintPerDep from '../components/MaintPerDep.js'
+import MaintStat from '../components/MaintStat'
+
 const reports = () => {
   const { data: session } = useSession();
   useEffect(() => {
@@ -47,6 +49,10 @@ const reports = () => {
 
             <Tabs.Tab icon={<IconStatusChange size={14} />} value="quality">
               Calidad de Atencion
+            </Tabs.Tab>
+
+            <Tabs.Tab icon={<IconStatusChange size={14} />} value="maintType">
+              Tipos de Mantenimientos
             </Tabs.Tab>
             
           </Tabs.List>
@@ -82,6 +88,10 @@ const reports = () => {
 
           <Tabs.Panel pt={20} value="quality">
             <QualityStats />
+          </Tabs.Panel>
+
+          <Tabs.Panel pt={20} value="maintType">
+            <MaintStat/>
           </Tabs.Panel>
 
           

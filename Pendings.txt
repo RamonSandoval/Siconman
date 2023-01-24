@@ -20,8 +20,7 @@ Ordenar tablas de departamentos y produccion por mas a menos equipos por departa
 
 Color en Calendario por fechas (Done)
 
-Radio button seleccinar departmento o produccion al agregar 
-dispositivo (Done)
+Radio button seleccinar departmento o produccion al agregar dispositivo (Done)
 
 Produccion como departamento y que se despliegue la lista de produccion (Evaluar la posiblidad)
 
@@ -43,6 +42,8 @@ Validaciones espacios en blanco (Done)
 
 Show default value on device edit
 
+Fix default value wipe on edit anything
+
 Show in text area department area only one value if condition (Done)
 
 Agregar abajo de tipo de mantenimiento si es correctivo o preventivo  (Done)
@@ -53,14 +54,19 @@ defaultValue on Mantenimiento realizado el, que jale la fecha de proximo manteni
 
 remove asther (Done)
 
+Strapi permissions
+
+BLock api requests strapi
+
 acentos y signos de interrogacion
 
 Documentar todo el codigo 
 
 Crear manual de usuario
 
-Agregar pie chart de Mantenimientos correctivos y preventivos
+Agregar pie chart de Mantenimientos correctivos y preventivos (Done)
 
-show in table next to production area "Produccion - Area Light"
+show in table next to production area "Produccion - Area Light" (Done)
+
 <Tooltip label="Filtrar Mantenimientos">
 
