@@ -103,13 +103,13 @@ export default function SignIn() {
                     />
                     <PasswordInput
                       {...form.getInputProps('password')}
-                      type="password"
                       className={styles.inputs}
                       label="Contraseña"
                       description="Ingrese su contraseña"
                       withAsterisk
                       icon={<IconLock size={16} />}
                     />
+                    
                     <Button
                       type="submit"
                       className={styles.login__button}

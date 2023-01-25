@@ -197,6 +197,16 @@ const inventory = () => {
       console.error(error);
     }
   }
+
+  function compare_name(a, b) {
+    if (a.attributes.device_id.toLowerCase() < b.attributes.device_id.toLowerCase()) {
+      return -1;
+    }
+    if (a.attributes.device_id.toLowerCase() > b.attributes.device_id.toLowerCase()) {
+      return 1;
+    }
+    return 0;
+  }
   /* A React component that is rendering a table with data from an API. */
   return (
     <>
@@ -267,7 +277,7 @@ const inventory = () => {
                 </thead>
                 <tbody className={styles.tableBody}>
                   {arrayDevices &&
-                    arrayDevices.map((data) => (
+                    arrayDevices.sort(compare_name).map((data) => (
                       <tr key={data.device_id}>
                         {/* <td>
                         <Center>{data.id}</Center>

@@ -76,7 +76,7 @@ const ModalMaint = ({ deviceToMaint, closeModal2 }) => {
       init();
       closeModal2();
     } catch (error) {
-      Notifications.error("Error al realizar el Mantenimiento al equipo" + pc);
+      Notifications.error("Error al realizar el Mantenimiento al equipo " + pc);
       console.log(error);
     }
   }

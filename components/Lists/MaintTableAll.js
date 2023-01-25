@@ -16,11 +16,14 @@ import { usePagination, useSetState } from "@mantine/hooks";
 import { useState, useEffect } from "react";
 import {
   IconCirclePlus,
+  IconClearFormatting,
   IconHistory,
   IconListDetails,
   IconRotateClockwise2,
   IconSearch,
   IconTool,
+  IconTools,
+  IconTooltip,
 } from "@tabler/icons";
 import styles from "../../styles/TableMaint.module.css";
 import { ActionIcon, ThemeIcon, createStyles } from "@mantine/core";

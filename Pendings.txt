@@ -62,13 +62,13 @@ BLock api requests strapi
 
 acentos y signos de interrogacion (Done)
 
-Documentar todo el codigo 
+Documentar todo el codigo (Done)
 
 Crear manual de usuario
 
-Acentos en tooltips y notis
+Acentos en tooltips y notis (Done)
 
-Invalid date in maints by date range if cond
+Invalid date in maints by date range if cond (Done)
 
 Remover tipo de mantenimiento a realizar cuando se crea un mantenimiento
 

@@ -9,6 +9,7 @@ import { useSetState } from "@mantine/hooks";
 
 const ModalEditDevice = ({ deviceToEdit, closeModal2 }) => {
   const id_edit = deviceToEdit.id;
+  const pcEdit = deviceToEdit.attributes.device_id
   const [arrayDep, setarrayDep] = useState([]);
   const [arrayProd, setarrayProd] = useState([]);
   const [activeProd, setActiveProd] = useState(true);
@@ -51,7 +52,7 @@ const ModalEditDevice = ({ deviceToEdit, closeModal2 }) => {
 
     try {
       await api.updateDevice(id_edit, body);
-      Notifications.success("Se ha editado el dispositivo correcatamente");
+      Notifications.success("Se ha editado el dispositivo correcatamente "+pcEdit);
       closeModal2();
       init();
     } catch (error) {

@@ -18,23 +18,15 @@ import {
 import { useState, useEffect } from "react";
 import { ThemeIcon } from "@mantine/core";
 import {
-  IconCalendar,
-  IconCalendarDue,
-  IconDatabase,
   IconFilter,
-  IconListDetails,
   IconRefresh,
-  IconRotateClockwise2,
   IconSearch,
-  IconTool,
 } from "@tabler/icons";
 import styles from "../styles/StatsByDateRange.module.css";
 import { ActionIcon } from "@mantine/core";
-import Layout from "./Layout";
 import { Fecha } from "../helpers";
 import Postpone from "./modals/ModalPostpone";
 import ModalMaint from "./modals/ModalMaint";
-import { DatePicker, DateRangePicker } from "@mantine/dates";
 
 const Stats = () => {
   const [isLoading, setLoading] = useState(false);
@@ -161,7 +153,7 @@ const Stats = () => {
               /> */}
               </Center>
               <Center pr={5}>Desde:</Center>
-              <input  type="date" value={search} onChange={min}  />
+              <input type="date" value={search} onChange={min} />
               <Center pl={2} pr={5}>
                 al:{" "}
               </Center>
@@ -177,13 +169,13 @@ const Stats = () => {
                 </Button>
               </Tooltip>
               <Center>
-              <ActionIcon
-                onClick={() => init()}
-                className={styles.refresh__icon}
-                variant="filled"
-              >
-                <IconRefresh size={30} />
-              </ActionIcon>
+                <ActionIcon
+                  onClick={() => init()}
+                  className={styles.refresh__icon}
+                  variant="filled"
+                >
+                  <IconRefresh size={30} />
+                </ActionIcon>
               </Center>
               {errorDateNull != "" && <Text color="red">{errorDateNull}</Text>}
             </div>
@@ -243,17 +235,23 @@ const Stats = () => {
                           </td>
                           <td>
                             <Center>
-                              {Fecha(
-                                data.attributes.maintenance?.data?.attributes
-                                  .maintenance_date
-                              )}
+                              {data.attributes.maintenance?.data?.attributes
+                                .maintenance_date == null
+                                ? " Por asignar"
+                                : Fecha(
+                                    data.attributes.maintenance?.data
+                                      ?.attributes.maintenance_date
+                                  )}
                             </Center>
                           </td>
                           <td>
-                            {Fecha(
-                              data.attributes.maintenance?.data?.attributes
-                                .next_maintenance
-                            )}
+                            {data.attributes.maintenance?.data?.attributes
+                              .next_maintenance == null
+                              ? " Por asignar"
+                              : Fecha(
+                                  data.attributes.maintenance?.data?.attributes
+                                    .next_maintenance
+                                )}
                           </td>
                           <td>
                             {
