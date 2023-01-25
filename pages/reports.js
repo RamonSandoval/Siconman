@@ -1,26 +1,27 @@
 import React from "react";
 import Layout from "../components/Layout";
-import { Center, Container, Group, Tabs } from "@mantine/core";
+import { Center,Tabs } from "@mantine/core";
 import styles from "../styles/Tabs.module.css";
 import {
   IconCalendarEvent,
   IconBuilding,
   IconStatusChange,
-  IconTool,
 } from "@tabler/icons";
 import DepartmentAreaStats from "../components/Lists/DepartmentAreaStats";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { getSession } from "next-auth/react";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import SignIn from "./auth/sign-in";
 import StatsDepartments from "../components/StatsDepartments";
 import ProductionAreaStats from "../components/Lists/ProductionAreaStats";
 import StatsProduction from "../components/StatsProduction";
 import StatsByDateRange from "../components/StatsByDateRange";
 import QualityStats from "../components/QualityStats";
-import MaintPerDep from '../components/MaintPerDep.js'
-import MaintStat from '../components/MaintStat'
+import MaintStat from "../components/MaintStat";
 
+/**
+ * If the session is null, return. Otherwise, log the session.jwt.
+ */
 const reports = () => {
   const { data: session } = useSession();
   useEffect(() => {
@@ -28,6 +29,7 @@ const reports = () => {
     console.log("session.jwt", session.jwt);
   }, [session]);
 
+  /* Rendering the page. */
   return (
     <>
       <h1>{session ? "" : <SignIn />}</h1>
@@ -54,7 +56,6 @@ const reports = () => {
             <Tabs.Tab icon={<IconStatusChange size={14} />} value="maintType">
               Tipos de Mantenimientos
             </Tabs.Tab>
-            
           </Tabs.List>
 
           <Tabs.Panel pt={20} value="mantMes">
@@ -68,22 +69,21 @@ const reports = () => {
           >
             <StatsDepartments />
             <Center pt={50}>
-            <h4>Listado de Equipos por Departamento</h4>
-          </Center>
-            <DepartmentAreaStats  />
+              <h4>Listado de Equipos por Departamento</h4>
+            </Center>
+            <DepartmentAreaStats />
           </Tabs.Panel>
 
           <Tabs.Panel
             pt={20}
             value="mantProd"
             className={styles.DepartmentAreaStats}
-          > 
-          <StatsProduction />
-          <Center pt={50}>
-            <h4>Listado de Equipos por Area de Produccion</h4>
-          </Center>
+          >
+            <StatsProduction />
+            <Center pt={50}>
+              <h4>Listado de Equipos por Area de Produccion</h4>
+            </Center>
             <ProductionAreaStats />
-           
           </Tabs.Panel>
 
           <Tabs.Panel pt={20} value="quality">
@@ -91,10 +91,8 @@ const reports = () => {
           </Tabs.Panel>
 
           <Tabs.Panel pt={20} value="maintType">
-            <MaintStat/>
+            <MaintStat />
           </Tabs.Panel>
-
-          
         </Tabs>
       )}
     </>

@@ -3,9 +3,10 @@ import Layout from "../components/Layout";
 import { Button, Modal, Select, Text, Tooltip } from "@mantine/core";
 import styles from "../styles/Config.module.css";
 import { signOut, useSession } from "next-auth/react";
-import { getSession } from 'next-auth/react';
+import { getSession } from "next-auth/react";
 import { useState, useEffect } from "react";
-import SignIn from "./auth/sign-in";import api from "../services/api";
+import SignIn from "./auth/sign-in";
+import api from "../services/api";
 import Notifications from "../components/Notifications";
 import { Tabs, Table, ActionIcon, Center } from "@mantine/core";
 import {
@@ -25,7 +26,7 @@ import ModalEditProduction from "../components/modals/ModalEditProduction";
 const config = () => {
   const { data: session } = useSession();
   const [arrayDep, setarrayDep] = useState([]);
-  const [arrayProd, setArrayProd] = useState([])
+  const [arrayProd, setArrayProd] = useState([]);
   const [opened, setOpened] = useState();
   const [opened2, setOpened2] = useState(false);
   const [opened3, setOpened3] = useState(false);
@@ -33,44 +34,63 @@ const config = () => {
   const [opened5, setOpened5] = useState(false);
   const [opened6, setOpened6] = useState(false);
   const [departmentToDelete, setDepartmentToDelete] = useState({});
-  const [departmentToEdit,setDepartmentToEdit] = useState({})
-  const [productionToDelete, setProductionToDelete] = useState({})
-  const [productionToEdit, setProductionToEdit] = useState({})
-  const [productionName,setProductionName] = useState({})
-  
-  const info = departmentToEdit.attributes?.department_name
+  const [departmentToEdit, setDepartmentToEdit] = useState({});
+  const [productionToDelete, setProductionToDelete] = useState({});
+  const [productionToEdit, setProductionToEdit] = useState({});
+  const [productionName, setProductionName] = useState({});
 
+  const info = departmentToEdit.attributes?.department_name;
 
+  /* Checking if the session is null, if it is, it returns. If it is not null, it logs the session.jwt
+  and calls the init function. */
   useEffect(() => {
     if (session == null) return;
     console.log("session.jwt", session.jwt);
     init();
   }, [session]);
 
-  const closeModal = () =>{
+  const closeModal = () => {
     setOpened2(false);
     init();
-  }
+  };
 
-  const closeModal2 = () =>{
+  const closeModal2 = () => {
     setOpened(false);
     init();
-  }
-  const closeModal3 = () =>{
+  };
+  const closeModal3 = () => {
     setOpened5(false);
     init();
-  }
-  const closeModal4 = () =>{
+  };
+  /**
+   * When the user clicks the close button, the modal is closed and the init() function is called.
+   */
+  const closeModal4 = () => {
     setOpened6(false);
     init();
-  }
+  };
 
+  /**
+   * When the page loads, get the list of departments and productions from the API and store them in
+   * the state variables arrayDep and arrayProd.
+   */
   async function init() {
     const listDepartment = await api.departmentsList(1);
-    const listProduction = await api.productionList(1)
-    setArrayProd(listProduction.data)
+    const listProduction = await api.productionList(1);
+    setArrayProd(listProduction.data);
     setarrayDep(listDepartment.data);
   }
+  /**
+   * It's an async function that calls the api.deleteDepartment function, which is an async function
+   * that returns a promise. 
+   * If the promise is resolved, it calls the Notifications.success function, which is a function that
+   * takes a string as an argument. 
+   * If the promise is rejected, it calls the Notifications.error function, which is a function that
+   * takes a string as an argument. 
+   * It also calls the init function, which is a function that takes no arguments.
+   * 
+   * @param id the id of the department to be deleted
+   */
   async function deleteDepartment(id) {
     try {
       await api.deleteDepartment(id);
@@ -82,224 +102,251 @@ const config = () => {
     }
   }
 
-  async function deleteProduction(id){
-    try{
+  /**
+   * Await api.deleteProduction(id);
+   * 
+   * @param id the id of the production to be deleted
+   */
+  async function deleteProduction(id) {
+    try {
       await api.deleteProduction(id);
-      Notifications.success("Se ha eliminado el area de Produccion " + productionName + " correctamente");
+      Notifications.success(
+        "Se ha eliminado el area de Produccion " +
+          productionName +
+          " correctamente"
+      );
       init();
-    }catch(error){
-      Notifications.error("Error al eliminar el area de Produccion"+ id);
+    } catch (error) {
+      Notifications.error("Error al eliminar el area de Produccion" + id);
     }
   }
 
-  /*LISTS*/
-  var departmentsListSelect = arrayDep.map((d) => {
-    return d.attributes.department_name;
-  });
+  /**
+   * If the department name of the first object is less than the department name of the second object,
+   * return -1. If the department name of the first object is greater than the department name of the
+   * second object, return 1. If the department names are equal, return 0.
+   * 
+   * @param a the first object to compare
+   * @param b the second object to compare
+   * 
+   * @return the sorted array.
+   */
+  function compare_nameDep(a, b) {
+    if (
+      a.attributes.department_name.toLowerCase() <
+      b.attributes.department_name.toLowerCase()
+    ) {
+      return -1;
+    }
+    if (
+      a.attributes.department_name.toLowerCase() >
+      b.attributes.department_name.toLowerCase()
+    ) {
+      return 1;
+    }
+    return 0;
+  }
 
-    var remove0  = arrayProd.map((a) => {
-      return 
-})
-function compare_nameDep(a, b) {
-  if (a.attributes.department_name.toLowerCase() < b.attributes.department_name.toLowerCase()) {
-    return -1;
+  /**
+   * It takes two objects, compares their name attributes, and returns a value based on the result of
+   * the comparison.
+   * 
+   * @param a The first object to compare.
+   * @param b the second object to compare
+   * 
+   * @return a number.
+   */
+  function compare_nameProd(a, b) {
+    if (a.attributes.name.toLowerCase() < b.attributes.name.toLowerCase()) {
+      return -1;
+    }
+    if (a.attributes.name.toLowerCase() > b.attributes.name.toLowerCase()) {
+      return 1;
+    }
+    return 0;
   }
-  if (a.attributes.department_name.toLowerCase() > b.attributes.department_name.toLowerCase()) {
-    return 1;
-  }
-  return 0;
-}
 
-function compare_nameProd(a, b) {
-  if (a.attributes.name.toLowerCase() < b.attributes.name.toLowerCase()) {
-    return -1;
-  }
-  if (a.attributes.name.toLowerCase() > b.attributes.name.toLowerCase()) {
-    return 1;
-  }
-  return 0;
-}
-
+  /* A React component that is rendering a modal. */
   return (
     <>
-    <h1>{session ? "" : <SignIn/>}</h1>
+      <h1>{session ? "" : <SignIn />}</h1>
       <Layout tituloPagina="Configuracion" />
       {session && (
-      <div className={styles.mainContainer}>
-        <Tabs defaultValue="users" className={styles.tabsContainer}>
-          <Tabs.List>
-            <Tabs.Tab value="users" icon={<IconUsers size={14} />}>
-              Usuarios
-            </Tabs.Tab>
-            <Tabs.Tab value="departments" icon={<IconPin size={14} />}>
-              Departamentos
-            </Tabs.Tab>
-            <Tabs.Tab value="production" icon={<IconWorld size={14} />}>
-              Produccion
-            </Tabs.Tab>
-           
-          </Tabs.List>
+        <div className={styles.mainContainer}>
+          <Tabs defaultValue="users" className={styles.tabsContainer}>
+            <Tabs.List>
+              <Tabs.Tab value="users" icon={<IconUsers size={14} />}>
+                Usuarios
+              </Tabs.Tab>
+              <Tabs.Tab value="departments" icon={<IconPin size={14} />}>
+                Departamentos
+              </Tabs.Tab>
+              <Tabs.Tab value="production" icon={<IconWorld size={14} />}>
+                Produccion
+              </Tabs.Tab>
+            </Tabs.List>
 
-          <Tabs.Panel value="users" pt="xs">
-            <UsersList />
-          </Tabs.Panel>
+            <Tabs.Panel value="users" pt="xs">
+              <UsersList />
+            </Tabs.Panel>
 
-          <Tabs.Panel value="departments" pt="xs">
-            <div className={styles.iconContainer}>
-            <Tooltip label="Crear nuevo Departamento">
-              <ActionIcon
-                onClick={() => setOpened(true)}
-                className={styles.add__icon}
-                variant="filled"
-              >
-                <IconPlus size={30} />
-              </ActionIcon>
-              </Tooltip>
-            </div>
-            <Table highlightOnHover>
-              <thead>
-                <tr className={styles.table__titles}>
-                  <th>
-                    <Center>ID</Center>
-                  </th>
-                  <th>
-                    <Center>Departamento</Center>
-                  </th>
-                  <th>
-                    <Center>Acciones</Center>
-                  </th>
-                </tr>
-              </thead>
-              <tbody className={styles.tableBody}>
-                {arrayDep &&
-                  arrayDep.sort(compare_nameDep).map((data) => (
-                    <tr key={data.department_name}>
-                      <td>
-                        <Center>{data.id}</Center>
-                      </td>
-                      <td>
-                        <Center>{data.attributes.department_name}</Center>
-                      </td>
-                      <td>
-                        <Center>
-                          <div className={styles.icons}>
-                          <Tooltip label="Editar">
-                            <ActionIcon 
-                            color="indigo" 
-                            onClick={() => {
-                              setOpened2(true); 
-                              setDepartmentToEdit(data)
-                              }}>
-                              <IconEdit size={18} />
-                            </ActionIcon>
-                            </Tooltip>
-                            <Tooltip label="Eliminar">
-                            <ActionIcon
-                              color="red"
-                              onClick={() => {
-                                setOpened3(true);
-                                setDepartmentToDelete(data.id);
-                              }}
-                            >
-                              <IconTrash size={18} />
-                            </ActionIcon>
-                            </Tooltip>
-                          </div>
-                        </Center>
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
-            </Table>
-          </Tabs.Panel>
+            <Tabs.Panel value="departments" pt="xs">
+              <div className={styles.iconContainer}>
+                <Tooltip label="Crear nuevo Departamento">
+                  <ActionIcon
+                    onClick={() => setOpened(true)}
+                    className={styles.add__icon}
+                    variant="filled"
+                  >
+                    <IconPlus size={30} />
+                  </ActionIcon>
+                </Tooltip>
+              </div>
+              <Table highlightOnHover>
+                <thead>
+                  <tr className={styles.table__titles}>
+                    <th>
+                      <Center>ID</Center>
+                    </th>
+                    <th>
+                      <Center>Departamento</Center>
+                    </th>
+                    <th>
+                      <Center>Acciones</Center>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className={styles.tableBody}>
+                  {arrayDep &&
+                    arrayDep.sort(compare_nameDep).map((data) => (
+                      <tr key={data.department_name}>
+                        <td>
+                          <Center>{data.id}</Center>
+                        </td>
+                        <td>
+                          <Center>{data.attributes.department_name}</Center>
+                        </td>
+                        <td>
+                          <Center>
+                            <div className={styles.icons}>
+                              <Tooltip label="Editar">
+                                <ActionIcon
+                                  color="indigo"
+                                  onClick={() => {
+                                    setOpened2(true);
+                                    setDepartmentToEdit(data);
+                                  }}
+                                >
+                                  <IconEdit size={18} />
+                                </ActionIcon>
+                              </Tooltip>
+                              <Tooltip label="Eliminar">
+                                <ActionIcon
+                                  color="red"
+                                  onClick={() => {
+                                    setOpened3(true);
+                                    setDepartmentToDelete(data.id);
+                                  }}
+                                >
+                                  <IconTrash size={18} />
+                                </ActionIcon>
+                              </Tooltip>
+                            </div>
+                          </Center>
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </Table>
+            </Tabs.Panel>
 
-          <Tabs.Panel value="production" pt="xs">
-           <div className={styles.iconContainer}>
-           <Tooltip label="Crear nueva area de Produccion">
-              <ActionIcon
-                onClick={() => setOpened5(true)}
-                className={styles.add__icon}
-                variant="filled"
-              >
-                <IconPlus size={30} />
-              </ActionIcon>
-              </Tooltip>
-            </div>
-            <Table highlightOnHover>
-              <thead>
-                <tr className={styles.table__titles}>
-                  <th>
-                    <Center>ID</Center>
-                  </th>
-                  <th>
-                    <Center>Area de Produccion</Center>
-                  </th>
-                  <th>
-                    <Center>Acciones</Center>
-                  </th>
-                </tr>
-              </thead>
-              <tbody className={styles.tableBody}>
-                {arrayProd && 
-                  arrayProd.sort(compare_nameProd).map((data) => (
-                    <tr key={data.department_name}>
-                      <td>
-                        <Center>{data.id}</Center>
-                      </td>
-                      <td>
-                        <Center>{data.attributes.name}</Center>
-                      </td>
-                      <td>
-                        <Center>
-                          <div className={styles.icons}>
-                          <Tooltip label="Editar">
-                            <ActionIcon 
-                            color="indigo" 
-                            onClick={() => {
-                              setOpened6(true); 
-                              setProductionToEdit(data)
-                              }}>
-                              <IconEdit size={18} />
-                            </ActionIcon>
-                            </Tooltip>
+            <Tabs.Panel value="production" pt="xs">
+              <div className={styles.iconContainer}>
+                <Tooltip label="Crear nueva area de Produccion">
+                  <ActionIcon
+                    onClick={() => setOpened5(true)}
+                    className={styles.add__icon}
+                    variant="filled"
+                  >
+                    <IconPlus size={30} />
+                  </ActionIcon>
+                </Tooltip>
+              </div>
+              <Table highlightOnHover>
+                <thead>
+                  <tr className={styles.table__titles}>
+                    <th>
+                      <Center>ID</Center>
+                    </th>
+                    <th>
+                      <Center>Area de Produccion</Center>
+                    </th>
+                    <th>
+                      <Center>Acciones</Center>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className={styles.tableBody}>
+                  {arrayProd &&
+                    arrayProd.sort(compare_nameProd).map((data) => (
+                      <tr key={data.department_name}>
+                        <td>
+                          <Center>{data.id}</Center>
+                        </td>
+                        <td>
+                          <Center>{data.attributes.name}</Center>
+                        </td>
+                        <td>
+                          <Center>
+                            <div className={styles.icons}>
+                              <Tooltip label="Editar">
+                                <ActionIcon
+                                  color="indigo"
+                                  onClick={() => {
+                                    setOpened6(true);
+                                    setProductionToEdit(data);
+                                  }}
+                                >
+                                  <IconEdit size={18} />
+                                </ActionIcon>
+                              </Tooltip>
 
-                            <Tooltip label="Eliminar">
-                            <ActionIcon
-                              color="red"
-                              onClick={() => {
-                                setOpened4(true);
-                                setProductionToDelete(data.id);
-                                setProductionName(data.attributes.name)
-                              }}
-                            >
-                              <IconTrash size={18} />
-                            </ActionIcon>
-                            </Tooltip>
-                          </div>
-                        </Center>
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
-            </Table>
-          </Tabs.Panel>
-         
-        </Tabs>
-      </div>
+                              <Tooltip label="Eliminar">
+                                <ActionIcon
+                                  color="red"
+                                  onClick={() => {
+                                    setOpened4(true);
+                                    setProductionToDelete(data.id);
+                                    setProductionName(data.attributes.name);
+                                  }}
+                                >
+                                  <IconTrash size={18} />
+                                </ActionIcon>
+                              </Tooltip>
+                            </div>
+                          </Center>
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </Table>
+            </Tabs.Panel>
+          </Tabs>
+        </div>
       )}
-     {/* MODAL ADD DEPARTMENT */}
+      {/* MODAL ADD DEPARTMENT */}
       <Modal
-      centered
+        centered
         opened={opened}
         onClose={() => setOpened(false)}
         title="Agregar departamento"
       >
-        <ModalAddDepartment closeModal2={closeModal2}/>
+        <ModalAddDepartment closeModal2={closeModal2} />
       </Modal>
 
       {/* MODAL ADD PRODUCTION */}
       <Modal
-      centered
+        centered
         opened={opened5}
         onClose={() => setOpened5(false)}
         title="Agregar area de Produccion"
@@ -307,34 +354,39 @@ function compare_nameProd(a, b) {
         <ModalAddProduction closeModal3={closeModal3} />
       </Modal>
 
-
-      {/* MODAL EDIT DEPARTMENT */} 
+      {/* MODAL EDIT DEPARTMENT */}
       {departmentToEdit && (
         <Modal
-        centered
+          centered
           title={"Editar Departamento " + info}
           opened={opened2}
           onClose={() => setOpened2(false)}
         >
-          <ModalEditDeparment closeModal={closeModal} departmentToEdit={{ ...departmentToEdit }} />
+          <ModalEditDeparment
+            closeModal={closeModal}
+            departmentToEdit={{ ...departmentToEdit }}
+          />
         </Modal>
       )}
-      
-      {/* MODAL EDIT PRODUCTION */} 
+
+      {/* MODAL EDIT PRODUCTION */}
       {productionToEdit && (
         <Modal
-        centered
+          centered
           title={"Editar Departamento " + info}
           opened={opened6}
           onClose={() => setOpened6(false)}
         >
-          <ModalEditProduction closeModal4={closeModal4} productionToEdit={{ ...productionToEdit }} />
+          <ModalEditProduction
+            closeModal4={closeModal4}
+            productionToEdit={{ ...productionToEdit }}
+          />
         </Modal>
       )}
 
       {/* MODAL DELETE DEPARTMENT */}
       <Modal
-      centered
+        centered
         opened={opened3}
         onClose={() => setOpened3(false)}
         title={
@@ -357,11 +409,13 @@ function compare_nameProd(a, b) {
 
       {/* MODAL DELETE PRODUCTION */}
       <Modal
-      centered
+        centered
         opened={opened4}
         onClose={() => setOpened4(false)}
         title={
-          <Text size="lg">Seguro que desea eliminar el area de Produccion "{productionName}" </Text>
+          <Text size="lg">
+            Seguro que desea eliminar el area de Produccion "{productionName}"{" "}
+          </Text>
         }
       >
         <div className={styles.modal__confirmation}>
@@ -380,21 +434,28 @@ function compare_nameProd(a, b) {
     </>
   );
 };
+/**
+ * If the user is not logged in, redirect them to the sign-in page
+ * 
+ * @param context The context object that Next.js provides to getInitialProps.
+ * 
+ * @return The return value is an object with a redirect property.
+ */
 export const getServerSideProps = async (context) => {
   const session = await getSession(context);
-  
+
   // Check if session exists or not, if not, redirect
   if (session == null) {
     return {
       redirect: {
-        destination: '/auth/sign-in',
+        destination: "/auth/sign-in",
         permanent: true,
       },
     };
   }
   return {
-    props: {
-    },
+    props: {},
   };
 };
+/* Exporting the config object. */
 export default config;

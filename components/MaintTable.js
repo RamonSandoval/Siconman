@@ -1,4 +1,4 @@
-import React, { createContext } from "react";
+import React from "react";
 import api from "../services/api";
 import stylesModal from "../styles/ModalRegisterNewMaint.module.css";
 import {
@@ -7,28 +7,23 @@ import {
   TextInput,
   Modal,
   Center,
-  Loader,
   Divider,
   Button,
 } from "@mantine/core";
 import { useState, useEffect } from "react";
 import {
   IconCirclePlus,
-  IconClock,
   IconHistory,
   IconListDetails,
-  IconRotateClockwise,
   IconRotateClockwise2,
   IconSearch,
   IconTool,
-  IconTools,
 } from "@tabler/icons";
 import styles from "../styles/TableMaint.module.css";
 import { ActionIcon, ThemeIcon, createStyles } from "@mantine/core";
 import Layout from "./Layout";
 import { Fecha } from "../helpers";
 import Postpone from "./modals/ModalPostpone";
-import { IconList } from "@tabler/icons";
 import ModalMaint from "./modals/ModalMaint";
 import ModalMaintHistory from "./modals/ModalMaintHistory";
 import ModalCreateMaint from "./modals/ModalCreateMaint";
@@ -49,6 +44,7 @@ const MaintTable = () => {
   const [openedMaintNew, setOpenedMaintNew] = useState(false);
   const [maintColor, setMaintColor] = useState();
 
+  /* Creating a style object that will be used by the Header component. */
   const useStyles = createStyles((theme) => ({
     header: {
       position: "sticky",
@@ -80,6 +76,11 @@ const MaintTable = () => {
     init();
   }, []);
 
+  /**
+   * When the page loads, call the api.devicesList function twice, once with a parameter of 1 and once
+   * with a parameter of 2, and then set the state of arrayDevices and arrayDataDev to the concatenated
+   * results of those two calls.
+   */
   async function init() {
     setLoading(true);
     const list = await api.devicesList(1);
@@ -88,6 +89,26 @@ const MaintTable = () => {
     setarrayDataDev(list.data.concat(list2.data));
   }
 
+  /**
+   * If the date of the first object is less than the date of the second object, return -1. If the date
+   * of the first object is greater than the date of the second object, return 1. If the dates are
+   * equal, return 0.
+   *
+   * @param a The first object to compare.
+   * @param b the current item in the array
+   *
+   * @return the value of the comparison.
+   */
+  /**
+   * If the date of the first object is less than the date of the second object, return -1. If the date
+   * of the first object is greater than the date of the second object, return 1. If the dates are
+   * equal, return 0.
+   *
+   * @param a The first object to compare.
+   * @param b the current item being iterated over
+   *
+   * @return the value of the comparison.
+   */
   function compare_date(a, b) {
     if (a.date < b.date) {
       return -1;
@@ -98,6 +119,9 @@ const MaintTable = () => {
     return 0;
   }
 
+  /**
+   * When the user clicks the close button, the modal is closed and the init function is called.
+   */
   const closeModal = () => {
     setOpened(false);
     init();
@@ -112,15 +136,30 @@ const MaintTable = () => {
     init();
   };
 
+  /**
+   * When the user clicks the button, the function will set the color of the indicator to green.
+   */
   const maintIndicator = () => {
     setMaintColor("green");
   };
 
+  /**
+   * When the user types something in the input field, the value of the input field is set to the state
+   * variable 'search' and the function 'filtrar' is called with the value of the input field as an
+   * argument.
+   *
+   * @param e the event object
+   */
   const handleChange = (e) => {
     setSearch(e.target.value);
     filtrar(e.target.value);
   };
 
+  /**
+   * It filters the arrayDataDev array and returns the result to the setarrayDevices function.
+   *
+   * @param search is the value of the input search
+   */
   const filtrar = (search) => {
     var resultado = arrayDataDev.filter((e) => {
       if (
@@ -136,11 +175,11 @@ const MaintTable = () => {
           ?.toString()
           .toLowerCase()
           .includes(search.toLowerCase()) ||
-          e.attributes.production?.data?.attributes.name
+        e.attributes.production?.data?.attributes.name
           ?.toString()
           .toLowerCase()
-          .includes(search.toLowerCase())||
-          e.attributes.maintenance?.data?.attributes?.maintenance_type_next
+          .includes(search.toLowerCase()) ||
+        e.attributes.maintenance?.data?.attributes?.maintenance_type_next
           ?.toString()
           .toLowerCase()
           .includes(search.toLowerCase())
@@ -151,6 +190,7 @@ const MaintTable = () => {
     setarrayDevices(resultado);
   };
 
+  /* A React component that is rendering a table with data from an API. */
   return (
     <>
       <Layout tituloPagina="Inicio" />
@@ -167,7 +207,7 @@ const MaintTable = () => {
               </ThemeIcon>
               <p>Mantenimientos</p>
             </div>
-            <Button onClick={()=> console.log(arrayDevices.data)}/>
+            <Button onClick={() => console.log(arrayDevices.data)} />
             <div className={styles.searchBar}>
               <TextInput
                 placeholder="Buscar"

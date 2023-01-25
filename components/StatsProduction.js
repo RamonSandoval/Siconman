@@ -6,17 +6,20 @@ import {
   LinearScale,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect} from "react";
 import api from "../services/api";
-import { Button, Center } from "@mantine/core";
+import {Center } from "@mantine/core";
 
+/* Registering the chart.js plugins. */
 ChartJS.register(CategoryScale, BarElement, LinearScale);
 
+/**
+ * A function that returns a JSX element.
+ */
 const StatsProduction = () => {
   const [arrayProd, setArrayProd] = useState([]);
-  const calendarRef = useRef(null);
-  const [chart, setChart] = useState({});
 
+  /* Creating the data for the chart. */
   var data = {
     labels: arrayProd && arrayProd.map((data) => data.attributes.name),
     datasets: [
@@ -54,6 +57,7 @@ const StatsProduction = () => {
     ],
   };
 
+  /* The options for the chart. */
   var options = {
     maintainAspectRatio: false,
     scales: {
@@ -71,6 +75,10 @@ const StatsProduction = () => {
     init();
   }, []);
 
+  /**
+   * When the page loads, get the list of productions from the API and store them in the arrayProd
+   * variable.
+   */
   async function init() {
     const listProduction = await api.productionList(1);
     setArrayProd(listProduction.data);
@@ -82,6 +90,7 @@ const StatsProduction = () => {
         );
       });
     */
+  /* Returning the JSX element. */
   return (
     <>
       <Center>

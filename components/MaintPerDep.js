@@ -17,22 +17,13 @@ import {
 import { useState, useEffect } from "react";
 import { ThemeIcon } from "@mantine/core";
 import {
-  IconCalendar,
-  IconCalendarDue,
-  IconDatabase,
   IconFilter,
-  IconListDetails,
-  IconRotateClockwise2,
   IconSearch,
-  IconTool,
 } from "@tabler/icons";
 import styles from "../styles/StatsByDateRange.module.css";
-import { ActionIcon } from "@mantine/core";
-import Layout from "./Layout";
 import { Fecha } from "../helpers";
 import Postpone from "./modals/ModalPostpone";
 import ModalMaint from "./modals/ModalMaint";
-import { DatePicker, DateRangePicker } from "@mantine/dates";
 
 const MaintPerDep = () => {
   const [isLoading, setLoading] = useState(false);
@@ -51,6 +42,11 @@ const MaintPerDep = () => {
     init();
   }, []);
 
+  /**
+   * When the page loads, call the api.devicesList function twice, once with a parameter of 1 and once
+   * with a parameter of 2, and then set the arrayDevices and arrayDataDev state variables to the
+   * concatenated results of those two calls.
+   */
   async function init() {
     setLoading(true);
     const list = await api.devicesList(1);
@@ -77,10 +73,23 @@ const MaintPerDep = () => {
     setSearch2(e.target.value);
   };
 
+  /**
+   * The function dep takes an event as an argument and sets the state of search3 to the value of the
+   * event target.
+   * 
+   * @param e the event object
+   */
   const dep = (e) => {
     setSearch3(e.target.value);
   };
 
+  /**
+   * If the search and search2 fields are not empty, then filter the arrayDataDev array by the search
+   * and search2 fields and the search3 field.
+   * 
+   * If the search and search2 fields are empty, then set the errorDateNull state to "Ingrese valores
+   * correctos" (Enter correct values).
+   */
   const filtrar = () => {
     if (search != "" && search2 != "") {
       setErrorDateNull("");
@@ -102,6 +111,15 @@ const MaintPerDep = () => {
     }
   };
 
+  /**
+   * If the next_maintenance date of the first object is less than the next_maintenance date of the
+   * second object, return -1. If the next_maintenance date of the first object is greater than the
+   * next_maintenance date of the second object, return 1. If the next_maintenance dates are equal,
+   * return 0.
+   * 
+   * @param a the first object to compare
+   * @param b {
+   */
   function compare_date(a, b) {
     if (
       a.attributes.maintenance?.data?.attributes?.next_maintenance <
@@ -118,6 +136,7 @@ const MaintPerDep = () => {
     return 0;
   }
 
+  /* A React component that is rendering a table with data from an API. */
   return (
     <>
       <Center>

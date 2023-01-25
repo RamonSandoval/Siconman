@@ -2,13 +2,12 @@ import React from "react";
 import Notifications from "../components/Notifications";
 import { Loader, Pagination, Tooltip } from "@mantine/core";
 import { signOut, useSession } from "next-auth/react";
-import { getSession } from 'next-auth/react';
+import { getSession } from "next-auth/react";
 import SignIn from "./auth/sign-in";
 
-import { usePagination } from '@mantine/hooks';
+import { usePagination } from "@mantine/hooks";
 import {
   Modal,
-  
   Table,
   Divider,
   ThemeIcon,
@@ -48,60 +47,84 @@ const inventory = () => {
   const [isLoading, setLoading] = useState(false);
   const { data: session } = useSession();
 
-  const pagination = usePagination({total:10, initialPage: 1})
-
 
   const devicesLength = arrayDevices.length;
 
+ /* Checking if the session is null, if it is, it returns. If it is not null, it will console.log the
+ session.jwt and then call the init function. */
   useEffect(() => {
     if (session == null) return;
     console.log("session.jwt", session.jwt);
     init();
   }, [session]);
-  
-  const [activePage, setPage] = useState(1)
 
+  const [activePage, setPage] = useState(1);
+
+  /**
+   * When the page loads, get the list of devices from the API and store it in the arrayDevices
+   * variable.
+   */
   async function init() {
-    
     const list = await api.devicesList(activePage);
     setarrayDevices(list.data);
     setarrayDataDev(list.data);
   }
 
-  function actualizar (){
-    console.log(activePage+1)
-    init()
+  /**
+   * The function is called when the user clicks the button. It then calls the init() function, which
+   * is the function that creates the pagination.
+   */
+  function actualizar() {
+    console.log(activePage + 1);
+    init();
   }
-  
+
   if (isLoading)
-  return (
-    console.log('cargando'),
-    <Center>
-      <Loader />
-    </Center>
-  );
+    return (
+      console.log("cargando"),
+      (
+        <Center>
+          <Loader />
+        </Center>
+      )
+    );
 
   const closeModal = () => {
     setOpened(false);
     init();
   };
 
+  /**
+   * When the user clicks the close button, the modal is closed and the init function is called.
+   */
   const closeModal2 = () => {
     setOpened2(false);
     init();
   };
 
+  /* Returning the current date in the format of "Month Day, Year" */
   new Date().toLocaleString("en-US", {
     year: "numeric",
     month: "long",
     day: "2-digit",
   });
 
+  /**
+   * When the input value changes, set the search state to the input value and call the filtrar
+   * function with the input value as an argument.
+   * 
+   * @param e the event object
+   */
   const handleChange = (e) => {
     setSearch(e.target.value);
     filtrar(e.target.value);
   };
 
+  /**
+   * It filters the arrayDataDev array and returns the result to the setarrayDevices function.
+   * 
+   * @param search is the value of the input
+   */
   const filtrar = (search) => {
     var resultado = arrayDataDev.filter((elemento) => {
       if (
@@ -128,6 +151,7 @@ const inventory = () => {
     setarrayDevices(resultado);
   };
 
+  /* Creating a style object that will be used by the component. */
   const useStyles = createStyles((theme) => ({
     header: {
       position: "sticky",
@@ -173,143 +197,144 @@ const inventory = () => {
       console.error(error);
     }
   }
+  /* A React component that is rendering a table with data from an API. */
   return (
     <>
       <Layout />
       <Head>
         <title>Inventario</title>
       </Head>
-      <h1>{session ? "" : <SignIn/>}</h1>
-
+      <h1>{session ? "" : <SignIn />}</h1>
       {session && (
-      <Center >
-        <div className={styles.table}>
-          <div className={styles.table__title}>
-            <div className={styles.table__title2}>
-              <ThemeIcon
-                className={styles.icon}
-                color="#002A5B"
-                variant="transparent"
-              >
-                <IconList />
-              </ThemeIcon>
-              <h3>Inventario</h3>
-            </div>
+        <Center>
+          <div className={styles.table}>
+            <div className={styles.table__title}>
+              <div className={styles.table__title2}>
+                <ThemeIcon
+                  className={styles.icon}
+                  color="#002A5B"
+                  variant="transparent"
+                >
+                  <IconList />
+                </ThemeIcon>
+                <h3>Inventario</h3>
+              </div>
 
-            <TextInput
-              placeholder="Buscar"
-              value={search}
-              onChange={handleChange}
-              icon={<IconSearch />}
-            />
-            <Tooltip label="Agregar">
-            <ActionIcon
-              onClick={() => setOpened(true)}
-              className={styles.add__icon}
-              variant="filled"
+              <TextInput
+                placeholder="Buscar"
+                value={search}
+                onChange={handleChange}
+                icon={<IconSearch />}
+              />
+              <Tooltip label="Agregar">
+                <ActionIcon
+                  onClick={() => setOpened(true)}
+                  className={styles.add__icon}
+                  variant="filled"
+                >
+                  <IconPlus size={30} />
+                </ActionIcon>
+              </Tooltip>
+            </div>
+            <Divider variant="dashed" size="sm" my="sm" />
+            <ScrollArea
+              sx={{ height: 700 }}
+              onScrollPositionChange={({ y }) => setScrolled(y !== 0)}
             >
-              <IconPlus size={30} />
-            </ActionIcon>
-            </Tooltip>
-          </div>
-          <Divider variant="dashed" size="sm" my="sm" />
-          <ScrollArea
-            sx={{ height: 700 }}
-            onScrollPositionChange={({ y }) => setScrolled(y !== 0)}
-          >
-            <Table highlightOnHover>
-              <thead
-                className={cx(classes.header, { [classes.scrolled]: scrolled })}
-              >
-                <tr className={styles.table__titles}>
-                  {/* <th>
+              <Table highlightOnHover>
+                <thead
+                  className={cx(classes.header, {
+                    [classes.scrolled]: scrolled,
+                  })}
+                >
+                  <tr className={styles.table__titles}>
+                    {/* <th>
                     <Center>#</Center>
                   </th> */}
-                  <th>
-                    <Center>ID Equipo</Center>
-                  </th>
-                  <th>
-                    <Center>Departamento / Área</Center>
-                  </th>
-                  <th>
-                    <Center>Modelo</Center>
-                  </th>
-                  <th>
-                    <Center>Acciones</Center>
-                  </th>
-                </tr>
-              </thead>
-              <tbody className={styles.tableBody}>
-                {arrayDevices &&
-                  arrayDevices.map((data) => (
-                    <tr key={data.device_id}>
-                      {/* <td>
+                    <th>
+                      <Center>ID Equipo</Center>
+                    </th>
+                    <th>
+                      <Center>Departamento / Área</Center>
+                    </th>
+                    <th>
+                      <Center>Modelo</Center>
+                    </th>
+                    <th>
+                      <Center>Acciones</Center>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className={styles.tableBody}>
+                  {arrayDevices &&
+                    arrayDevices.map((data) => (
+                      <tr key={data.device_id}>
+                        {/* <td>
                         <Center>{data.id}</Center>
                       </td> */}
-                      <td>
-                        <Center>{data.attributes.device_id}</Center>
-                      </td>
-                      <td>
-                        <Center>
-                          {
-                            data.attributes.department?.data?.attributes
-                              .department_name
-                          } 
-                          {data.attributes.production?.data?.attributes.name}
-                        </Center>
-                      </td>
-                      <td>
-                        <Center>{data.attributes.model}</Center>
-                      </td>
-                      <td>
-                        <Center>
-                          <div className={styles.icons}>
-                          <Tooltip label="Editar">
-                            <ActionIcon
-                              color="indigo"
-                              onClick={() => {
-                                setDeviceToEdit(data);
-                                setOpened2(true);
-                                console.log(data);
-                              }}
-                            >
-                              <IconEdit size={18} />
-                            </ActionIcon>
-                            </Tooltip>
-                            <Tooltip label="Eliminar">
-                            <ActionIcon
-                              color="red"
-                              onClick={() => {
-                                setOpened3(true);
-                                setDeviceToDelete(data.id);
-                              }}
-                            >
-                              <IconTrash size={18} />
-                            </ActionIcon>
-                            </Tooltip>
-                          </div>
-                        </Center>
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
-            </Table>
-          </ScrollArea>
-          <Center>
-         <Pagination
-          grow
-            page={activePage}
-            initialPage={1}
-            onChange={setPage}
-            onClick={()=> actualizar()} 
-            total={7}
-            />
+                        <td>
+                          <Center>{data.attributes.device_id}</Center>
+                        </td>
+                        <td>
+                          <Center>
+                            {
+                              data.attributes.department?.data?.attributes
+                                .department_name
+                            }
+                            {data.attributes.production?.data?.attributes.name}
+                          </Center>
+                        </td>
+                        <td>
+                          <Center>{data.attributes.model}</Center>
+                        </td>
+                        <td>
+                          <Center>
+                            <div className={styles.icons}>
+                              <Tooltip label="Editar">
+                                <ActionIcon
+                                  color="indigo"
+                                  onClick={() => {
+                                    setDeviceToEdit(data);
+                                    setOpened2(true);
+                                    console.log(data);
+                                  }}
+                                >
+                                  <IconEdit size={18} />
+                                </ActionIcon>
+                              </Tooltip>
+                              <Tooltip label="Eliminar">
+                                <ActionIcon
+                                  color="red"
+                                  onClick={() => {
+                                    setOpened3(true);
+                                    setDeviceToDelete(data.id);
+                                  }}
+                                >
+                                  <IconTrash size={18} />
+                                </ActionIcon>
+                              </Tooltip>
+                            </div>
+                          </Center>
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </Table>
+            </ScrollArea>
+            <Center>
+              <Pagination
+                grow
+                page={activePage}
+                initialPage={1}
+                onChange={setPage}
+                onClick={() => actualizar()}
+                total={7}
+              />
             </Center>
-        </div>
-      </Center>
-)};
-
-      {/*-----------------MODAL's ADD AND EDIT DEVICES--------------*/}
+          </div>
+        </Center>
+      )}
+      ;{/*-----------------MODAL's ADD AND EDIT DEVICES--------------*/}
       <Modal
         centered
         opened={opened}
@@ -319,7 +344,6 @@ const inventory = () => {
         {/* <ModalAddDeviceSteps/> */}
         <ModalAddDevice closeModal={closeModal} />
       </Modal>
-
       {deviceToEdit && (
         <Modal
           centered
@@ -362,14 +386,13 @@ export const getServerSideProps = async (context) => {
   if (session == null) {
     return {
       redirect: {
-        destination: '/auth/sign-in',
+        destination: "/auth/sign-in",
         permanent: true,
       },
     };
   }
   return {
-    props: {
-    },
+    props: {},
   };
 };
 

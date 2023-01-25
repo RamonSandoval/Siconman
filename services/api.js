@@ -3,6 +3,7 @@ import conection from './conection';
 
 const api = {
     /*---------------------------------STRAPI REQUEST TO COLLECTION TYPES---------------------------------------*/
+    /* A function that is returning a promise. GET api content*/
     devicesList: async (pagenum) => {
         return await conection.GET('/api/devices?pagination[pageSize]=100&populate=%2A&pagination[page]='+pagenum);
     },
@@ -19,7 +20,8 @@ const api = {
         return await conection.GET('/api/users?pagination[pageSize]=300');
     },
     /*----------------------------------------------------------------------------------------------------------*/
-    /*---------------------------------------------ADD REQUEST--------------------------------------------------*/
+    /*---------------------------------------------POST REQUEST--------------------------------------------------*/
+    /* A function that is returning a promise. POST to api */
     addDevice: async (body) =>{
         return await conection.POST('/api/devices?populate=%2A', body);
     },
@@ -37,6 +39,7 @@ const api = {
     },
     /*----------------------------------------------------------------------------------------------------------*/
     /*---------------------------------------------DELETE REQUEST-----------------------------------------------*/
+    /* A function that is returning a promise. DELETE to api. Delete api content*/
     deleteDevice: async (id) => {
         return await conection.DELETE('/api/devices/' + id);
     },
@@ -54,6 +57,7 @@ const api = {
     },
     /*----------------------------------------------------------------------------------------------------------*/
     /*---------------------------------------------UPDATE REQUEST-----------------------------------------------*/
+    /* A function that is returning a promise. UPDATE to api. Update api content. */
     updateDevice: async (id,body) => {
         return await conection.UPDATE('/api/devices/' + id,body);
     },

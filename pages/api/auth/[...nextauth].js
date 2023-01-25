@@ -2,6 +2,7 @@ import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { signIn } from '../../../services/auth';
 
+/* A configuration for NextAuth.js. */
 export default NextAuth({
   // Configure one or more authentication providers
   providers: [

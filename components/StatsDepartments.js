@@ -3,7 +3,7 @@ import {Chart as ChartJS, BarElement,CategoryScale,LinearScale} from 'chart.js'
 import {Bar} from 'react-chartjs-2'
 import { useState, useEffect,useRef } from "react";
 import api from '../services/api'
-import { Button, Center } from '@mantine/core';
+import { Center } from '@mantine/core';
 
 
     ChartJS.register(
@@ -82,13 +82,6 @@ const StatsDepartments = () => {
       setarrayDep(listDepartment.data);
       setChart(list)
     }
-
-    /* const departmentsList = arrayDep.map((d) => {
-        return(
-          d
-        );
-      });
-    */
   return (
     <>
     <Center>

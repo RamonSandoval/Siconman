@@ -1,4 +1,12 @@
-import { ActionIcon, Button, Center, Modal, Table, Text, Tooltip } from "@mantine/core";
+import {
+  ActionIcon,
+  Button,
+  Center,
+  Modal,
+  Table,
+  Text,
+  Tooltip,
+} from "@mantine/core";
 import { IconEdit, IconPlus, IconTrash } from "@tabler/icons";
 import React from "react";
 import styles from "../styles/UserList.module.css";
@@ -7,50 +15,65 @@ import { useState, useEffect } from "react";
 import api from "../services/api";
 import ModalEditUser from "./modals/ModalEditUser";
 import ModalAddUser from "./modals/ModalAddUser";
-import Notifications from './Notifications'
+import Notifications from "./Notifications";
 
 const UsersList = () => {
   const [arrayUsers, setarrayUsers] = useState([]);
-  const [opened, setOpened] = useState(false)
+  const [opened, setOpened] = useState(false);
   const [opened2, setOpened2] = useState(false);
   const [opened3, setOpened3] = useState(false);
   const [userToDelete, setUserToDelete] = useState({});
-  const [userToEdit,setUserToEdit] = useState({});
+  const [userToEdit, setUserToEdit] = useState({});
 
-  const user_name = userToEdit.username
+  const user_name = userToEdit.username;
   useEffect(() => {
     init();
   }, []);
 
+  /**
+   * The function init() is an asynchronous function that calls the function usersList() from the api
+   * object, and then calls the function setarrayUsers() with the result of the call to usersList().
+   */
   async function init() {
     const listUsers = await api.usersList(1);
     setarrayUsers(listUsers);
   }
 
+  /**
+   * "The function deleteUser() is an asynchronous function that calls the api.deleteUser() function,
+   * which is also an asynchronous function, and then calls the init() function, which is also an
+   * asynchronous function."
+   * </code>
+   *
+   * @param id The id of the user to delete
+   */
   async function deleteUser(id) {
     try {
       await api.deleteUser(id);
       Notifications.success("Se ha eliminado el usuario " + id);
       init();
     } catch (error) {
-      alert("Error al eliminar al usuario" + id)
+      alert("Error al eliminar al usuario" + id);
       Notifications.error("Error al eliminar al usuario" + id);
       console.error(error);
     }
   }
+  /* Returning the component to be used in other files. */
   return (
     <>
-    <div className={styles.iconContainer}>
-              <Tooltip label="Crear Nuevo Usuario">
-              <ActionIcon
-                onClick={() => {setOpened(true)}}
-                className={styles.add__icon}
-                variant="filled"
-              >
-                <IconPlus size={30} />
-              </ActionIcon>
-              </Tooltip>
-            </div>
+      <div className={styles.iconContainer}>
+        <Tooltip label="Crear Nuevo Usuario">
+          <ActionIcon
+            onClick={() => {
+              setOpened(true);
+            }}
+            className={styles.add__icon}
+            variant="filled"
+          >
+            <IconPlus size={30} />
+          </ActionIcon>
+        </Tooltip>
+      </div>
       <Table highlightOnHover>
         <thead>
           <tr className={styles.table__titles}>
@@ -96,22 +119,28 @@ const UsersList = () => {
                 <td>
                   <Center>
                     <div className={styles.icons}>
-                    <Tooltip label="Editar">
-                      <ActionIcon color="indigo" onClick={() => {setOpened2(true); setUserToEdit(data)}}>
-                        <IconEdit size={18} />
-                      </ActionIcon>
+                      <Tooltip label="Editar">
+                        <ActionIcon
+                          color="indigo"
+                          onClick={() => {
+                            setOpened2(true);
+                            setUserToEdit(data);
+                          }}
+                        >
+                          <IconEdit size={18} />
+                        </ActionIcon>
                       </Tooltip>
 
                       <Tooltip label="Eliminar">
-                      <ActionIcon
-                        color="red"
-                        onClick={() => {
-                          setOpened3(true);
-                          setUserToDelete(data.id);
-                        }}
-                      >
-                        <IconTrash size={18} />
-                      </ActionIcon>
+                        <ActionIcon
+                          color="red"
+                          onClick={() => {
+                            setOpened3(true);
+                            setUserToDelete(data.id);
+                          }}
+                        >
+                          <IconTrash size={18} />
+                        </ActionIcon>
                       </Tooltip>
                     </div>
                   </Center>
@@ -120,31 +149,29 @@ const UsersList = () => {
             ))}
         </tbody>
       </Table>
-      {/* MODAL EDIT USER */}      
+      {/* MODAL EDIT USER */}
 
       {userToEdit && (
-      <Modal
-        centered
-        opened={opened2}
-        onClose={() => setOpened2(false)}
-        title="Editar Usuario"
-      >
-       <ModalEditUser userToEdit={{...userToEdit}}/>
-      </Modal>
-      )} 
+        <Modal
+          centered
+          opened={opened2}
+          onClose={() => setOpened2(false)}
+          title="Editar Usuario"
+        >
+          <ModalEditUser userToEdit={{ ...userToEdit }} />
+        </Modal>
+      )}
 
-      {/* MODAL ADD USER */}      
+      {/* MODAL ADD USER */}
 
-      
       <Modal
         centered
         opened={opened}
         onClose={() => setOpened(false)}
         title="Editar Usuario"
       >
-       <ModalAddUser/>
+        <ModalAddUser />
       </Modal>
-
 
       {/* MODAL DELETE USER */}
       <Modal
@@ -170,4 +197,5 @@ const UsersList = () => {
   );
 };
 
+/* Exporting the component to be used in other files. */
 export default UsersList;

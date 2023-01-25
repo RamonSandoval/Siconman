@@ -8,12 +8,14 @@ import SignIn from './sign-in';
 export default function NotAuthenticated() {
   const router = useRouter();
 
+  /* Redirecting the user to the sign-in page after 2 seconds. */
   useEffect(() => {
     setTimeout(() => {
       router.replace('/auth/sign-in');
     }, 2000);
   }, []);
 
+  /* Returning the SignIn component. */
   return (
     <div className={styles.container}>
       <Head>

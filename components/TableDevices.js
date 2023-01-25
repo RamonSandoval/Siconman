@@ -1,4 +1,4 @@
-import React, { createContext } from "react";
+import React from "react";
 import api from "../services/api";
 import stylesModal from "../styles/ModalRegisterNewMaint.module.css";
 import {
@@ -27,7 +27,6 @@ import Layout from "./Layout";
 import { Fecha } from "../helpers";
 import Postpone from "./modals/ModalPostpone";
 import ModalMaint from "./modals/ModalMaint";
-import Notifications from "./Notifications";
 
 const TableDevices = () => {
   const [isLoading, setLoading] = useState(false);
@@ -39,21 +38,21 @@ const TableDevices = () => {
   const [openedMaint, setOpenedMaint] = useState(false);
   const [deviceToMaint, setDeviceToMaint] = useState({});
 
-
   /* DATE SUBSTRACTION */
   //Normal Date
+  /* Creating a new date object and then converting it to a string in the Canadian format. */
   const date = new Date().toLocaleDateString("en-CA");
   // Minus 3 days
+  /* Creating a new date object, setting the date to 3 days from now, and then converting it to a
+  string. */
   var d3 = new Date();
-  d3.setDate(d3.getDate()+3);
-  var date3 = d3.toLocaleDateString('en-CA')
+  d3.setDate(d3.getDate() + 3);
+  var date3 = d3.toLocaleDateString("en-CA");
   //Minus 7 days
   var d7 = new Date();
-  d7.setDate(d7.getDate()+7);
-  var date7 = d7.toLocaleDateString('en-CA')
+  d7.setDate(d7.getDate() + 7);
+  var date7 = d7.toLocaleDateString("en-CA");
   /* */
-
-
 
   useEffect(() => {
     init();
@@ -67,6 +66,9 @@ const TableDevices = () => {
     setarrayDataDev(list.data.concat(list2.data));
   }
 
+  /**
+   * When the user clicks the close button, the modal is closed and the init function is called.
+   */
   const closeModal = () => {
     setOpened(false);
     init();
@@ -77,11 +79,23 @@ const TableDevices = () => {
     init();
   };
 
+  /**
+   * When the user types something in the input field, the value of the input field is set to the state
+   * variable 'search' and the function 'filtrar' is called with the value of the input field as an
+   * argument.
+   *
+   * @param e the event object
+   */
   const handleChange = (e) => {
     setSearch(e.target.value);
     filtrar(e.target.value);
   };
 
+  /**
+   * It filters the arrayDataDev array and returns the result to the setarrayDevices function.
+   *
+   * @param search is the value of the input field
+   */
   const filtrar = (search) => {
     var resultado = arrayDataDev.filter((e) => {
       if (
@@ -104,14 +118,20 @@ const TableDevices = () => {
     setarrayDevices(resultado);
   };
 
+  /* Creating a new array with the same values as the original array. */
   const deviceList = arrayDevices.map((d) => {
     return d;
   });
 
-  const filterList = arrayDevices.map((d) => {
-    return d.attributes.maintenance?.data?.attributes?.next_maintenance;
-  });
-
+  /**
+   * If the next_maintenance date of the first object is less than the next_maintenance date of the
+   * second object, return -1. If the next_maintenance date of the first object is greater than the
+   * next_maintenance date of the second object, return 1. If the next_maintenance dates are equal,
+   * return 0.
+   *
+   * @param a the first object to compare
+   * @param b {
+   */
   function compare_date(a, b) {
     if (
       a.attributes.maintenance?.data?.attributes?.next_maintenance <
@@ -128,6 +148,7 @@ const TableDevices = () => {
     return 0;
   }
 
+  /* A React component that is rendering a table with data from an API. */
   return (
     <>
       <Layout tituloPagina="Inicio" />
@@ -185,91 +206,87 @@ const TableDevices = () => {
               </thead>
               <tbody>
                 {deviceList &&
-                  deviceList.sort(compare_date).map(
-                    (data, index) =>
-                      index < 14 && data.attributes.maintenance?.data?.attributes.next_maintenance != null ? (
-                        <tr className={styles.table__data} key={data.device_id}>
-                              {(data.attributes.maintenance?.data?.attributes
-                              .next_maintenance < date 
-                              ? 
-                              <td>
-                                <Tooltip label="Mantenimiento Atrasado">
-                                <ThemeIcon variant="transparent">
+                  deviceList.sort(compare_date).map((data, index) =>
+                    index < 14 &&
+                    data.attributes.maintenance?.data?.attributes
+                      .next_maintenance != null ? (
+                      <tr className={styles.table__data} key={data.device_id}>
+                        {data.attributes.maintenance?.data?.attributes
+                          .next_maintenance < date ? (
+                          <td>
+                            <Tooltip label="Mantenimiento Atrasado">
+                              <ThemeIcon variant="transparent">
                                 <IconAlertCircle color="red" />
                               </ThemeIcon>
-                              </Tooltip> 
-                              </td>: 
-                              (data.attributes.maintenance?.data?.attributes
-                              .next_maintenance < date3
-                              ?
-                              <td>
-                                <Tooltip label="Realizar Matenimiento">
-                                <ThemeIcon variant="transparent">
+                            </Tooltip>
+                          </td>
+                        ) : data.attributes.maintenance?.data?.attributes
+                            .next_maintenance < date3 ? (
+                          <td>
+                            <Tooltip label="Realizar Matenimiento">
+                              <ThemeIcon variant="transparent">
                                 <IconAlertCircle color="#ff6f00" />
-                              </ThemeIcon> 
-                              </Tooltip>
-                              </td> : (data.attributes.maintenance?.data?.attributes
-                              .next_maintenance < date7
-                              ?
-                              <td>
-                                <Tooltip label="Mantenimiento Proximo">
-                                <ThemeIcon variant="transparent">
+                              </ThemeIcon>
+                            </Tooltip>
+                          </td>
+                        ) : data.attributes.maintenance?.data?.attributes
+                            .next_maintenance < date7 ? (
+                          <td>
+                            <Tooltip label="Mantenimiento Proximo">
+                              <ThemeIcon variant="transparent">
                                 <IconAlertCircle color="#ffbb00" />
-                              </ThemeIcon> 
-                              </Tooltip>
-                              </td>: <td></td>
-                             )))}
+                              </ThemeIcon>
+                            </Tooltip>
+                          </td>
+                        ) : (
+                          <td></td>
+                        )}
 
-                              <td>
-                            <Center>{data.attributes.device_id}</Center>
-                          </td>
-                          <td>
-                            <Center>
-                              {
-                                data.attributes.department?.data?.attributes
-                                  .department_name
-                              }
-                              {
-                                data.attributes.production?.data?.attributes
-                                  .name
-                              }
-                            </Center>
-                          </td>
-                          <td>
-                            <Center>{data.attributes.model}</Center>
-                          </td>
-                          <td>
-                            <Center>
+                        <td>
+                          <Center>{data.attributes.device_id}</Center>
+                        </td>
+                        <td>
+                          <Center>
+                            {
+                              data.attributes.department?.data?.attributes
+                                .department_name
+                            }
+                            {data.attributes.production?.data?.attributes.name}
+                          </Center>
+                        </td>
+                        <td>
+                          <Center>{data.attributes.model}</Center>
+                        </td>
+                        <td>
+                          <Center>
                             {data.attributes.maintenance?.data?.attributes
-                            .maintenance_date == null
+                              .maintenance_date == null
+                              ? " Por asignar"
+                              : Fecha(
+                                  data.attributes.maintenance?.data?.attributes
+                                    .maintenance_date
+                                )}
+                          </Center>
+                        </td>
+                        <td>
+                          {data.attributes.maintenance?.data?.attributes
+                            .next_maintenance == null
                             ? " Por asignar"
                             : Fecha(
                                 data.attributes.maintenance?.data?.attributes
-                                  .maintenance_date
+                                  .next_maintenance
                               )}
-                            </Center>
-                          </td>
-                          <td>
-                          {data.attributes.maintenance?.data?.attributes
-                          .next_maintenance == null
-                          ? " Por asignar"
-                          : Fecha(
-                              data.attributes.maintenance?.data?.attributes
-                                .next_maintenance
-                            )}
-                          </td>
+                        </td>
 
-                          <td>
+                        <td>
                           {data.attributes.maintenance?.data?.attributes
-                          .maintenance_type_next == null
-                          ? " Por asignar"
-                          : 
-                              data.attributes.maintenance?.data?.attributes
-                                .maintenance_type_next
-                            }
-                          </td>
-                          <td>
-                            <div className={styles.icons}>
+                            .maintenance_type_next == null
+                            ? " Por asignar"
+                            : data.attributes.maintenance?.data?.attributes
+                                .maintenance_type_next}
+                        </td>
+                        <td>
+                          <div className={styles.icons}>
                             <Tooltip label="Registrar Mantenimiento">
                               <ActionIcon
                                 color="indigo"
@@ -281,9 +298,9 @@ const TableDevices = () => {
                               >
                                 <IconTool size={18} />
                               </ActionIcon>
-                              </Tooltip>
+                            </Tooltip>
 
-                              <Tooltip label="Posponer Fecha">
+                            <Tooltip label="Posponer Fecha">
                               <ActionIcon
                                 onClick={() => {
                                   setMaintToPostPone(data);
@@ -293,11 +310,11 @@ const TableDevices = () => {
                               >
                                 <IconRotateClockwise2 color="green" size={18} />
                               </ActionIcon>
-                              </Tooltip>
-                            </div>
-                          </td>
-                        </tr>
-                      ) : null
+                            </Tooltip>
+                          </div>
+                        </td>
+                      </tr>
+                    ) : null
                   )}
               </tbody>
             </Table>
@@ -341,5 +358,6 @@ const TableDevices = () => {
     </>
   );
 };
+/* Exporting the component. */
 
 export default TableDevices;

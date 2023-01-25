@@ -66,6 +66,12 @@ Documentar todo el codigo
 
 Crear manual de usuario
 
+Acentos en tooltips y notis
+
+Invalid date in maints by date range if cond
+
+Remover tipo de mantenimiento a realizar cuando se crea un mantenimiento
+
 fix user_maint not working  (Done)
 
 Posibility to remove pagination on inventory and maint and only show 30 devices 

@@ -1,3 +1,9 @@
+/**
+ * It takes a date string in the format of "YYYY-MM-DD" and returns a date string in the format of
+ * "Month DD, YYYY".
+ * 
+ * @return A string with the date in the format: "day month year"
+ */
 export const Fecha = fecha =>{
     const fechaNueva = new Date(fecha+"T00:00:00")
     const opciones = {

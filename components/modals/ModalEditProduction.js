@@ -6,32 +6,39 @@ import { IconId } from "@tabler/icons";
 import Notifications from "../Notifications";
 import api from "../../services/api";
 
-const ModalEditProduction = ({ productionToEdit,closeModal4}) => {
-  const id_production = productionToEdit.id
-  const production_name = productionToEdit.attributes.name
+const ModalEditProduction = ({ productionToEdit, closeModal4 }) => {
+  const id_production = productionToEdit.id;
+  const production_name = productionToEdit.attributes.name;
   useEffect(() => {
     init();
   }, []);
 
-  async function init(){}
-  
-  async function updateProduction(){
-    const body = {
-        data:{
-            name: form.values.name
-        }
-    }
-    try{
-        await api.updateProduction(id_production,body)
-        Notifications.success("Se ha editado el area de Produccion " + production_name +" con exito")
-        closeModal4()
-    }catch(error){
-        Notifications.error("Error al editar el area de Produccion " + id_production)
+  async function init() {}
 
+  /**
+   * When the user clicks the button, the function will update the production name in the database and
+   * then close the modal.
+   */
+  async function updateProduction() {
+    const body = {
+      data: {
+        name: form.values.name,
+      },
+    };
+    try {
+      await api.updateProduction(id_production, body);
+      Notifications.success(
+        "Se ha editado el area de Produccion " + production_name + " con exito"
+      );
+      closeModal4();
+    } catch (error) {
+      Notifications.error(
+        "Error al editar el area de Produccion " + id_production
+      );
     }
   }
 
-  
+  /* A form that is being submitted to the function updateProduction. */
   const form = useForm({
     initialValues: {
       name: productionToEdit.attributes.name,
@@ -39,7 +46,7 @@ const ModalEditProduction = ({ productionToEdit,closeModal4}) => {
     validate: {},
   });
 
-
+  /* A form that is being submitted to the function updateProduction. */
   return (
     <form onSubmit={form.onSubmit(updateProduction)}>
       <TextInput

@@ -38,9 +38,14 @@ const ModalMaintHistory = ({ deviceToMaintHistory }) => {
     return d.attributes.device_id;
   });
 
+  /**
+   * "This function updates the maintenance with the data from the form"
+   * </code>
+   */
   async function updateMaintenance() {
     const body = {
       data: {
+       /* A form value. */
         motive: form.values.motive,
         user_request: form.values.user_request,
         user_maintenance: form.values.user_maintenance,
@@ -53,6 +58,7 @@ const ModalMaintHistory = ({ deviceToMaintHistory }) => {
         user_request_name: form.values.user_request_name,
       },
     };
+    /* Trying to update the maintenance with the data from the form. */
     try {
       await api.updateMaintenance(id_maint, body);
       Notifications.success("Se ha realizado el mantenimiento con exito");
@@ -62,6 +68,7 @@ const ModalMaintHistory = ({ deviceToMaintHistory }) => {
     }
   }
 
+  /* A form that is being created with the initial values of the maintenance that is being updated. */
   const form = useForm({
     initialValues: {
       device_id: deviceToMaintHistory.attributes.device_id,

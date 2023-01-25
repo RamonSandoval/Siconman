@@ -10,34 +10,42 @@ import { useSetState } from "@mantine/hooks";
 const ModalEditDevice = ({ deviceToEdit, closeModal2 }) => {
   const id_edit = deviceToEdit.id;
   const [arrayDep, setarrayDep] = useState([]);
-  const [arrayProd, setarrayProd] = useState([])
+  const [arrayProd, setarrayProd] = useState([]);
   const [activeProd, setActiveProd] = useState(true);
   const [activeDep, setActiveDep] = useState(true);
-  const [depValue,setDepValue] = useState(deviceToEdit.attributes.department.data?.id)
-  const [prodValue,setProdValue] = useState(deviceToEdit.attributes.production.data?.id)
-  const [test1,setTest1] = useState('')
+  const [depValue, setDepValue] = useState(
+    deviceToEdit.attributes.department.data?.id
+  );
+  const [prodValue, setProdValue] = useState(
+    deviceToEdit.attributes.production.data?.id
+  );
 
-  
   useEffect(() => {
-    
     init();
   }, [deviceToEdit.attributes]);
 
+  /**
+   * When the page loads, get the list of departments and the list of productions from the API, and
+   * then set the state of the arrayDep and arrayProd variables to the data returned from the API.
+   */
   async function init() {
-   
     const listDepartment = await api.departmentsList(1);
     setarrayDep(listDepartment.data);
-    const listProd = await api.productionList(1)
-    setarrayProd(listProd.data)
+    const listProd = await api.productionList(1);
+    setarrayProd(listProd.data);
   }
 
+  /**
+   * It takes the values from the form and sends them to the API to update the device.
+   * </code>
+   */
   async function updateDevice() {
     const body = {
       data: {
         device_id: form.values.device_id,
         department: form.values.department_name,
-        model: form.values.model.replace(/ /g,''),
-        production: form.values.name
+        model: form.values.model.replace(/ /g, ""),
+        production: form.values.name,
       },
     };
 
@@ -52,12 +60,13 @@ const ModalEditDevice = ({ deviceToEdit, closeModal2 }) => {
     }
   }
 
+  /* A form that is being created with the initial values of the device to be edited. */
   const form = useForm({
     initialValues: {
       device_id: deviceToEdit.attributes.device_id,
       department_name: depValue,
       model: deviceToEdit.attributes.model,
-      name:  prodValue,
+      name: prodValue,
     },
     validate: {
       /* device_id: (value) => 
@@ -68,17 +77,19 @@ const ModalEditDevice = ({ deviceToEdit, closeModal2 }) => {
   function departmentAdd() {
     setActiveDep(false);
     setActiveProd(true);
-    setProdValue(deviceToEdit.attributes)
-    
+    setProdValue(deviceToEdit.attributes);
   }
+  /**
+   * If the user clicks the add button, the production input field is disabled, the department input
+   * field is enabled, and the department input field is cleared.
+   */
   function productionAdd() {
     setActiveProd(false);
     setActiveDep(true);
-    setDepValue(null)    
-    
-   
+    setDepValue(null);
   }
 
+  /* Returning a form with a submit button. */
   return (
     <>
       <form onSubmit={form.onSubmit(updateDevice)}>
@@ -89,24 +100,23 @@ const ModalEditDevice = ({ deviceToEdit, closeModal2 }) => {
           icon={<IconId />}
         />
         <Center>
-       
-        <Radio.Group
-          pt={12}
-          label="Selecciona la nueva ubicacion del equipo"
-          {...form.getInputProps("user_request".valueOf(Radio))}
-        >
-          <Radio
-            onClick={() => departmentAdd()}
-            value="yes"
-            label="Departamento"
-          />
-          <Radio
-            onClick={() => productionAdd()}
-            value="no"
-            label="Produccion"
-          />
-        </Radio.Group>
-      </Center>
+          <Radio.Group
+            pt={12}
+            label="Selecciona la nueva ubicacion del equipo"
+            {...form.getInputProps("user_request".valueOf(Radio))}
+          >
+            <Radio
+              onClick={() => departmentAdd()}
+              value="yes"
+              label="Departamento"
+            />
+            <Radio
+              onClick={() => productionAdd()}
+              value="no"
+              label="Produccion"
+            />
+          </Radio.Group>
+        </Center>
         <Select
           label="Departamento / Area"
           icon={<IconPin />}
@@ -120,15 +130,16 @@ const ModalEditDevice = ({ deviceToEdit, closeModal2 }) => {
           })}
         />
         <Select
-        label="Area de Produccion"
-        icon={<IconWorld/>}
-        disabled={activeProd}
-        clearable
-        searchable
-        {...form.getInputProps("name")}
-        data={arrayProd.map((f) => {
-          return { value: f.id, label: f.attributes.name }})}
-        /> 
+          label="Area de Produccion"
+          icon={<IconWorld />}
+          disabled={activeProd}
+          clearable
+          searchable
+          {...form.getInputProps("name")}
+          data={arrayProd.map((f) => {
+            return { value: f.id, label: f.attributes.name };
+          })}
+        />
         <TextInput
           pb={20}
           label="Modelo"

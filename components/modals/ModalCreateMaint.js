@@ -34,6 +34,12 @@ const ModalCreateMaint = ({ deviceToMaintNew, closeModal3 }) => {
     init();
   }, []);
 
+  /**
+   * When the page loads, get the list of devices from the API, then get the list of departments from
+   * the API, then get the list of users from the API, then set the state of the array of users, then
+   * set the state of the array of departments, then set the state of the array of devices, then set
+   * the state of the array of data devices.
+   */
   async function init() {
     const list = await api.devicesList(1);
     const list2 = await api.devicesList(2);
@@ -45,14 +51,11 @@ const ModalCreateMaint = ({ deviceToMaintNew, closeModal3 }) => {
     setArrayDataDev(list.data.concat(list2.data));
   }
 
-  var devicesListSelect = arrayDataDev.map((d) => {
-    return d.attributes.device_id;
-  });
 
-  var usersList = arrayUsers.map((d) => {
-    return d.username;
-  });
-
+  /**
+   * It sends a POST request to the API with the data from the form.
+   * </code>
+   */
   async function addMaintenance() {
     const body = {
       data: {
@@ -83,6 +86,7 @@ const ModalCreateMaint = ({ deviceToMaintNew, closeModal3 }) => {
     }
   }
 
+  /* A form that is being created. */
   const form = useForm({
     initialValues: {
       device_id: deviceToMaintNew.attributes.device_id,
@@ -102,10 +106,8 @@ const ModalCreateMaint = ({ deviceToMaintNew, closeModal3 }) => {
         value === null ? console.log("No tiene departamento") : null,
     },
   });
-  var departmentsListSelect = arrayDep.map((d) => {
-    return d.attributes.department_name;
-  });
 
+  /* A form that is being created. */
   return (
     <form onSubmit={form.onSubmit(addMaintenance)}>
       <div className={stylesModal.modal__container}>
@@ -149,7 +151,7 @@ const ModalCreateMaint = ({ deviceToMaintNew, closeModal3 }) => {
             {...form.getInputProps("maintenance_type")}
           />
 
-<Radio.Group
+          <Radio.Group
             {...form.getInputProps("type_maint".valueOf(Radio))}
             withAsterisk
           >

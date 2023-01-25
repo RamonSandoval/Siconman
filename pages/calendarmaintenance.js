@@ -1,12 +1,17 @@
-import { Center } from "@mantine/core";
 import React from "react";
 import Layout from "../components/Layout";
 import MaintCalendar from "../components/MaintCalendar";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { getSession } from "next-auth/react";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import SignIn from "./auth/sign-in";
 
+/**
+ * If the session is null, then display the SignIn component, otherwise display the MaintCalendar
+ * component.
+ * 
+ * @return The session is being returned.
+ */
 const CalendarMaint = () => {
   const { data: session } = useSession();
   useEffect(() => {
@@ -26,6 +31,16 @@ const CalendarMaint = () => {
     </>
   );
 };
+
+
+/**
+ * If the user is not logged in, redirect them to the sign-in page
+ * 
+ * @param context The context object that Next.js provides to getInitialProps.
+ * 
+ * @return The return value is an object with a redirect property.
+ */
+
 export const getServerSideProps = async (context) => {
   const session = await getSession(context);
 
