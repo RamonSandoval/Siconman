@@ -40,7 +40,11 @@ if condition white space on creating anything (Done)
 
 Validaciones espacios en blanco (Done)
 
+Active tab in Header
+
 Show default value on device edit (Done)
+
+Acentos En login
 
 Se agro en cada notificacion el id del equipo o departamento (Done)
 
