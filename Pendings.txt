@@ -40,9 +40,11 @@ if condition white space on creating anything (Done)
 
 Validaciones espacios en blanco (Done)
 
-Show default value on device edit
+Show default value on device edit (Done)
 
-Fix default value wipe on edit anything
+Se agro en cada notificacion el id del equipo o departamento (Done)
+
+Fix default value wipe on edit anything (Done?)
 
 Show in text area department area only one value if condition (Done)
 
@@ -58,14 +60,15 @@ Strapi permissions
 
 BLock api requests strapi
 
-acentos y signos de interrogacion
+acentos y signos de interrogacion (Done)
 
 Documentar todo el codigo 
 
 Crear manual de usuario
 
-fix user_maint not working 
+fix user_maint not working  (Done)
 
+Posibility to remove pagination on inventory and maint and only show 30 devices 
 Agregar pie chart de Mantenimientos correctivos y preventivos (Done)
 
 show in table next to production area "Produccion - Area Light" (Done)

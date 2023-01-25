@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, TextInput, Center, Select, Radio } from "@mantine/core";
+import { Button, TextInput, Center, Select, Radio, Text } from "@mantine/core";
 import { IconClipboardList, IconId, IconPin, IconWorld } from "@tabler/icons";
 import api from "../../services/api";
 import { useForm } from "@mantine/form";
@@ -13,14 +13,18 @@ const ModalEditDevice = ({ deviceToEdit, closeModal2 }) => {
   const [arrayProd, setarrayProd] = useState([])
   const [activeProd, setActiveProd] = useState(true);
   const [activeDep, setActiveDep] = useState(true);
-
+  const [depValue,setDepValue] = useState(deviceToEdit.attributes.department.data?.id)
+  const [prodValue,setProdValue] = useState(deviceToEdit.attributes.production.data?.id)
+  const [test1,setTest1] = useState('')
 
   
   useEffect(() => {
+    
     init();
-  }, []);
+  }, [deviceToEdit.attributes]);
 
   async function init() {
+   
     const listDepartment = await api.departmentsList(1);
     setarrayDep(listDepartment.data);
     const listProd = await api.productionList(1)
@@ -48,13 +52,12 @@ const ModalEditDevice = ({ deviceToEdit, closeModal2 }) => {
     }
   }
 
-  const [depValue,setDepValue] = useState(deviceToEdit.attributes.department.data?.id)
   const form = useForm({
     initialValues: {
       device_id: deviceToEdit.attributes.device_id,
       department_name: depValue,
       model: deviceToEdit.attributes.model,
-      name:  deviceToEdit.attributes.production.data?.id,
+      name:  prodValue,
     },
     validate: {
       /* device_id: (value) => 
@@ -65,12 +68,14 @@ const ModalEditDevice = ({ deviceToEdit, closeModal2 }) => {
   function departmentAdd() {
     setActiveDep(false);
     setActiveProd(true);
-
+    setProdValue(deviceToEdit.attributes)
+    
   }
   function productionAdd() {
     setActiveProd(false);
     setActiveDep(true);
-    setDepValue(null)
+    setDepValue(null)    
+    
    
   }
 
@@ -84,6 +89,7 @@ const ModalEditDevice = ({ deviceToEdit, closeModal2 }) => {
           icon={<IconId />}
         />
         <Center>
+       
         <Radio.Group
           pt={12}
           label="Selecciona la nueva ubicacion del equipo"

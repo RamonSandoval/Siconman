@@ -15,7 +15,6 @@ import { useState, useEffect } from "react";
 import stylesModal from "../../styles/ModalRegisterNewMaint.module.css";
 import api from "../../services/api";
 import Notifications from "../Notifications";
-import { Fecha, FechaUS } from "../../helpers";
 const ModalMaint = ({ deviceToMaint, closeModal2 }) => {
   const [arrayDevices, setarrayDevices] = useState([]);
   const [arrayDataDev, setArrayDataDev] = useState([]);
@@ -24,6 +23,8 @@ const ModalMaint = ({ deviceToMaint, closeModal2 }) => {
   const [arrayUsers, setarrayUsers] = useState([]);
   const id_maint = deviceToMaint.attributes?.maintenance?.data?.id;
   const dateToday = new Date()
+  const pc = deviceToMaint.attributes.device_id
+
   useEffect(() => {
     init();
   }, []);
@@ -60,11 +61,11 @@ const ModalMaint = ({ deviceToMaint, closeModal2 }) => {
     };
     try {
       await api.updateMaintenance(id_maint, body);
-      Notifications.success("Se ha realizado el mantenimiento con exito");
+      Notifications.success("Se ha realizado el mantenimiento con éxito al equipo "+ pc);
       init();
       closeModal2();
     } catch (error) {
-      Notifications.error("Error al realizar el Mantenimiento");
+      Notifications.error("Error al realizar el Mantenimiento al equipo" + pc);
       console.log(error);
     }
   }
@@ -81,6 +82,10 @@ const ModalMaint = ({ deviceToMaint, closeModal2 }) => {
       department_name: (value) =>
         value === null ? console.log("No tiene departamento") : null,
     },
+  });
+
+  var usersListP = arrayUsers.map((d) => {
+    return d.username
   });
 
   return (
@@ -151,6 +156,7 @@ const ModalMaint = ({ deviceToMaint, closeModal2 }) => {
             label="Notas"
             {...form.getInputProps("notes")}
           />
+           
           <DatePicker
             allowFreeInput
             placeholder="Elegir fecha"
@@ -172,10 +178,9 @@ const ModalMaint = ({ deviceToMaint, closeModal2 }) => {
           <Select
             label="Realizo Mantenimiento"
             {...form.getInputProps("user_maintenance")}
-            data={arrayUsers.map((f) => {
-              return { value: f.id,label: f.username };
-            })}
+            data={usersListP}
           />
+         
           <Select
             label="Tipo de Mantenimiento proximo"
             searchable
@@ -193,6 +198,7 @@ const ModalMaint = ({ deviceToMaint, closeModal2 }) => {
           
           
           <div className={stylesModal.button}>
+            <Button className={stylesModal.hiddenButton}/>
             <Button
               variant="gradient"
               gradient={{ from: "#00255b", to: "#00255b", deg: 75 }}
