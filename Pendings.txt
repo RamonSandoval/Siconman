@@ -87,7 +87,9 @@ show in table next to production area "Produccion - Area Light" (Done)
 
 Fix max rows in table
 
+order maintTableAll por ultimo mantenimiento 
 
+Revisar acentos
 
 <Tooltip label="Filtrar Mantenimientos">
 
