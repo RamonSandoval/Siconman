@@ -17,11 +17,7 @@ import {
 } from "@mantine/core";
 import { useState, useEffect } from "react";
 import { ThemeIcon } from "@mantine/core";
-import {
-  IconFilter,
-  IconRefresh,
-  IconSearch,
-} from "@tabler/icons";
+import { IconFilter, IconRefresh, IconSearch } from "@tabler/icons";
 import styles from "../styles/StatsByDateRange.module.css";
 import { ActionIcon } from "@mantine/core";
 import { Fecha } from "../helpers";
@@ -218,18 +214,26 @@ const Stats = () => {
                           <td>
                             <Center>{data.attributes.device_id}</Center>
                           </td>
-                          <td>
-                            <Center>
-                              {
-                                data.attributes.department?.data?.attributes
-                                  .department_name
-                              }
-                              {
-                                data.attributes.production?.data?.attributes
-                                  .name
-                              }
-                            </Center>
-                          </td>
+                          {data.attributes.production?.data == null ? (
+                            <td>
+                              <Center>
+                                {
+                                  data.attributes.department?.data?.attributes
+                                    .department_name
+                                }
+                              </Center>
+                            </td>
+                          ) : (
+                            <td>
+                              <Center>
+                                Producción -{" "}
+                                {
+                                  data.attributes.production?.data?.attributes
+                                    .name
+                                }
+                              </Center>
+                            </td>
+                          )}
                           <td>
                             <Center>{data.attributes.model}</Center>
                           </td>

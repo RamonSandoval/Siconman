@@ -1,5 +1,3 @@
-import React from "react";
-import Layout from "../components/Layout";
 import { Center,Tabs } from "@mantine/core";
 import styles from "../styles/Tabs.module.css";
 import {
@@ -8,9 +6,6 @@ import {
   IconStatusChange,
 } from "@tabler/icons";
 import DepartmentAreaStats from "../components/Lists/DepartmentAreaStats";
-import { useSession } from "next-auth/react";
-import { getSession } from "next-auth/react";
-import { useEffect } from "react";
 import SignIn from "./auth/sign-in";
 import StatsDepartments from "../components/StatsDepartments";
 import ProductionAreaStats from "../components/Lists/ProductionAreaStats";
@@ -18,12 +13,116 @@ import StatsProduction from "../components/StatsProduction";
 import StatsByDateRange from "../components/StatsByDateRange";
 import QualityStats from "../components/QualityStats";
 import MaintStat from "../components/MaintStat";
+import {
+  createStyles,
+  Header,
+  Menu,
+  Group,
+  Button,
+  Divider,
+  Box,
+  Burger,
+  Drawer,
+  ScrollArea,
+  Image,
+  Text,
+  ActionIcon,
+} from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import Link from "next/link";
+import {
+  IconLogout,
+} from "@tabler/icons";
+import React, { useEffect, useState } from "react";
+import styles2 from "../styles/NavBar.module.css";
+import { signOut, useSession } from "next-auth/react";
+import { getSession } from 'next-auth/react';
+import Head from "next/head";
 
+const useStyles = createStyles((theme) => ({
+
+  
+  link: {
+    display: "flex",
+    alignItems: "center",
+    height: "100%",
+    paddingLeft: theme.spacing.md,
+    paddingRight: theme.spacing.md,
+    textDecoration: "none",
+    color: theme.colorScheme === "dark" ? theme.white : theme.black,
+    fontWeight: 500,
+    fontSize: theme.fontSizes.sm,
+
+    [theme.fn.smallerThan("sm")]: {
+      height: 42,
+      display: "flex",
+      alignItems: "center",
+      width: "100%",
+    },
+
+    ...theme.fn.hover({
+      backgroundColor:
+        theme.colorScheme === "dark"
+          ? theme.colors.dark[6]
+          : theme.colors.gray[0],
+    }),
+  },
+
+  subLink: {
+    width: "100%",
+    padding: `${theme.spacing.xs}px ${theme.spacing.md}px`,
+    borderRadius: theme.radius.md,
+
+    ...theme.fn.hover({
+      backgroundColor:
+        theme.colorScheme === "dark"
+          ? theme.colors.dark[7]
+          : theme.colors.gray[0],
+    }),
+
+    "&:active": theme.activeStyles,
+  },
+
+  dropdownFooter: {
+    backgroundColor:
+      theme.colorScheme === "dark"
+        ? theme.colors.dark[7]
+        : theme.colors.gray[0],
+    margin: -theme.spacing.md,
+    marginTop: theme.spacing.sm,
+    padding: `${theme.spacing.md}px ${theme.spacing.md * 2}px`,
+    paddingBottom: theme.spacing.xl,
+    borderTop: `1px solid ${
+      theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.colors.gray[1]
+    }`,
+  },
+
+  hiddenMobile: {
+    [theme.fn.smallerThan("lg")]: {
+      display: "none",
+    },
+  },
+
+  hiddenDesktop: {
+    [theme.fn.largerThan("lg")]: {
+      display: "none",
+    },
+  },
+}));
 /**
  * If the session is null, return. Otherwise, log the session.jwt.
  */
 const reports = () => {
   const { data: session } = useSession();
+  const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
+    useDisclosure(false);
+  const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
+  const { classes, theme } = useStyles();
+  /* A hook that allows you to use state in a functional component. */
+  const [opened, setOpened] = useState(false);
+
+  const [openedMaint, setOpenedMaint] = useState(false);
+const [active, setActive] = useState({ borderBottom: '2px solid indigo' });
   useEffect(() => {
     if (session == null) return;
     console.log("session.jwt", session.jwt);
@@ -32,8 +131,139 @@ const reports = () => {
   /* Rendering the page. */
   return (
     <>
+    <Head>
+        <title>Reportes</title>
+      </Head>
       <h1>{session ? "" : <SignIn />}</h1>
-      <Layout tituloPagina="Reportes" />
+     <Box pb={70}>
+        <Header className={styles2.header__container} height={60} px="md">
+          <Group className={styles2.groupContainerMain} sx={{ height: "100%" }}>
+            <div>
+              <a href="/">
+              <Image className={styles2.logo}
+                alt="Dialight Logo"
+                src="/assets/img/logos/logo_siconmandial.png"
+                width={200}
+              ></Image>
+              </a>
+            </div>
+
+            <div className={styles2.groupContainer} >
+            <Group
+              sx={{ height: "100%" }}
+              spacing={30}
+              className={classes.hiddenMobile}
+            >
+              <a href="/" aria-current="page" className={styles2.link}>
+                Inicio
+              </a>
+              
+              <a href="/maintenance" className={styles2.link}>
+                Mantenimientos
+              </a>
+
+              <a href="/calendarmaintenance" className={styles2.link}>
+                Calendario
+              </a>
+              <a href="/inventory" className={styles2.link}>
+                Inventario
+              </a>
+              <a href="/reports" style={active}  className={styles2.link}>
+                Reportes
+              </a>
+              <a href="/config" className={styles2.link}>
+              Configuración
+              </a>
+             
+              <Menu shadow="md" width={290}>
+                <Menu.Target>
+                    <ActionIcon>
+                      <IconLogout color="black"/>
+                    </ActionIcon>
+                    
+                </Menu.Target>
+
+                <Menu.Dropdown>
+                  <Menu.Label>Opciones</Menu.Label>
+                  <Menu.Item onClick={signOut} icon={<IconLogout size={14} />}>
+                    Cerrar Sesion
+                  </Menu.Item>
+                  
+                </Menu.Dropdown>
+              </Menu>
+            </Group>
+            </div>
+            <Group className={classes.hiddenMobile}>
+            </Group>
+
+            <Burger
+              opened={drawerOpened}
+              onClick={toggleDrawer}
+              className={classes.hiddenDesktop}
+            />
+          </Group>
+          
+        </Header>
+
+        <Drawer
+          opened={drawerOpened}
+          onClose={closeDrawer}
+          size="100%"
+          padding="md"
+          title="Opciones"
+          className={classes.hiddenDesktop}
+          zIndex={1000000}
+        >
+          <ScrollArea sx={{ height: "calc(100vh - 60px)" }} mx="-md">
+            <Divider
+              my="sm"
+              color={theme.colorScheme === "dark" ? "dark.5" : "gray.1"}
+            />
+
+            <a href="/" className={classes.link}>
+              Inicio
+            </a>
+            <a href="/maintenance" className={classes.link}>
+              Mantenimientos
+            </a>
+
+            <a href="/calendarmaintenance" className={classes.link}>
+              <Box component="span" mr={5}>
+                Calendario
+              </Box>
+            </a>
+            <a href="/inventory" className={classes.link}>
+              Inventario
+            </a>
+            <a href="reports" className={classes.link}>
+              Reportes
+            </a>
+            <a href="/config" className={classes.link}>
+            Configuración
+            </a>
+
+            <Divider
+              my="sm"
+              color={theme.colorScheme === "dark" ? "dark.5" : "gray.1"}
+            />
+            <Menu shadow="md" width={290}>
+                <Menu.Target>
+                  <Button color="dark" variant="transparent">
+                      {/* {session.user.email}  */}
+                  </Button>
+                </Menu.Target>
+
+                <Menu.Dropdown>
+                  <Menu.Label>Opciones</Menu.Label>
+                  <Menu.Item onClick={signOut} icon={<IconLogout size={14} />}>
+                    Cerrar Sesion
+                  </Menu.Item>
+                  
+                </Menu.Dropdown>
+              </Menu>
+          </ScrollArea>
+        </Drawer>
+      </Box>
 
       {session && (
         <Tabs defaultValue="mantMes" className={styles.tabs__container}>
@@ -46,7 +276,7 @@ const reports = () => {
               Equipos por Departamento
             </Tabs.Tab>
             <Tabs.Tab icon={<IconBuilding size={14} />} value="mantProd">
-              Equipos por Area de Produccion
+              Equipos por Área de Producción
             </Tabs.Tab>
 
             <Tabs.Tab icon={<IconStatusChange size={14} />} value="quality">
@@ -81,7 +311,7 @@ const reports = () => {
           >
             <StatsProduction />
             <Center pt={50}>
-              <h4>Listado de Equipos por Area de Produccion</h4>
+              <h4>Listado de Equipos por Área de Producción</h4>
             </Center>
             <ProductionAreaStats />
           </Tabs.Panel>

@@ -22,13 +22,13 @@ const ModalAddProduction = ({ closeModal3 }) => {
       /* Sending the data to the API. */
       await api.addProduction(body);
       Notifications.success(
-        "Se ha agregado el area " + form.values.name + " correctamente"
+        "Se ha agregado el área " + form.values.name + " correctamente"
       );
       closeModal3();
     } catch (error) {
      /* A notification that is being called in the Modal component. */
       Notifications.error(
-        "Error al crear el area, ya se encuentra registrado?"
+        "Error al crear el área, ya se encuentra registrado?"
       );
       console.error(error);
     }
@@ -55,7 +55,6 @@ const ModalAddProduction = ({ closeModal3 }) => {
         icon={<IconPin />}
       />
       <Center pt={10}>
-        /* A button that is being called in the Modal component. */
         <Button
           variant="gradient"
           gradient={{ from: "#00255b", to: "#00255b", deg: 75 }}

@@ -1,6 +1,9 @@
 import '../styles/globals.css'
 import {SessionProvider} from 'next-auth/react'
 import { NotificationsProvider } from '@mantine/notifications';
+import Layout from '../components/Layout';
+import TableDevices from '../components/TableDevices';
+import { Nav } from '../components/Header';
 
 function MyApp({ Component, pageProps: { session, ...pageProps} }) {
   /* A React Fragment. It is a way to return multiple elements without a wrapper div. */

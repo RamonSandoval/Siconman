@@ -61,7 +61,7 @@ const ProductionAreaStats = () => {
           <thead>
             <tr>
               <th>
-                <Center>Area de Produccion</Center>
+                <Center>Área de Producción</Center>
               </th>
               <th>
                 <Center>Cantidad de Equipos</Center>

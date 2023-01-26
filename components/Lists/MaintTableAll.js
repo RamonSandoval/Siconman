@@ -82,30 +82,30 @@ const MaintTableAll = () => {
 
   const { classes, cx } = useStyles();
 
- /* Calling the init() function when the component mounts. */
+  /* Calling the init() function when the component mounts. */
   useEffect(() => {
     init();
   }, []);
 
- /**
-  * When the page loads, get the list of devices from the API and store it in the arrayDevices
-  * variable.
-  */
+  /**
+   * When the page loads, get the list of devices from the API and store it in the arrayDevices
+   * variable.
+   */
   async function init() {
     const list = await api.devicesList(activePage);
     setarrayDevices(list.data);
     setarrayDataDev(list.data);
   }
-/**
- * If the date of the first object is less than the date of the second object, return -1. If the date
- * of the first object is greater than the date of the second object, return 1. If the dates are equal,
- * return 0.
- * 
- * @param a The first object to be compared.
- * @param b the current item in the array
- * 
- * @return the result of the comparison.
- */
+  /**
+   * If the date of the first object is less than the date of the second object, return -1. If the date
+   * of the first object is greater than the date of the second object, return 1. If the dates are equal,
+   * return 0.
+   *
+   * @param a The first object to be compared.
+   * @param b the current item in the array
+   *
+   * @return the result of the comparison.
+   */
 
   function compare_date(a, b) {
     if (a.date < b.date) {
@@ -145,7 +145,7 @@ const MaintTableAll = () => {
 
   /**
    * It filters the arrayDataDev array and returns the result to the setarrayDevices function.
-   * 
+   *
    * @param search is the value of the input
    */
   const filtrar = (search) => {
@@ -178,10 +178,10 @@ const MaintTableAll = () => {
     setarrayDevices(resultado);
   };
 
- /**
-  * The function is called when the user clicks the button. It then calls the init() function, which is
-  * the function that creates the pagination.
-  */
+  /**
+   * The function is called when the user clicks the button. It then calls the init() function, which is
+   * the function that creates the pagination.
+   */
   function actualizar() {
     console.log(activePage + 1);
     init();
@@ -252,15 +252,23 @@ const MaintTableAll = () => {
                       <td bgcolor={maintCompare}>
                         <Center>{data.attributes.device_id}</Center>
                       </td>
-                      <td>
-                        <Center>
-                          {
-                            data.attributes.department?.data?.attributes
-                              .department_name
-                          }
-                          {data.attributes.production?.data?.attributes.name}
-                        </Center>
-                      </td>
+                      {data.attributes.production?.data == null ? (
+                        <td>
+                          <Center>
+                            {
+                              data.attributes.department?.data?.attributes
+                                .department_name
+                            }
+                          </Center>
+                        </td>
+                      ) : (
+                        <td>
+                          <Center>
+                            Produccion -{" "}
+                            {data.attributes.production?.data?.attributes.name}
+                          </Center>
+                        </td>
+                      )}
                       <td>
                         <Center>{data.attributes.model}</Center>
                       </td>

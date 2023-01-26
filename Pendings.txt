@@ -34,17 +34,19 @@ Cambiar dispositivo a equipo (Done)
 
 Se ordenaron listas por odren alfabetico (Done)
 
-Agregar mas colores hex a las graficas
+Agregar mas colores hex a las graficas (Done)
 
 if condition white space on creating anything (Done)
 
 Validaciones espacios en blanco (Done)
 
-Active tab in Header
+Active tab in Header (Done)
 
 Show default value on device edit (Done)
 
-Acentos En login
+Acentos En login (Done)
+
+Historail mantenimiento correctivo o preventivo
 
 Se agro en cada notificacion el id del equipo o departamento (Done)
 
@@ -74,7 +76,7 @@ Acentos en tooltips y notis (Done)
 
 Invalid date in maints by date range if cond (Done)
 
-Remover tipo de mantenimiento a realizar cuando se crea un mantenimiento
+Remover tipo de mantenimiento a realizar cuando se crea un mantenimiento (Done)
 
 fix user_maint not working  (Done)
 

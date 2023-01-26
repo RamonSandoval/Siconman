@@ -45,7 +45,7 @@ const ModalMaintHistory = ({ deviceToMaintHistory }) => {
   async function updateMaintenance() {
     const body = {
       data: {
-       /* A form value. */
+        /* A form value. */
         motive: form.values.motive,
         user_request: form.values.user_request,
         user_maintenance: form.values.user_maintenance,
@@ -111,6 +111,9 @@ const ModalMaintHistory = ({ deviceToMaintHistory }) => {
           .user_maintenance,
       fault: deviceToMaintHistory.attributes?.maintenance?.data?.fault,
       name: deviceToMaintHistory.attributes?.production?.data?.attributes.name,
+      type_maint:
+        deviceToMaintHistory.attributes?.maintenance?.data?.attributes
+          .type_maint,
     },
     validate: {},
   });
@@ -152,10 +155,16 @@ const ModalMaintHistory = ({ deviceToMaintHistory }) => {
             {...form.getInputProps("motive")}
             data={[]}
           />
+          <Radio.Group
+            {...form.getInputProps("type_maint".valueOf(Radio))}
+          >
+            <Radio disabled value="Correctivo" label="Correctivo" />
+            <Radio disabled  value="Preventivo" label="Preventivo" />
+          </Radio.Group>
           <div className={stylesModal.modal__solicitant}>
             <Radio.Group
               disabled
-              label="Solicitio Usuario?"
+              label="Solicito Usuario?"
               {...form.getInputProps("user_request".valueOf(Radio))}
             >
               <Radio readOnly disabled value="yes" label="Si" />
@@ -175,7 +184,11 @@ const ModalMaintHistory = ({ deviceToMaintHistory }) => {
 
           {deviceToMaintHistory.attributes.maintenance?.data?.attributes
             .maintenance_date == null ? (
-            <TextInput label="Mantenimiento Realizado el: " readOnly placeholder="Por asignar"></TextInput>
+            <TextInput
+              label="Mantenimiento Realizado el: "
+              readOnly
+              placeholder="Por asignar"
+            ></TextInput>
           ) : (
             <TextInput
               readOnly

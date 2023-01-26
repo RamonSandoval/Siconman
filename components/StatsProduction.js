@@ -94,7 +94,7 @@ const StatsProduction = () => {
   return (
     <>
       <Center>
-        <h4>Equipos por Area de Produccion</h4>
+        <h4>Equipos por Área de Producción</h4>
       </Center>
       <div>
         <Bar height={100} data={data} options={options} />

@@ -103,10 +103,7 @@
   line-height: 1.5;
 }
 
-.logo {
-  height: 1em;
-  margin-left: 0.5rem;
-}
+
 
 @media (max-width: 600px) {
   .grid {
@@ -127,13 +124,22 @@
     filter: invert(1);
   }
 }
-.statsDepartmentsContainer{
-}
-.statsProductionContainer{
-}
 .statsContainer{
   height: auto;
   align-items: center;
   justify-content: center;
   display: flex;
+}
+.hover__link{
+  cursor: pointer;
+}
+.header__container{
+  position: fixed;
+  /*background-color: rgb(241, 241, 241);*/
+}
+.logo{
+  float: left;
+}
+.groupContainer{
+  margin: 0 auto;
 }

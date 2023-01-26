@@ -151,7 +151,7 @@ const TableDevices = () => {
   /* A React component that is rendering a table with data from an API. */
   return (
     <>
-      <Layout tituloPagina="Inicio" />
+     {/*  <Layout tituloPagina="Inicio" /> */}
       <Center>
         <div className={styles.table}>
           <div className={styles.table__title}>
@@ -245,15 +245,21 @@ const TableDevices = () => {
                         <td>
                           <Center>{data.attributes.device_id}</Center>
                         </td>
-                        <td>
-                          <Center>
-                            {
-                              data.attributes.department?.data?.attributes
-                                .department_name
-                            }
-                            {data.attributes.production?.data?.attributes.name}
-                          </Center>
-                        </td>
+                        {data.attributes.production?.data == null ? 
+                  <td>
+                    <Center>
+                      {
+                        data.attributes.department?.data?.attributes
+                          .department_name
+                      }
+                    </Center>
+                  </td> :
+                  <td>
+                  <Center>
+                  Produccion - {data.attributes.production?.data?.attributes.name}
+                    
+                  </Center>
+                </td>}
                         <td>
                           <Center>{data.attributes.model}</Center>
                         </td>
