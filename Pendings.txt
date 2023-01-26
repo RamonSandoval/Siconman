@@ -85,5 +85,9 @@ Agregar pie chart de Mantenimientos correctivos y preventivos (Done)
 
 show in table next to production area "Produccion - Area Light" (Done)
 
+Fix max rows in table
+
+
+
 <Tooltip label="Filtrar Mantenimientos">
 
