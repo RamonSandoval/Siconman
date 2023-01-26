@@ -39,7 +39,7 @@ export default function SignIn() {
     });
     if (result.ok) {
       router.replace("/");
-      Notifications.success("Ha iniciado sesion con exito");
+      Notifications.success("Ha iniciado sesión con éxito");
       return;
     }
     Notifications.error("Correo o Contraseña incorrecta");
@@ -96,10 +96,10 @@ export default function SignIn() {
                     <TextInput
                       {...form.getInputProps('email')}
                       className={styles.inputs}
-                      label="Correo electronico"
+                      label="Correo electrónico"
                       placeholder="ejemplo@gmail.com"
                       icon={<IconUser size={14} />}
-                      description="Ingrese su correo electronico"
+                      description="Ingrese su correo electrónico"
                     />
                     <PasswordInput
                       {...form.getInputProps('password')}

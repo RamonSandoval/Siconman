@@ -137,26 +137,26 @@ export function Nav() {
               spacing={30}
               className={classes.hiddenMobile}
             >
-              <a href="/" className={styles.link}>
+              <a href="/" aria-current="inicio" className={styles.link}>
                 Inicio
               </a>
               
-              <Link href="/maintenance" className={classes.link}>
+              <a href="/maintenance" className={styles.link}>
                 Mantenimientos
-              </Link>
+              </a>
 
-              <Link href="/calendarmaintenance" className={classes.link}>
+              <a href="/calendarmaintenance" className={styles.link}>
                 Calendario
-              </Link>
-              <Link href="/inventory" className={classes.link}>
+              </a>
+              <a href="/inventory" className={styles.link}>
                 Inventario
-              </Link>
-              <Link href="/reports" className={classes.link}>
+              </a>
+              <a href="/reports" className={styles.link}>
                 Reportes
-              </Link>
-              <Link href="/config" className={classes.link}>
+              </a>
+              <a href="/config" className={styles.link}>
               Configuración
-              </Link>
+              </a>
              
               <Menu shadow="md" width={290}>
                 <Menu.Target>

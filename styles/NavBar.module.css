@@ -13,3 +13,7 @@
     margin: 0 auto;
 
 }
+.link[aria-current]{
+    text-decoration: underline wavy #f8c348 0.15rem;
+    text-underline-offset: 0.5rem;
+}
