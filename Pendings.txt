@@ -91,5 +91,9 @@ order maintTableAll por ultimo mantenimiento
 
 Revisar acentos
 
+Fix table all devices not working properly
+
+fix api page bug
+
 <Tooltip label="Filtrar Mantenimientos">
 
