@@ -107,11 +107,17 @@ const MaintTableAll = () => {
    * @return the result of the comparison.
    */
 
-  function compare_date(a, b) {
-    if (a.date < b.date) {
+   function compare_date(a, b) {
+    if (
+      a.attributes.maintenance?.data?.attributes?.maintenance_date <
+      b.attributes.maintenance?.data?.attributes?.maintenance_date
+    ) {
       return -1;
     }
-    if (a.date > b.date) {
+    if (
+      a.attributes.maintenance?.data?.attributes?.maintenance_date >
+      b.attributes.maintenance?.data?.attributes?.maintenance_date
+    ) {
       return 1;
     }
     return 0;

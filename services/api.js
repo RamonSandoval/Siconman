@@ -5,8 +5,9 @@ const api = {
     /*---------------------------------STRAPI REQUEST TO COLLECTION TYPES---------------------------------------*/
     /* A function that is returning a promise. GET api content*/
     devicesList: async (pagenum) => {
-        return await conection.GET('/api/devices?pagination[pageSize]=100&populate=%2A&pagination[page]='+pagenum);
-    },
+        return await conection.GET('/api/devices?populate=%2A');
+/*         return await conection.GET('/api/devices?pagination[pageSize]=999&populate=%2A&pagination[page]=1');
+ */    },
     departmentsList: async () => {
         return await conection.GET('/api/departments?pagination[pageSize]=300&populate=%2A');
     },

@@ -30,9 +30,9 @@ const ModalEditDevice = ({ deviceToEdit, closeModal2 }) => {
    * then set the state of the arrayDep and arrayProd variables to the data returned from the API.
    */
   async function init() {
-    const listDepartment = await api.departmentsList(1);
+    const listDepartment = await api.departmentsList();
     setarrayDep(listDepartment.data);
-    const listProd = await api.productionList(1);
+    const listProd = await api.productionList();
     setarrayProd(listProd.data);
   }
 

@@ -102,14 +102,14 @@ const Stats = () => {
 
   function compare_date(a, b) {
     if (
-      a.attributes.maintenance?.data?.attributes?.next_maintenance <
-      b.attributes.maintenance?.data?.attributes?.next_maintenance
+      a.attributes.maintenance?.data?.attributes?.maintenance_date <
+      b.attributes.maintenance?.data?.attributes?.maintenance_date
     ) {
       return -1;
     }
     if (
-      a.attributes.maintenance?.data?.attributes?.next_maintenance >
-      b.attributes.maintenance?.data?.attributes?.next_maintenance
+      a.attributes.maintenance?.data?.attributes?.maintenance_date >
+      b.attributes.maintenance?.data?.attributes?.maintenance_date
     ) {
       return 1;
     }

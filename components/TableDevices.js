@@ -60,10 +60,9 @@ const TableDevices = () => {
 
   async function init() {
     setLoading(true);
-    const list = await api.devicesList(1);
-    const list2 = await api.devicesList(2);
-    setarrayDevices(list.data.concat(list2.data));
-    setarrayDataDev(list.data.concat(list2.data));
+    const list = await api.devicesList();
+    setarrayDevices(list.data);
+    setarrayDataDev(list.data);
   }
 
   /**
@@ -106,10 +105,6 @@ const TableDevices = () => {
         e.attributes.department?.data?.attributes.department_name
           .toString()
           .toLowerCase()
-          .includes(search.toLowerCase()) ||
-        e.attributes.model
-          ?.toString()
-          .toLowerCase()
           .includes(search.toLowerCase())
       ) {
         return e;
@@ -134,14 +129,14 @@ const TableDevices = () => {
    */
   function compare_date(a, b) {
     if (
-      a.attributes.maintenance?.data?.attributes?.next_maintenance <
-      b.attributes.maintenance?.data?.attributes?.next_maintenance
+      a.attributes.maintenance.data?.attributes?.next_maintenance <
+      b.attributes.maintenance.data?.attributes?.next_maintenance
     ) {
       return -1;
     }
     if (
-      a.attributes.maintenance?.data?.attributes?.next_maintenance >
-      b.attributes.maintenance?.data?.attributes?.next_maintenance
+      a.attributes.maintenance.data?.attributes?.next_maintenance >
+      b.attributes.maintenance.data?.attributes?.next_maintenance
     ) {
       return 1;
     }
@@ -151,7 +146,7 @@ const TableDevices = () => {
   /* A React component that is rendering a table with data from an API. */
   return (
     <>
-     {/*  <Layout tituloPagina="Inicio" /> */}
+      {/*  <Layout tituloPagina="Inicio" /> */}
       <Center>
         <div className={styles.table}>
           <div className={styles.table__title}>
@@ -164,6 +159,7 @@ const TableDevices = () => {
                 <IconListDetails />
               </ThemeIcon>
               <p>Próximos Mantenimientos</p>
+              <p>{arrayDevices.length}</p>
             </div>
             <div className={styles.searchBar}>
               <TextInput
@@ -181,6 +177,7 @@ const TableDevices = () => {
               <thead className={styles.table__columns}>
                 <tr>
                   <th></th>
+                  <th>#</th>
                   <th>
                     <Center>ID Equipo</Center>
                   </th>
@@ -205,10 +202,11 @@ const TableDevices = () => {
                 </tr>
               </thead>
               <tbody>
-                {deviceList &&
-                  deviceList.sort(compare_date).map((data, index) =>
-                   index <15 &&
-                    data.attributes.maintenance?.data?.attributes.next_maintenance != null ? (
+                {arrayDevices &&
+                  arrayDevices.map((data, index) =>
+                    arrayDevices.sort(compare_date) &&
+                    data.attributes.maintenance?.data?.attributes
+                      .next_maintenance != null ? (
                       <tr className={styles.table__data} key={data.device_id}>
                         {data.attributes.maintenance?.data?.attributes
                           .next_maintenance < date ? (
@@ -240,25 +238,30 @@ const TableDevices = () => {
                         ) : (
                           <td></td>
                         )}
-
+                        <td>{index}</td>
                         <td>
                           <Center>{data.attributes.device_id}</Center>
                         </td>
-                        {data.attributes.production?.data == null ? 
-                  <td>
-                    <Center>
-                      {
-                        data.attributes.department?.data?.attributes
-                          .department_name
-                      }
-                    </Center>
-                  </td> :
-                  <td>
-                  <Center>
-                  Produccion - {data.attributes.production?.data?.attributes.name}
-                    
-                  </Center>
-                </td>}
+                        {data.attributes.production?.data == null ? (
+                          <td>
+                            <Center>
+                              {
+                                data.attributes.department?.data?.attributes
+                                  .department_name
+                              }
+                            </Center>
+                          </td>
+                        ) : (
+                          <td>
+                            <Center>
+                              Produccion -{" "}
+                              {
+                                data.attributes.production?.data?.attributes
+                                  .name
+                              }
+                            </Center>
+                          </td>
+                        )}
                         <td>
                           <Center>{data.attributes.model}</Center>
                         </td>
