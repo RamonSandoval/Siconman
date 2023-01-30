@@ -35,7 +35,7 @@ const UsersList = () => {
    * object, and then calls the function setarrayUsers() with the result of the call to usersList().
    */
   async function init() {
-    const listUsers = await api.usersList(1);
+    const listUsers = await api.usersList();
     setarrayUsers(listUsers);
   }
 
@@ -64,9 +64,13 @@ const UsersList = () => {
       <div className={styles.iconContainer}>
         <Tooltip label="Crear Nuevo Usuario">
           <ActionIcon
+            /* component="a"
+            target="_blank"
+            rel="noopener noreferrer"
+            href="http://localhost:1337/admin/content-manager/collectionType/plugin::users-permissions.user/create" */
             onClick={() => {
               setOpened(true);
-            }}
+            }} 
             className={styles.add__icon}
             variant="filled"
           >
@@ -87,7 +91,7 @@ const UsersList = () => {
               <Center>Correo</Center>
             </th>
             <th>
-              <Center>Permisos</Center>
+              <Center>Rol</Center>
             </th>
             <th>
               <Center>Estatus</Center>
@@ -111,10 +115,14 @@ const UsersList = () => {
                   <Center>{data.email}</Center>
                 </td>
                 <td>
-                  <Center>admin</Center>
+                  <Center>{data.role.name}</Center>
                 </td>
                 <td>
-                  <Center>{data.confirmed}</Center>
+                  {data.blocked == true ? (
+                    <Center>Deshabilitado</Center>
+                  ) : (
+                    <Center>Habilitado</Center>
+                  )}
                 </td>
                 <td>
                   <Center>
@@ -168,7 +176,7 @@ const UsersList = () => {
         centered
         opened={opened}
         onClose={() => setOpened(false)}
-        title="Editar Usuario"
+        title="Crear Nuevo Usuario"
       >
         <ModalAddUser />
       </Modal>

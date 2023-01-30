@@ -42,31 +42,7 @@ const ModalMaintHistory = ({ deviceToMaintHistory }) => {
    * "This function updates the maintenance with the data from the form"
    * </code>
    */
-  async function updateMaintenance() {
-    const body = {
-      data: {
-        /* A form value. */
-        motive: form.values.motive,
-        user_request: form.values.user_request,
-        user_maintenance: form.values.user_maintenance,
-        maintenance_type: form.values.maintenance_type,
-        notes: form.values.notes,
-        maintenance_date: form.values.maintenance_date,
-        next_maintenance: form.values.next_maintenance,
-        maintenance_eval: form.values.maintenance_eval,
-        maintenance_type_next: form.values.maintenance_type_next,
-        user_request_name: form.values.user_request_name,
-      },
-    };
-    /* Trying to update the maintenance with the data from the form. */
-    try {
-      await api.updateMaintenance(id_maint, body);
-      Notifications.success("Se ha realizado el mantenimiento con exito");
-    } catch (error) {
-      Notifications.error("Error al realizar el Mantenimiento");
-      console.log(error);
-    }
-  }
+ 
 
   /* A form that is being created with the initial values of the maintenance that is being updated. */
   const form = useForm({
@@ -117,9 +93,9 @@ const ModalMaintHistory = ({ deviceToMaintHistory }) => {
     },
     validate: {},
   });
-
+  
   return (
-    <form onSubmit={form.onSubmit(updateMaintenance)}>
+    <form>
       <div className={stylesModal.modal__container}>
         <div className={stylesModal.modal__lcontainer}>
           <TextInput
@@ -198,13 +174,13 @@ const ModalMaintHistory = ({ deviceToMaintHistory }) => {
           )}
 
           <TextInput
-            label="Tipo de Mantenimiento proximo"
+            label="Tipo de Mantenimiento próximo"
             readOnly
             {...form.getInputProps("maintenance_type_next")}
           />
           <TextInput
             readOnly
-            label="Proximo Mantenimiento"
+            label="Próximo Mantenimiento"
             {...form.getInputProps("next_maintenance")}
           />
           {/* <DatePicker

@@ -164,9 +164,10 @@ const [active, setActive] = useState({ borderBottom: '2px solid indigo' });
               <a href="/reports" className={styles.link}>
                 Reportes
               </a>
+              {session.id != 9 ? 
               <a href="/config" className={styles.link}>
               Configuración
-              </a>
+              </a> : null }
              
               <Menu shadow="md" width={290}>
                 <Menu.Target>

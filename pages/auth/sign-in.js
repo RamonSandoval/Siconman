@@ -115,7 +115,7 @@ export default function SignIn() {
                       className={styles.login__button}
                       radius="md"
                     >
-                      Iniciar Sesion
+                      Iniciar Sesión
                     </Button>
                   </Stack>
                   {/* <Image

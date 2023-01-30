@@ -115,7 +115,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 const config = () => {
-  const { data: session } = useSession();
+  const { data: session} = useSession();
   const [arrayDep, setarrayDep] = useState([]);
   const [arrayProd, setArrayProd] = useState([]);
   const [opened, setOpened] = useState();
@@ -145,6 +145,8 @@ const [active, setActive] = useState({ borderBottom: '2px solid indigo' });
   useEffect(() => {
     if (session == null) return;
     console.log("session.jwt", session.jwt);
+
+    
     init();
   }, [session]);
 
@@ -268,10 +270,13 @@ const [active, setActive] = useState({ borderBottom: '2px solid indigo' });
   /* A React component that is rendering a modal. */
   return (
     <>
+    
       <Head>
         <title>Configuracion</title>
       </Head>
       <h1>{session ? "" : <SignIn />}</h1>
+      
+      {session && (
       <Box pb={70}>
         <Header className={styles2.header__container} height={60} px="md">
           <Group className={styles2.groupContainerMain} sx={{ height: "100%" }}>
@@ -401,7 +406,8 @@ const [active, setActive] = useState({ borderBottom: '2px solid indigo' });
           </ScrollArea>
         </Drawer>
       </Box>
-      {session && (
+       )}
+      
         <div className={styles.mainContainer}>
           <Tabs defaultValue="users" className={styles.tabsContainer}>
             <Tabs.List>
@@ -563,7 +569,7 @@ const [active, setActive] = useState({ borderBottom: '2px solid indigo' });
             </Tabs.Panel>
           </Tabs>
         </div>
-      )}
+     
       {/* MODAL ADD DEPARTMENT */}
       <Modal
         centered
@@ -675,7 +681,7 @@ export const getServerSideProps = async (context) => {
   const session = await getSession(context);
 
   // Check if session exists or not, if not, redirect
-  if (session == null) {
+  if (session == null || session.id === 9) {
     return {
       redirect: {
         destination: "/auth/sign-in",

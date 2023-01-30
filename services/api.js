@@ -18,7 +18,7 @@ const api = {
         return await conection.GET('/api/productions?pagination[pageSize]=300&populate=%2A');
     },
     usersList: async () => {
-        return await conection.GET('/api/users?pagination[pageSize]=300');
+        return await conection.GET('/api/users?populate=%2A');
     },
     /*----------------------------------------------------------------------------------------------------------*/
     /*---------------------------------------------POST REQUEST--------------------------------------------------*/
@@ -33,7 +33,7 @@ const api = {
         return await conection.POST('/api/maintenances?populate=%2A', body);
     },
     addUser: async (body) => {
-        return await conection.POST('/api/users',body);
+        return await conection.POST('api/auth/local/register',body);
     },
     addProduction: async (body) => {
         return await conection.POST('/api/productions',body);
@@ -69,7 +69,7 @@ const api = {
         return await conection.UPDATE('/api/maintenances/' + id,body);
     },
     updateUser: async (id,body) => {
-        return await conection.UPDATE('/api/users?pagination[pageSize]=300' + id,body);
+        return await conection.UPDATE('/api/auth/local/'+ id,body);
     },
     updateProduction: async (id,body) => {
         return await conection.UPDATE('/api/productions/' + id,body);

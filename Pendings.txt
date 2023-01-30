@@ -87,7 +87,7 @@ show in table next to production area "Produccion - Area Light" (Done)
 
 Fix max rows in table
 
-order maintTableAll por ultimo mantenimiento 
+order maintTableAll por ultimo mantenimiento (Done)
 
 Revisar acentos
 
@@ -95,6 +95,12 @@ Fix table all devices not working properly
 
 fix api page bug
 
+
+
+
+
 <Tooltip label="Filtrar Mantenimientos">
 
 data.attributes.maintenance?.data?.attributes.next_maintenance != null ? (
+
+{session.id != 9 ? 

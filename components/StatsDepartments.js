@@ -15,11 +15,7 @@ import { Center } from '@mantine/core';
    
 
 const StatsDepartments = () => {
-    const [arrayDataDev, setarrayDataDev] = useState([]);
-    const [arrayDevices, setarrayDevices] = useState([]);
     const [arrayDep, setarrayDep] = useState([]);
-    const calendarRef = useRef(null);
-    const [chart,setChart] = useState({})
 
     var data = {
       labels: arrayDep && arrayDep.map(data=> data.attributes.department_name ),
@@ -74,13 +70,8 @@ const StatsDepartments = () => {
     }, []);
   
     async function init() {
-      const list = await api.devicesList(1);
-      const list2 = await api.devicesList(2);
-      setarrayDevices(list.data.concat(list2.data));
-      setarrayDataDev(list.data.concat(list2.data));
       const listDepartment = await api.departmentsList(1);
       setarrayDep(listDepartment.data);
-      setChart(list)
     }
   return (
     <>

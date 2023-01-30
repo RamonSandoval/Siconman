@@ -27,9 +27,11 @@ import Layout from "./Layout";
 import { Fecha } from "../helpers";
 import Postpone from "./modals/ModalPostpone";
 import ModalMaint from "./modals/ModalMaint";
+import { signOut, useSession } from "next-auth/react";
+import { getSession } from 'next-auth/react';
 
 const TableDevices = () => {
-  const [isLoading, setLoading] = useState(false);
+  const [ isLoading, setIsLoading ] = useState(false);
   const [opened, setOpened] = useState(false);
   const [search, setSearch] = useState("");
   const [arrayDataDev, setarrayDataDev] = useState([]);
@@ -37,6 +39,7 @@ const TableDevices = () => {
   const [maintToPostpone, setMaintToPostPone] = useState([]);
   const [openedMaint, setOpenedMaint] = useState(false);
   const [deviceToMaint, setDeviceToMaint] = useState({});
+  const { data: session} = useSession();
 
   /* DATE SUBSTRACTION */
   //Normal Date
@@ -55,15 +58,21 @@ const TableDevices = () => {
   /* */
 
   useEffect(() => {
+    if (session == null) return;
+    console.log("session.jwt", session.jwt);
     init();
-  }, []);
+  }, [session]);
 
   async function init() {
-    setLoading(true);
-    const list = await api.devicesList();
+    setIsLoading(true);
+    const list = await api.devicesList()
     setarrayDevices(list.data);
     setarrayDataDev(list.data);
+    setIsLoading(false)
+    
   }
+
+ 
 
   /**
    * When the user clicks the close button, the modal is closed and the init function is called.
@@ -72,6 +81,7 @@ const TableDevices = () => {
     setOpened(false);
     init();
   };
+
 
   const closeModal2 = () => {
     setOpenedMaint(false);
@@ -146,7 +156,6 @@ const TableDevices = () => {
   /* A React component that is rendering a table with data from an API. */
   return (
     <>
-      {/*  <Layout tituloPagina="Inicio" /> */}
       <Center>
         <div className={styles.table}>
           <div className={styles.table__title}>
@@ -159,7 +168,7 @@ const TableDevices = () => {
                 <IconListDetails />
               </ThemeIcon>
               <p>Próximos Mantenimientos</p>
-              <p>{arrayDevices.length}</p>
+            
             </div>
             <div className={styles.searchBar}>
               <TextInput
@@ -172,12 +181,14 @@ const TableDevices = () => {
           </div>
           <ScrollArea>
             <Divider variant="dashed" size="sm" my="sm" />
-
+            { isLoading ? 
+              <Center className={styles.loading}>
+              <Loader size="xl" color="orange"/> 
+              </Center>:
             <Table highlightOnHover>
               <thead className={styles.table__columns}>
                 <tr>
                   <th></th>
-                  <th>#</th>
                   <th>
                     <Center>ID Equipo</Center>
                   </th>
@@ -196,11 +207,14 @@ const TableDevices = () => {
                   <th>
                     <Center>Tipo de Mantenimiento</Center>
                   </th>
+                  {session.id != 9 ? 
                   <th>
                     <Center>Acciones</Center>
-                  </th>
+                  </th> : null }
                 </tr>
               </thead>
+              
+           
               <tbody>
                 {arrayDevices &&
                   arrayDevices.map((data, index) =>
@@ -238,7 +252,6 @@ const TableDevices = () => {
                         ) : (
                           <td></td>
                         )}
-                        <td>{index}</td>
                         <td>
                           <Center>{data.attributes.device_id}</Center>
                         </td>
@@ -293,6 +306,7 @@ const TableDevices = () => {
                             : data.attributes.maintenance?.data?.attributes
                                 .maintenance_type_next}
                         </td>
+                        {session.id != 9 ? 
                         <td>
                           <div className={styles.icons}>
                             <Tooltip label="Registrar Mantenimiento">
@@ -321,14 +335,16 @@ const TableDevices = () => {
                             </Tooltip>
                           </div>
                         </td>
+                        : null }
                       </tr>
                     ) : null
                   )}
               </tbody>
-            </Table>
+            </Table>}
           </ScrollArea>
         </div>
       </Center>
+
 
       {maintToPostpone && (
         <Modal
@@ -367,5 +383,20 @@ const TableDevices = () => {
   );
 };
 /* Exporting the component. */
+export const getServerSideProps = async (context) => {
+  const session = await getSession(context);
 
+  // Check if session exists or not, if not, redirect
+  if (session == null || session.id === 9) {
+    return {
+      redirect: {
+        destination: "/auth/sign-in",
+        permanent: true,
+      },
+    };
+  }
+  return {
+    props: {},
+  };
+};
 export default TableDevices;

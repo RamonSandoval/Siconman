@@ -3,7 +3,8 @@ import { ActionIcon, Center, ThemeIcon,TextInput,Tooltip,Divider,Table,ScrollAre
     Pagination,
     Modal,
     Button,
-    Text, } from '@mantine/core';
+    Text,
+    Loader, } from '@mantine/core';
 import React, { useEffect } from 'react'
 import styles from "../../styles/Inventory.module.css";
 import { signOut, useSession } from "next-auth/react";
@@ -31,7 +32,7 @@ const InventoryList = () => {
   const [arrayDevices, setarrayDevices] = useState([]);
   const [arrayDataDev, setarrayDataDev] = useState([]);
   const [scrolled, setScrolled] = useState(false);
-  const [isLoading, setLoading] = useState(false);
+  const [ isLoading, setIsLoading ] = useState(false);
   const { data: session } = useSession();
 
     useEffect(() => {
@@ -46,9 +47,11 @@ const InventoryList = () => {
        * variable.
        */
       async function init() {
+        setIsLoading(true);
         const list = await api.devicesList(activePage);
         setarrayDevices(list.data);
         setarrayDataDev(list.data);
+        setIsLoading(false)
       }
     
       /**
@@ -59,8 +62,7 @@ const InventoryList = () => {
         console.log(activePage + 1);
         init();
       }
-    
-      
+
       const closeModal = () => {
         setOpened(false);
         init();
@@ -201,6 +203,7 @@ const InventoryList = () => {
           onChange={handleChange}
           icon={<IconSearch />}
         />
+        {session.id != 9 ?
         <Tooltip label="Agregar">
           <ActionIcon
             onClick={() => setOpened(true)}
@@ -209,13 +212,17 @@ const InventoryList = () => {
           >
             <IconPlus size={30} />
           </ActionIcon>
-        </Tooltip>
+        </Tooltip>: null }
       </div>
       <Divider variant="dashed" size="sm" my="sm" />
       <ScrollArea
-        sx={{ height: 700 }}
+        sx={{ height: 710 }}
         onScrollPositionChange={({ y }) => setScrolled(y !== 0)}
       >
+        { isLoading ? 
+              <Center pt={200} className={styles.loading}>
+              <Loader size="xl" color="orange" /> 
+              </Center>:
         <Table highlightOnHover>
           <thead
             className={cx(classes.header, {
@@ -235,9 +242,10 @@ const InventoryList = () => {
               <th>
                 <Center>Modelo</Center>
               </th>
+              {session.id != 9 ?
               <th>
                 <Center>Acciones</Center>
-              </th>
+              </th> : null }
             </tr>
           </thead>
           <tbody className={styles.tableBody}>
@@ -269,6 +277,7 @@ const InventoryList = () => {
                   <td>
                     <Center>{data.attributes.model}</Center>
                   </td>
+                  {session.id != 9 ?
                   <td>
                     <Center>
                       <div className={styles.icons}>
@@ -297,13 +306,14 @@ const InventoryList = () => {
                         </Tooltip>
                       </div>
                     </Center>
-                  </td>
+                  </td> : null}
                 </tr>
               ))}
           </tbody>
         </Table>
+}
       </ScrollArea>
-      <Center>
+      {/* <Center>
         <Pagination
           grow
           page={activePage}
@@ -312,7 +322,7 @@ const InventoryList = () => {
           onClick={() => actualizar()}
           total={7}
         />
-      </Center>
+      </Center> */}
     </div>
     {/*-----------------MODAL's ADD AND EDIT DEVICES--------------*/}
     <Modal

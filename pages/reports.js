@@ -13,6 +13,7 @@ import StatsProduction from "../components/StatsProduction";
 import StatsByDateRange from "../components/StatsByDateRange";
 import QualityStats from "../components/QualityStats";
 import MaintStat from "../components/MaintStat";
+
 import {
   createStyles,
   Header,
@@ -135,6 +136,7 @@ const [active, setActive] = useState({ borderBottom: '2px solid indigo' });
         <title>Reportes</title>
       </Head>
       <h1>{session ? "" : <SignIn />}</h1>
+      {session && 
      <Box pb={70}>
         <Header className={styles2.header__container} height={60} px="md">
           <Group className={styles2.groupContainerMain} sx={{ height: "100%" }}>
@@ -146,6 +148,7 @@ const [active, setActive] = useState({ borderBottom: '2px solid indigo' });
                 width={200}
               ></Image>
               </a>
+              <Button onClick={()=> console.log(session)}/>
             </div>
 
             <div className={styles2.groupContainer} >
@@ -171,9 +174,10 @@ const [active, setActive] = useState({ borderBottom: '2px solid indigo' });
               <a href="/reports" style={active}  className={styles2.link}>
                 Reportes
               </a>
+              {session.id != 9 ?
               <a href="/config" className={styles2.link}>
               Configuración
-              </a>
+              </a> : null }
              
               <Menu shadow="md" width={290}>
                 <Menu.Target>
@@ -238,9 +242,10 @@ const [active, setActive] = useState({ borderBottom: '2px solid indigo' });
             <a href="reports" className={classes.link}>
               Reportes
             </a>
+            {session.id != 9 ? 
             <a href="/config" className={classes.link}>
             Configuración
-            </a>
+            </a> : null }
 
             <Divider
               my="sm"
@@ -263,7 +268,7 @@ const [active, setActive] = useState({ borderBottom: '2px solid indigo' });
               </Menu>
           </ScrollArea>
         </Drawer>
-      </Box>
+      </Box>}
 
       {session && (
         <Tabs defaultValue="mantMes" className={styles.tabs__container}>

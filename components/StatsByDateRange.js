@@ -25,7 +25,6 @@ import Postpone from "./modals/ModalPostpone";
 import ModalMaint from "./modals/ModalMaint";
 
 const Stats = () => {
-  const [isLoading, setLoading] = useState(false);
   const [opened, setOpened] = useState(false);
   const [search, setSearch] = useState("");
   const [search2, setSearch2] = useState("");
@@ -37,17 +36,18 @@ const Stats = () => {
   const [openedMaint, setOpenedMaint] = useState(false);
   const [deviceToMaint, setDeviceToMaint] = useState({});
   const [errorDateNull, setErrorDateNull] = useState("");
-
+  const [ isLoading, setIsLoading ] = useState(false);
   useEffect(() => {
     init();
   }, []);
 
   async function init() {
-    setLoading(true);
+    setIsLoading(true);
     const list = await api.devicesList(1);
     const list2 = await api.devicesList(2);
     setarrayDevices(list.data.concat(list2.data));
     setarrayDataDev(list.data.concat(list2.data));
+    setIsLoading(false);
   }
 
   const closeModal = () => {
@@ -178,7 +178,10 @@ const Stats = () => {
           </div>
           <ScrollArea>
             <Divider variant="dashed" size="sm" my="sm" />
-
+            { isLoading ? 
+              <Center className={styles.loading}>
+              <Loader variant="bars"/> 
+              </Center>:
             <Table highlightOnHover>
               <thead className={styles.table__columns}>
                 <tr>
@@ -290,7 +293,7 @@ const Stats = () => {
                       )
                   )}
               </tbody>
-            </Table>
+            </Table>}
           </ScrollArea>
         </div>
       </Center>

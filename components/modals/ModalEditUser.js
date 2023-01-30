@@ -3,6 +3,7 @@ import React, { useState } from "react";
 
 import { useForm } from "@mantine/form";
 import api from "../../services/api";
+import Notifications from "../Notifications";
 
 const ModalEditUser = ({ userToEdit }) => {
   var blockedTextNew = "";
@@ -32,16 +33,16 @@ const ModalEditUser = ({ userToEdit }) => {
     const body = {
       data: {
         username: form.values.username,
-        /* email: form.values.email,
-        blocked: form.values.blocked,
-        confirmed: form.values.confirmed, */
+        email: form.values.email,
+       /*  blocked: form.values.blocked,
+        confirmed: form.values.confirmed,  */
       },
     };
     try {
       await api.updateUser(id_user, body);
-      alert("Usuario editado con exito");
+      Notifications.success('Se ha edito al usuario correctamente')
     } catch (error) {
-      alert("Error al editar el usuario");
+      Notifications.error('Error al editar al usuario')
     }
   }
 
@@ -50,8 +51,8 @@ const ModalEditUser = ({ userToEdit }) => {
     initialValues: {
       username: userToEdit.username,
       email: userToEdit.email,
-      blocked: blockedTextNew,
-      confirmed: confirmedTextNew,
+      /* blocked: blockedTextNew,
+      confirmed: confirmedTextNew, */
     },
     validate: {},
   });

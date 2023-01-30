@@ -173,9 +173,10 @@ const Home = () => {
               <a href="/reports" className={styles.link}>
                 Reportes
               </a>
+              {session.id != 9 ?
               <a href="/config" className={styles.link}>
               Configuración
-              </a>
+              </a> : null }
              
               <Menu shadow="md" width={290}>
                 <Menu.Target>
@@ -240,9 +241,10 @@ const Home = () => {
             <a href="reports" className={classes.link}>
               Reportes
             </a>
+            {session.id != 9 ?
             <a href="/config" className={classes.link}>
             Configuración
-            </a>
+            </a> : null }
 
             <Divider
               my="sm"

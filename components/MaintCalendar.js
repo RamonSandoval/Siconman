@@ -8,7 +8,6 @@ import { Container, Modal } from "@mantine/core";
 import styles from "../styles/MaintCalendar.module.css";
 import PostponeCalendar from "./modals/ModalPostponeCalendar";
 const MaintCalendar = () => {
-  const [arrayDataDev, setarrayDataDev] = useState([]);
   const [arrayDevices, setarrayDevices] = useState([]);
   const [opened, setOpened] = useState(false);
 
@@ -37,10 +36,8 @@ const MaintCalendar = () => {
    * to the arrayDevices variable.
    */
   async function init() {
-    const list = await api.devicesList(1);
-    const list2 = await api.devicesList(2);
-    setarrayDevices(list.data.concat(list2.data));
-    setarrayDataDev(list.data.concat(list2.data));
+    const list = await api.devicesList();
+    setarrayDevices(list.data);
   }
 
   /* It's mapping the arrayDevices array and returning an object with the title, date and color

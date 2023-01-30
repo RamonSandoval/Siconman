@@ -1,6 +1,9 @@
 import React, { createContext } from "react";
 import api from "../../services/api";
 import stylesModal from "../../styles/ModalRegisterNewMaint.module.css";
+
+import { signOut, useSession } from "next-auth/react";
+import { getSession } from 'next-auth/react';
 import {
   ScrollArea,
   Table,
@@ -10,6 +13,7 @@ import {
   Divider,
   Pagination,
   Tooltip,
+  Loader,
 } from "@mantine/core";
 import { usePagination, useSetState } from "@mantine/hooks";
 
@@ -37,6 +41,7 @@ import ModalCreateMaint from "../modals/ModalCreateMaint";
 import { Ce } from "tabler-icons-react";
 
 const MaintTableAll = () => {
+  const { data: session} = useSession();
   const [opened, setOpened] = useState(false);
   const [search, setSearch] = useState("");
   const [deviceToMaintNew, setDeviceToMaintNew] = useState({});
@@ -53,6 +58,7 @@ const MaintTableAll = () => {
   const pagination = usePagination({ total: 10, initialPage: 1 });
   const [activePage, setPage] = useState(1);
   const [maintCompare, setMaintCompare] = useSetState("");
+  const [ isLoading, setIsLoading ] = useState(false);
 
   /* Creating a style object that will be used by the Header component. */
   const useStyles = createStyles((theme) => ({
@@ -84,17 +90,22 @@ const MaintTableAll = () => {
 
   /* Calling the init() function when the component mounts. */
   useEffect(() => {
+    if (session == null) return;
+    console.log("session.jwt", session.jwt);
+
     init();
-  }, []);
+  }, [session]);
 
   /**
    * When the page loads, get the list of devices from the API and store it in the arrayDevices
    * variable.
    */
   async function init() {
+    setIsLoading(true);
     const list = await api.devicesList(activePage);
     setarrayDevices(list.data);
     setarrayDataDev(list.data);
+    setIsLoading(false)
   }
   /**
    * If the date of the first object is less than the date of the second object, return -1. If the date
@@ -109,14 +120,14 @@ const MaintTableAll = () => {
 
    function compare_date(a, b) {
     if (
-      a.attributes.maintenance?.data?.attributes?.maintenance_date <
-      b.attributes.maintenance?.data?.attributes?.maintenance_date
+      a.attributes.maintenance?.data?.attributes?.next_maintenance <
+      b.attributes.maintenance?.data?.attributes?.next_maintenance
     ) {
       return -1;
     }
     if (
-      a.attributes.maintenance?.data?.attributes?.maintenance_date >
-      b.attributes.maintenance?.data?.attributes?.maintenance_date
+      a.attributes.maintenance?.data?.attributes?.next_maintenance >
+      b.attributes.maintenance?.data?.attributes?.next_maintenance
     ) {
       return 1;
     }
@@ -220,9 +231,13 @@ const MaintTableAll = () => {
           </div>
           <Divider variant="dashed" size="sm" my="sm" />
           <ScrollArea
-            sx={{ height: 600 }}
+            sx={{ height: 710 }}
             onScrollPositionChange={({ y }) => setScrolled(y !== 0)}
           >
+            { isLoading ? 
+              <Center className={styles.loading}>
+              <Loader size="xl" color="orange"/> 
+              </Center>:
             <Table highlightOnHover>
               <thead
                 className={cx(classes.header, { [classes.scrolled]: scrolled })}
@@ -307,6 +322,7 @@ const MaintTableAll = () => {
                       </td>
                       <td>
                         <div className={styles.icons}>
+                        {session.id != 9 ? 
                           <Tooltip label="Registrar Mantenimiento">
                             <ActionIcon
                               color="dark"
@@ -318,7 +334,7 @@ const MaintTableAll = () => {
                             >
                               <IconTool size={18} />
                             </ActionIcon>
-                          </Tooltip>
+                          </Tooltip> : null }
                           <Tooltip label="Historial Mantenimiento">
                             <ActionIcon
                               color="yellow"
@@ -330,7 +346,7 @@ const MaintTableAll = () => {
                               <IconHistory size={18} />
                             </ActionIcon>
                           </Tooltip>
-
+                          {session.id != 9 ?      
                           <Tooltip label="Posponer Fecha">
                             <ActionIcon
                               onClick={() => {
@@ -341,9 +357,12 @@ const MaintTableAll = () => {
                             >
                               <IconRotateClockwise2 color="green" size={18} />
                             </ActionIcon>
-                          </Tooltip>
+                          </Tooltip> : null }
 
-                          {data.attributes.maintenance?.data == null ? (
+                          
+                          
+                          {data.attributes.maintenance?.data == null ? session.id != 9 ? (
+                            
                             <Tooltip label="Crear Nuevo Mantenimiento">
                               <ActionIcon
                                 variant="light"
@@ -356,7 +375,7 @@ const MaintTableAll = () => {
                                 <IconCirclePlus size={18} />
                               </ActionIcon>
                             </Tooltip>
-                          ) : (
+                          ) : session.id != 9 ? (
                             <Tooltip label="Crear Nuevo Mantenimiento">
                               <ActionIcon
                                 variant="light"
@@ -370,15 +389,15 @@ const MaintTableAll = () => {
                                 <IconCirclePlus size={18} />
                               </ActionIcon>
                             </Tooltip>
-                          )}
+                          ):null :null}
                         </div>
                       </td>
                     </tr>
                   ))}
               </tbody>
-            </Table>
+            </Table>}
           </ScrollArea>
-          <Center pt={30}>
+          {/* <Center pt={30}>
             <Pagination
               grow
               page={activePage}
@@ -387,7 +406,7 @@ const MaintTableAll = () => {
               onClick={() => actualizar()}
               total={7}
             />
-          </Center>
+          </Center> */}
         </div>
       </Center>
 
@@ -466,6 +485,23 @@ const MaintTableAll = () => {
       )}
     </>
   );
+};
+
+export const getServerSideProps = async (context) => {
+  const session = await getSession(context);
+
+  // Check if session exists or not, if not, redirect
+  if (session == null || session.id === 9) {
+    return {
+      redirect: {
+        destination: "/auth/sign-in",
+        permanent: true,
+      },
+    };
+  }
+  return {
+    props: {},
+  };
 };
 
 export default MaintTableAll;

@@ -103,6 +103,7 @@ const ModalMaint = ({ deviceToMaint, closeModal2 }) => {
     return d.username;
   });
 
+
   /* A form that is being created. */
   return (
     <form onSubmit={form.onSubmit(updateMaintenance)}>
@@ -187,7 +188,7 @@ const ModalMaint = ({ deviceToMaint, closeModal2 }) => {
           />
           <Radio.Group
             name="tiempo"
-            label="Se atendio en tiempo y forma?"
+            label="Se atendió en tiempo y forma?"
             {...form.getInputProps("maintenance_eval".valueOf(Radio))}
             withAsterisk
           >
@@ -201,7 +202,7 @@ const ModalMaint = ({ deviceToMaint, closeModal2 }) => {
           />
 
           <Select
-            label="Tipo de Mantenimiento proximo"
+            label="Tipo de Mantenimiento próximo"
             searchable
             data={["Hardware", "Software", "Hardware/Software"]}
             {...form.getInputProps("maintenance_type_next")}
@@ -210,7 +211,7 @@ const ModalMaint = ({ deviceToMaint, closeModal2 }) => {
           <DatePicker
             allowFreeInput
             placeholder="Elegir fecha"
-            label="Proximo Mantenimiento "
+            label="Próximo Mantenimiento "
             {...form.getInputProps("next_maintenance")}
             withAsterisk
           />
