@@ -118,21 +118,28 @@ const MaintTableAll = () => {
    * @return the result of the comparison.
    */
 
-   function compare_date(a, b) {
-    if (
-      a.attributes.maintenance?.data?.attributes?.next_maintenance <
-      b.attributes.maintenance?.data?.attributes?.next_maintenance
-    ) {
-      return -1;
+   var arrayfiltrado = arrayDevices.filter(
+    (data) =>
+      data.attributes.maintenance?.data  != null
+  );
+  /* Creating a new array with the same values as the original array. */
+  //var deviceList = arrayDevices.sort((x, y) => x.attributes.maintenance?.data?.attributes?.next_maintenance  - y.attributes.maintenance?.data?.attributes?.next_maintenance );
+  var deviceList = arrayDevices.sort(function (x, y) {
+    // ordenar primero por el campo 'name'
+    const fechaA = x.attributes.maintenance?.data?.attributes?.next_maintenance
+    const fechaB = y.attributes.maintenance?.data?.attributes?.next_maintenance
+
+    if (fechaA < fechaB) {
+        return -1;
     }
-    if (
-      a.attributes.maintenance?.data?.attributes?.next_maintenance >
-      b.attributes.maintenance?.data?.attributes?.next_maintenance
-    ) {
-      return 1;
+ 
+    if (fechaA > fechaB) {
+        return 1;
     }
+ 
+    // si los nombres son iguales, ordenar por 'year'
     return 0;
-  }
+});
 
   /**
    * When the user clicks the close button, the modal is closed and the init function is called.
@@ -267,8 +274,8 @@ const MaintTableAll = () => {
                 </tr>
               </thead>
               <tbody className={styles.tbody}>
-                {arrayDevices &&
-                  arrayDevices.sort(compare_date).map((data) => (
+                {deviceList &&
+                  deviceList.map((data) => (
                     <tr className={styles.table__data} key={data.device_id}>
                       <td bgcolor={maintCompare}>
                         <Center>{data.attributes.device_id}</Center>

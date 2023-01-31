@@ -1,6 +1,8 @@
 import React from "react";
 import api from "../services/api";
 import stylesModal from "../styles/ModalRegisterNewMaint.module.css";
+import { signOut, useSession } from "next-auth/react";
+import { getSession } from 'next-auth/react';
 import {
   ScrollArea,
   Table,
@@ -27,11 +29,9 @@ import Layout from "./Layout";
 import { Fecha } from "../helpers";
 import Postpone from "./modals/ModalPostpone";
 import ModalMaint from "./modals/ModalMaint";
-import { signOut, useSession } from "next-auth/react";
-import { getSession } from 'next-auth/react';
 
 const TableDevices = () => {
-  const [ isLoading, setIsLoading ] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const [opened, setOpened] = useState(false);
   const [search, setSearch] = useState("");
   const [arrayDataDev, setarrayDataDev] = useState([]);
@@ -40,7 +40,6 @@ const TableDevices = () => {
   const [openedMaint, setOpenedMaint] = useState(false);
   const [deviceToMaint, setDeviceToMaint] = useState({});
   const { data: session} = useSession();
-
   /* DATE SUBSTRACTION */
   //Normal Date
   /* Creating a new date object and then converting it to a string in the Canadian format. */
@@ -61,18 +60,16 @@ const TableDevices = () => {
     if (session == null) return;
     console.log("session.jwt", session.jwt);
     init();
-  }, [session]);
+  }, []);
 
   async function init() {
-    setIsLoading(true);
-    const list = await api.devicesList()
+    setLoading(true);
+    const list = await api.devicesList();
     setarrayDevices(list.data);
     setarrayDataDev(list.data);
-    setIsLoading(false)
     
+    //console.log(arrayDevices[0].attributes.maintenance?.data?.attributes?.next_maintenance)
   }
-
- 
 
   /**
    * When the user clicks the close button, the modal is closed and the init function is called.
@@ -81,7 +78,6 @@ const TableDevices = () => {
     setOpened(false);
     init();
   };
-
 
   const closeModal2 = () => {
     setOpenedMaint(false);
@@ -115,6 +111,10 @@ const TableDevices = () => {
         e.attributes.department?.data?.attributes.department_name
           .toString()
           .toLowerCase()
+          .includes(search.toLowerCase()) ||
+        e.attributes.model
+          ?.toString()
+          .toLowerCase()
           .includes(search.toLowerCase())
       ) {
         return e;
@@ -123,10 +123,46 @@ const TableDevices = () => {
     setarrayDevices(resultado);
   };
 
+
+  var arrayfiltrado = arrayDevices.filter(
+    (data) =>
+      data.attributes.maintenance?.data  != null
+  );
   /* Creating a new array with the same values as the original array. */
-  const deviceList = arrayDevices.map((d) => {
-    return d;
-  });
+  //var deviceList = arrayDevices.sort((x, y) => x.attributes.maintenance?.data?.attributes?.next_maintenance  - y.attributes.maintenance?.data?.attributes?.next_maintenance );
+  var deviceList = arrayfiltrado.sort(function (x, y) {
+    // ordenar primero por el campo 'name'
+    const fechaA = x.attributes.maintenance?.data?.attributes?.next_maintenance
+    const fechaB = y.attributes.maintenance?.data?.attributes?.next_maintenance
+
+    if (fechaA < fechaB) {
+        return -1;
+    }
+ 
+    if (fechaA > fechaB) {
+        return 1;
+    }
+ 
+    // si los nombres son iguales, ordenar por 'year'
+    return 0;
+});
+  //const deviceList = arrayDevices.sortBy('attributes.device_id');
+/*    const deviceList = ()  =>{
+    for (i = 0; i < arrayDevices.length; i++) 
+    {      //Loop over java Array  outer Loop use
+        for (j = i + 1; j < arrayDevices.length; j++) 
+        {  // Loop over java array
+            var tmp = 0;                            //tempraory variable in order 
+            if (arr[i].attributes.maintenance?.data?.attributes?.next_maintenance > arr[j].attributes.maintenance?.data?.attributes?.next_maintenance) 
+            {          //compare outer loop object with inner loop 
+                tmp = arr[i];               // if greater than swapping.
+                arr[i] = arr[j];            // Swaping code here.
+                arr[j] = tmp;
+            }
+        }
+    }
+
+   } */
 
   /**
    * If the next_maintenance date of the first object is less than the next_maintenance date of the
@@ -137,25 +173,29 @@ const TableDevices = () => {
    * @param a the first object to compare
    * @param b {
    */
-  function compare_date(a, b) {
-    if (
-      a.attributes.maintenance.data?.attributes?.next_maintenance <
-      b.attributes.maintenance.data?.attributes?.next_maintenance
-    ) {
-      return -1;
-    }
-    if (
-      a.attributes.maintenance.data?.attributes?.next_maintenance >
-      b.attributes.maintenance.data?.attributes?.next_maintenance
-    ) {
-      return 1;
-    }
-    return 0;
-  }
+/*   function compare_date(a, b) {
+    
+    
+    const fechaA =a.attributes.maintenance?.data?.attributes?.next_maintenance
+    const fechaB =b.attributes.maintenance?.data?.attributes?.next_maintenance
+    //return new Date(fechaA).getTime() > new Date(fechaB).getTime()
+    
+     if (fechaA<fechaB) {
+        return -1;
+      }
+      if (fechaA>fechaB) {
+        return 1;
+      }
+      // a debe ser igual b
+      return 0; 
+    
+    
+  } */
 
   /* A React component that is rendering a table with data from an API. */
   return (
     <>
+     {/*  <Layout tituloPagina="Inicio" /> */}
       <Center>
         <div className={styles.table}>
           <div className={styles.table__title}>
@@ -168,7 +208,6 @@ const TableDevices = () => {
                 <IconListDetails />
               </ThemeIcon>
               <p>Próximos Mantenimientos</p>
-            
             </div>
             <div className={styles.searchBar}>
               <TextInput
@@ -181,14 +220,14 @@ const TableDevices = () => {
           </div>
           <ScrollArea>
             <Divider variant="dashed" size="sm" my="sm" />
-            { isLoading ? 
-              <Center className={styles.loading}>
-              <Loader size="xl" color="orange"/> 
-              </Center>:
+
             <Table highlightOnHover>
               <thead className={styles.table__columns}>
                 <tr>
                   <th></th>
+                  <th>
+                    <Center>Index</Center>
+                  </th>
                   <th>
                     <Center>ID Equipo</Center>
                   </th>
@@ -213,15 +252,10 @@ const TableDevices = () => {
                   </th> : null }
                 </tr>
               </thead>
-              
-           
               <tbody>
-                {arrayDevices &&
-                  arrayDevices.map((data, index) =>
-                    arrayDevices.sort(compare_date) &&
-                    data.attributes.maintenance?.data?.attributes
-                      .next_maintenance != null ? (
-                      <tr className={styles.table__data} key={data.device_id}>
+                {deviceList &&
+                  deviceList.map((data, index) =>
+                      <tr className={styles.table__data} key={index}>
                         {data.attributes.maintenance?.data?.attributes
                           .next_maintenance < date ? (
                           <td>
@@ -253,28 +287,27 @@ const TableDevices = () => {
                           <td></td>
                         )}
                         <td>
+                          <Center>{index}</Center>
+                        </td>
+
+                        <td>
                           <Center>{data.attributes.device_id}</Center>
                         </td>
-                        {data.attributes.production?.data == null ? (
-                          <td>
-                            <Center>
-                              {
-                                data.attributes.department?.data?.attributes
-                                  .department_name
-                              }
-                            </Center>
-                          </td>
-                        ) : (
-                          <td>
-                            <Center>
-                              Produccion -{" "}
-                              {
-                                data.attributes.production?.data?.attributes
-                                  .name
-                              }
-                            </Center>
-                          </td>
-                        )}
+                        {data.attributes.production?.data == null ? 
+                  <td>
+                    <Center>
+                      {
+                        data.attributes.department?.data?.attributes
+                          .department_name
+                      }
+                    </Center>
+                  </td> :
+                  <td>
+                  <Center>
+                  Produccion - {data.attributes.production?.data?.attributes.name}
+                    
+                  </Center>
+                </td>}
                         <td>
                           <Center>{data.attributes.model}</Center>
                         </td>
@@ -334,17 +367,15 @@ const TableDevices = () => {
                               </ActionIcon>
                             </Tooltip>
                           </div>
-                        </td>
-                        : null }
+                        </td> : null }
                       </tr>
-                    ) : null
+                    
                   )}
               </tbody>
-            </Table>}
+            </Table>
           </ScrollArea>
         </div>
       </Center>
-
 
       {maintToPostpone && (
         <Modal
