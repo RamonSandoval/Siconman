@@ -12,6 +12,7 @@ import {
   IconTrash,
   IconPlus,
   IconWorld,
+  IconHelp,
 } from "@tabler/icons";
 import ModalAddDepartment from "../components/modals/ModalAddDepartment";
 import UsersList from "../components/UsersList";
@@ -569,6 +570,13 @@ const [active, setActive] = useState({ borderBottom: '2px solid indigo' });
             </Tabs.Panel>
           </Tabs>
         </div>
+        <Tooltip label="Ayuda" className={styles.tooltipText}>
+      <ActionIcon 
+        onClick={()=> alert('')}
+        variant="transparent" className={styles.helpIcon}>
+        <IconHelp size={50} />
+      </ActionIcon>
+      </Tooltip>
      
       {/* MODAL ADD DEPARTMENT */}
       <Modal

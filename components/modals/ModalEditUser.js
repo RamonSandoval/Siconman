@@ -24,7 +24,7 @@ const ModalEditUser = ({ userToEdit }) => {
   } else {
     confirmedTextNew = "Inactivo";
   }
-
+  
   /**
    * It's an async function that takes the values from the form and sends them to the API.
    * </code>
@@ -33,9 +33,8 @@ const ModalEditUser = ({ userToEdit }) => {
     const body = {
       data: {
         username: form.values.username,
-        email: form.values.email,
-       /*  blocked: form.values.blocked,
-        confirmed: form.values.confirmed,  */
+        email: form.values.email
+       
       },
     };
     try {
@@ -63,12 +62,13 @@ const ModalEditUser = ({ userToEdit }) => {
     <form onSubmit={form.onSubmit(updateUser)}>
       <TextInput label="Usuario" {...form.getInputProps("username")} />
       <TextInput label="Correo" {...form.getInputProps("email")} />
-      <TextInput label="Permisos" />
+      {/* <TextInput label="Permisos" />
       <TextInput label="Estatus" {...form.getInputProps("confirmed")} />
-      <TextInput label="Bloqueado" {...form.getInputProps("blocked")} />
+      <TextInput label="Bloqueado" {...form.getInputProps("blocked")} /> */}
 
       <Center pt={10}>
         <Button type="submit"> Aplicar{""}</Button>
+        <Button onClick={()=> console.log(id)}>test</Button>
       </Center>
     </form>
   );

@@ -26,7 +26,7 @@ export default NextAuth({
         try {
           const { user, jwt } = await signIn({
             email: credentials.email,
-            password: credentials.password,
+            password: credentials.password, 
           });
           return { ...user, jwt };
         } catch (error) {

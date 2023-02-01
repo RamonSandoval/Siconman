@@ -3,7 +3,6 @@
 }
 .header__container{
     position: fixed;
-    /*background-color: rgb(241, 241, 241);*/
     
 }
 .logo{
@@ -13,3 +12,15 @@
     margin: 0 auto;
 
 }
+.helpIcon{
+    position: absolute;
+    margin-right: 3rem;
+    margin-bottom: 2rem;
+    right:    0;
+    bottom:   0;
+    color: #00255b
+  }
+  .tooltipText{
+    font-style: italic;
+  }
+  

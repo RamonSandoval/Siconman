@@ -1,9 +1,10 @@
-import { Center,Tabs } from "@mantine/core";
+import { Center,Tabs, Tooltip } from "@mantine/core";
 import styles from "../styles/Tabs.module.css";
 import {
   IconCalendarEvent,
   IconBuilding,
   IconStatusChange,
+  IconHelp,
 } from "@tabler/icons";
 import DepartmentAreaStats from "../components/Lists/DepartmentAreaStats";
 import SignIn from "./auth/sign-in";
@@ -148,7 +149,6 @@ const [active, setActive] = useState({ borderBottom: '2px solid indigo' });
                 width={200}
               ></Image>
               </a>
-              <Button onClick={()=> console.log(session)}/>
             </div>
 
             <div className={styles2.groupContainer} >
@@ -330,6 +330,11 @@ const [active, setActive] = useState({ borderBottom: '2px solid indigo' });
           </Tabs.Panel>
         </Tabs>
       )}
+      <Tooltip label="Ayuda" className={styles.tooltipText}>
+      <ActionIcon variant="transparent" className={styles.helpIcon}>
+        <IconHelp size={50} />
+      </ActionIcon>
+      </Tooltip>
     </>
   );
 };

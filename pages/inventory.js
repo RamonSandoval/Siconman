@@ -14,10 +14,11 @@ import {
   Text,
   ActionIcon,
   Center,
+  Tooltip,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import Link from "next/link";
-import { IconLogout } from "@tabler/icons";
+import { IconHelp, IconLogout } from "@tabler/icons";
 import React, { useEffect } from "react";
 import styles from "../styles/NavBar.module.css";
 import { signOut, useSession } from "next-auth/react";
@@ -278,6 +279,11 @@ const inventory = () => {
             </Drawer>
           </Box>
           <InventoryList />
+          <Tooltip label="Ayuda" className={styles.tooltipText}>
+      <ActionIcon variant="transparent" className={styles.helpIcon}>
+        <IconHelp size={40} />
+      </ActionIcon>
+      </Tooltip>
           
         </>
       )}

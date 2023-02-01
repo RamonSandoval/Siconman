@@ -12,3 +12,14 @@
     float: right;
     width: 45%;
 }
+.helpIcon{
+    position: absolute;
+    margin-right: 3rem;
+    margin-bottom: 2rem;
+    right:    0;
+    bottom:   0;
+    color: #00255b
+  }
+  .tooltipText{
+    font-style: italic;
+  }

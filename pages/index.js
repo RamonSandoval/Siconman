@@ -17,18 +17,16 @@ import {
   Image,
   Text,
   ActionIcon,
+  ThemeIcon,
+  Tooltip,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import Link from "next/link";
-import {
-  IconLogout,
-} from "@tabler/icons";
+import { IconHelp, IconLogout } from "@tabler/icons";
 import React, { useEffect, useState } from "react";
 import { signOut, useSession } from "next-auth/react";
-import { getSession } from 'next-auth/react';
+import { getSession } from "next-auth/react";
 const useStyles = createStyles((theme) => ({
-
-  
   link: {
     display: "flex",
     alignItems: "center",
@@ -108,13 +106,14 @@ const Home = () => {
 
   const [openedMaint, setOpenedMaint] = useState(false);
 
- //const { data: session } = useSession();
+  //const { data: session } = useSession();
 
-  useEffect(() => {
-   /*  if (session == null) return;
+  useEffect(
+    () => {
+      /*  if (session == null) return;
     console.log("session.jwt", session.jwt); */
-  }, /* [session] */); 
-
+    } /* [session] */
+  );
 
   /* It's a hook that is executed when the component is mounted. It's checking if the session is null
   or not. If it's null, it will return nothing. If it's not null, it will log the session.jwt. */
@@ -124,155 +123,169 @@ const Home = () => {
   }, [session]);
 
   /* Rendering the page. */
-  const [active, setActive] = useState({ borderBottom: '2px solid indigo' });
+  const [active, setActive] = useState({ borderBottom: "2px solid indigo" });
   return (
     <div className={styles.container}>
       <Head>
         <title>Inicio</title>
       </Head>
       <h1>{session ? "" : <SignIn />}</h1>
-
       {/*It's a ternary operator. If session is true, it will render the TableDevices component. If
       not, it will render nothing. */}
       {session && (
         <>
-        <>
-      <Box pb={70}>
-        <Header className={styles.header__container} height={60} px="md">
-          <Group className={styles.groupContainerMain} sx={{ height: "100%" }}>
-            <div>
-              <a href="/">
-              <Image className={styles.logo}
-                alt="Dialight Logo"
-                src="/assets/img/logos/logo_siconmandial.png"
-                width={200}
-              ></Image>
-              </a>
-            </div>
+          <>
+            <Box pb={70} className={styles.headerMain}>
+              <Header className={styles.header__container} height={60} px="md">
+                <Group
+                  className={styles.groupContainerMain}
+                  sx={{ height: "100%" }}
+                >
+                  <div>
+                    <a href="/">
+                      <Image
+                        className={styles.logo}
+                        alt="Dialight Logo"
+                        src="/assets/img/logos/logo_siconmandial.png"
+                        width={200}
+                      ></Image>
+                    </a>
+                  </div>
 
-            <div className={styles.groupContainer} >
-            <Group
-              sx={{ height: "100%" }}
-              spacing={30}
-              className={classes.hiddenMobile}
-            >
-              <a href="/" aria-current="page" style={active} className={styles.link}>
-                Inicio
-              </a>
-              
-              <a href="/maintenance" className={styles.link}>
-                Mantenimientos
-              </a>
+                  <div className={styles.groupContainer}>
+                    <Group
+                      sx={{ height: "100%" }}
+                      spacing={30}
+                      className={classes.hiddenMobile}
+                    >
+                      <a
+                        href="/"
+                        aria-current="page"
+                        style={active}
+                        className={styles.link}
+                      >
+                        Inicio
+                      </a>
 
-              <a href="/calendarmaintenance" className={styles.link}>
-                Calendario
-              </a>
-              <a href="/inventory" className={styles.link}>
-                Inventario
-              </a>
-              <a href="/reports" className={styles.link}>
-                Reportes
-              </a>
-              {session.id != 9 ?
-              <a href="/config" className={styles.link}>
-              Configuración
-              </a> : null }
-             
-              <Menu shadow="md" width={290}>
-                <Menu.Target>
-                    <ActionIcon>
-                      <IconLogout color="black"/>
-                    </ActionIcon>
-                    
-                </Menu.Target>
+                      <a href="/maintenance" className={styles.link}>
+                        Mantenimientos
+                      </a>
 
-                <Menu.Dropdown>
-                  <Menu.Label>Opciones</Menu.Label>
-                  <Menu.Item onClick={signOut} icon={<IconLogout size={14} />}>
-                    Cerrar Sesion
-                  </Menu.Item>
-                  
-                </Menu.Dropdown>
-              </Menu>
-            </Group>
-            </div>
-            <Group className={classes.hiddenMobile}>
-            </Group>
+                      <a href="/calendarmaintenance" className={styles.link}>
+                        Calendario
+                      </a>
+                      <a href="/inventory" className={styles.link}>
+                        Inventario
+                      </a>
+                      <a href="/reports" className={styles.link}>
+                        Reportes
+                      </a>
+                      {session.id != 9 ? (
+                        <a href="/config" className={styles.link}>
+                          Configuración
+                        </a>
+                      ) : null}
 
-            <Burger
-              opened={drawerOpened}
-              onClick={toggleDrawer}
-              className={classes.hiddenDesktop}
-            />
-          </Group>
-          
-        </Header>
+                      <Menu shadow="md" width={290}>
+                        <Menu.Target>
+                          <ActionIcon>
+                            <IconLogout color="black" />
+                          </ActionIcon>
+                        </Menu.Target>
 
-        <Drawer
-          opened={drawerOpened}
-          onClose={closeDrawer}
-          size="100%"
-          padding="md"
-          title="Opciones"
-          className={classes.hiddenDesktop}
-          zIndex={1000000}
-        >
-          <ScrollArea sx={{ height: "calc(100vh - 60px)" }} mx="-md">
-            <Divider
-              my="sm"
-              color={theme.colorScheme === "dark" ? "dark.5" : "gray.1"}
-            />
+                        <Menu.Dropdown>
+                          <Menu.Label>Opciones</Menu.Label>
+                          <Menu.Item
+                            onClick={signOut}
+                            icon={<IconLogout size={14} />}
+                          >
+                            Cerrar Sesion
+                          </Menu.Item>
+                        </Menu.Dropdown>
+                      </Menu>
+                    </Group>
+                  </div>
+                  <Group className={classes.hiddenMobile}></Group>
 
-            <a href="/" className={classes.link}>
-              Inicio
-            </a>
-            <a href="/maintenance" className={classes.link}>
-              Mantenimientos
-            </a>
+                  <Burger
+                    opened={drawerOpened}
+                    onClick={toggleDrawer}
+                    className={classes.hiddenDesktop}
+                  />
+                </Group>
+              </Header>
+              <Drawer
+                opened={drawerOpened}
+                onClose={closeDrawer}
+                size="100%"
+                padding="md"
+                title="Opciones"
+                className={classes.hiddenDesktop}
+                zIndex={1000000}
+              >
+                <ScrollArea sx={{ height: "calc(100vh - 60px)" }} mx="-md">
+                  <Divider
+                    my="sm"
+                    color={theme.colorScheme === "dark" ? "dark.5" : "gray.1"}
+                  />
 
-            <a href="/calendarmaintenance" className={classes.link}>
-              <Box component="span" mr={5}>
-                Calendario
-              </Box>
-            </a>
-            <a href="/inventory" className={classes.link}>
-              Inventario
-            </a>
-            <a href="reports" className={classes.link}>
-              Reportes
-            </a>
-            {session.id != 9 ?
-            <a href="/config" className={classes.link}>
-            Configuración
-            </a> : null }
+                  <a href="/" className={classes.link}>
+                    Inicio
+                  </a>
+                  <a href="/maintenance" className={classes.link}>
+                    Mantenimientos
+                  </a>
 
-            <Divider
-              my="sm"
-              color={theme.colorScheme === "dark" ? "dark.5" : "gray.1"}
-            />
-            <Menu shadow="md" width={290}>
-                <Menu.Target>
-                  <Button color="dark" variant="transparent">
-                      {/* {session.user.email}  */}
-                  </Button>
-                </Menu.Target>
+                  <a href="/calendarmaintenance" className={classes.link}>
+                    <Box component="span" mr={5}>
+                      Calendario
+                    </Box>
+                  </a>
+                  <a href="/inventory" className={classes.link}>
+                    Inventario
+                  </a>
+                  <a href="reports" className={classes.link}>
+                    Reportes
+                  </a>
+                  {session.id != 9 ? (
+                    <a href="/config" className={classes.link}>
+                      Configuración
+                    </a>
+                  ) : null}
 
-                <Menu.Dropdown>
-                  <Menu.Label>Opciones</Menu.Label>
-                  <Menu.Item onClick={signOut} icon={<IconLogout size={14} />}>
-                    Cerrar Sesion
-                  </Menu.Item>
-                  
-                </Menu.Dropdown>
-              </Menu>
-          </ScrollArea>
-        </Drawer>
-      </Box>
-      
-    </>
+                  <Divider
+                    my="sm"
+                    color={theme.colorScheme === "dark" ? "dark.5" : "gray.1"}
+                  />
+                  <Menu shadow="md" width={290}>
+                    <Menu.Target>
+                      <Button color="dark" variant="transparent">
+                        {/* {session.user.email}  */}
+                      </Button>
+                    </Menu.Target>
+
+                    <Menu.Dropdown>
+                      <Menu.Label>Opciones</Menu.Label>
+                      <Menu.Item
+                        onClick={signOut}
+                        icon={<IconLogout size={14} />}
+                      >
+                        Cerrar Sesion
+                      </Menu.Item>
+                    </Menu.Dropdown>
+                  </Menu>
+                </ScrollArea>
+              </Drawer>
+            </Box>
+          </>
           <TableDevices />
         </>
-      )}
+      )}{" "}
+      <Tooltip label="Ayuda" className={styles.tooltipText}>
+      <ActionIcon variant="transparent" className={styles.helpIcon}>
+        <IconHelp size={50} />
+      </ActionIcon>
+      </Tooltip>
     </div>
   );
 };

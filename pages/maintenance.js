@@ -15,10 +15,12 @@ import {
   Image,
   Text,
   ActionIcon,
+  Tooltip,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import Link from "next/link";
 import {
+  IconHelp,
   IconLogout,
 } from "@tabler/icons";
 import React, { useEffect, useState } from "react";
@@ -262,6 +264,11 @@ const [active, setActive] = useState({ borderBottom: '2px solid indigo' });
         </Drawer>
       </Box>
       <MaintTableAll />
+      <Tooltip label="Ayuda" className={styles.tooltipText}>
+      <ActionIcon variant="transparent" className={styles.helpIcon}>
+        <IconHelp size={50} />
+      </ActionIcon>
+      </Tooltip>
       </>
      }
     </div>

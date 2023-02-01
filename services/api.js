@@ -33,7 +33,7 @@ const api = {
         return await conection.POST('/api/maintenances?populate=%2A', body);
     },
     addUser: async (body) => {
-        return await conection.POST('api/auth/local/register',body);
+        return await conection.POST('/api/users',body);
     },
     addProduction: async (body) => {
         return await conection.POST('/api/productions',body);
@@ -69,7 +69,7 @@ const api = {
         return await conection.UPDATE('/api/maintenances/' + id,body);
     },
     updateUser: async (id,body) => {
-        return await conection.UPDATE('/api/auth/local/'+ id,body);
+        return await conection.UPDATE('/api/users/' + id,body);
     },
     updateProduction: async (id,body) => {
         return await conection.UPDATE('/api/productions/' + id,body);

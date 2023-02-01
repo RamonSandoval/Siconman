@@ -53,7 +53,6 @@ const UsersList = () => {
       Notifications.success("Se ha eliminado el usuario " + id);
       init();
     } catch (error) {
-      alert("Error al eliminar al usuario" + id);
       Notifications.error("Error al eliminar al usuario" + id);
       console.error(error);
     }
