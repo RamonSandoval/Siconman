@@ -8,8 +8,6 @@
  */
 import React from 'react'
 import Head from 'next/head'
-import { Nav } from '../components/Header'
-import styles from "../styles/NavBar.module.css";
 
 const Layout = ({tituloPagina}) => {
   return (

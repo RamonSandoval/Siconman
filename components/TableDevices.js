@@ -226,9 +226,6 @@ const TableDevices = () => {
                 <tr>
                   <th></th>
                   <th>
-                    <Center>Index</Center>
-                  </th>
-                  <th>
                     <Center>ID Equipo</Center>
                   </th>
                   <th>
@@ -286,9 +283,7 @@ const TableDevices = () => {
                         ) : (
                           <td></td>
                         )}
-                        <td>
-                          <Center>{index}</Center>
-                        </td>
+                        
 
                         <td>
                           <Center>{data.attributes.device_id}</Center>

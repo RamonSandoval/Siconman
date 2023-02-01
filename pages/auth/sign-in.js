@@ -34,7 +34,7 @@ export default function SignIn() {
     // e.preventDefault();
     const result = await signIn("credentials", {
       redirect: false,
-      email: form.values.email,
+      username: form.values.username,
       password: form.values.password,
     });
     if (result.ok) {
@@ -46,11 +46,11 @@ export default function SignIn() {
   };
   const form = useForm({
     initialValues:{
-      email:'',
+      username:'',
       password:'',
     },
     validate:{
-      email:(value) => (/^\S+@\S+$/.test(value) ? null : 'Formato de correo no valido'),
+      username:(value) => value.length === 0 ? 'Formato de correo no valido' : null,
       password: (value) =>
         value.length === 0 ? "Ingrese una contraseña" : null,
     }
@@ -94,12 +94,12 @@ export default function SignIn() {
                     </div>
 
                     <TextInput
-                      {...form.getInputProps('email')}
+                    withAsterisk
+                      {...form.getInputProps('username')}
                       className={styles.inputs}
-                      label="Correo electrónico"
-                      placeholder="ejemplo@gmail.com"
+                      label="Usuario"
                       icon={<IconUser size={14} />}
-                      description="Ingrese su correo electrónico"
+                      description="Ingrese su usuario"
                     />
                     <PasswordInput
                       {...form.getInputProps('password')}

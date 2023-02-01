@@ -1,4 +1,4 @@
-import {  Modal, Tooltip } from "@mantine/core";
+import { Modal, Tooltip } from "@mantine/core";
 import styles from "../styles/Config.module.css";
 import SignIn from "./auth/sign-in";
 import api from "../services/api";
@@ -36,18 +36,15 @@ import {
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import Link from "next/link";
-import {
-  IconLogout,
-} from "@tabler/icons";
+import { IconLogout } from "@tabler/icons";
 import React, { useEffect, useState } from "react";
 import styles2 from "../styles/NavBar.module.css";
 import { signOut, useSession } from "next-auth/react";
-import { getSession } from 'next-auth/react';
+import { getSession } from "next-auth/react";
 import Head from "next/head";
+import Help from "./Help";
 
 const useStyles = createStyles((theme) => ({
-
-  
   link: {
     display: "flex",
     alignItems: "center",
@@ -116,7 +113,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 const config = () => {
-  const { data: session} = useSession();
+  const { data: session } = useSession();
   const [arrayDep, setarrayDep] = useState([]);
   const [arrayProd, setArrayProd] = useState([]);
   const [opened, setOpened] = useState();
@@ -130,6 +127,7 @@ const config = () => {
   const [productionToDelete, setProductionToDelete] = useState({});
   const [productionToEdit, setProductionToEdit] = useState({});
   const [productionName, setProductionName] = useState({});
+  const [openedHelp, setOpenedHelp] = useState(false);
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
     useDisclosure(false);
   const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
@@ -137,7 +135,7 @@ const config = () => {
   /* A hook that allows you to use state in a functional component. */
 
   const [openedMaint, setOpenedMaint] = useState(false);
-const [active, setActive] = useState({ borderBottom: '2px solid indigo' });
+  const [active, setActive] = useState({ borderBottom: "2px solid indigo" });
 
   const info = departmentToEdit.attributes?.department_name;
 
@@ -147,7 +145,6 @@ const [active, setActive] = useState({ borderBottom: '2px solid indigo' });
     if (session == null) return;
     console.log("session.jwt", session.jwt);
 
-    
     init();
   }, [session]);
 
@@ -184,13 +181,13 @@ const [active, setActive] = useState({ borderBottom: '2px solid indigo' });
   }
   /**
    * It's an async function that calls the api.deleteDepartment function, which is an async function
-   * that returns a promise. 
+   * that returns a promise.
    * If the promise is resolved, it calls the Notifications.success function, which is a function that
-   * takes a string as an argument. 
+   * takes a string as an argument.
    * If the promise is rejected, it calls the Notifications.error function, which is a function that
-   * takes a string as an argument. 
+   * takes a string as an argument.
    * It also calls the init function, which is a function that takes no arguments.
-   * 
+   *
    * @param id the id of the department to be deleted
    */
   async function deleteDepartment(id) {
@@ -206,7 +203,7 @@ const [active, setActive] = useState({ borderBottom: '2px solid indigo' });
 
   /**
    * Await api.deleteProduction(id);
-   * 
+   *
    * @param id the id of the production to be deleted
    */
   async function deleteProduction(id) {
@@ -227,10 +224,10 @@ const [active, setActive] = useState({ borderBottom: '2px solid indigo' });
    * If the department name of the first object is less than the department name of the second object,
    * return -1. If the department name of the first object is greater than the department name of the
    * second object, return 1. If the department names are equal, return 0.
-   * 
+   *
    * @param a the first object to compare
    * @param b the second object to compare
-   * 
+   *
    * @return the sorted array.
    */
   function compare_nameDep(a, b) {
@@ -252,10 +249,10 @@ const [active, setActive] = useState({ borderBottom: '2px solid indigo' });
   /**
    * It takes two objects, compares their name attributes, and returns a value based on the result of
    * the comparison.
-   * 
+   *
    * @param a The first object to compare.
    * @param b the second object to compare
-   * 
+   *
    * @return a number.
    */
   function compare_nameProd(a, b) {
@@ -271,128 +268,130 @@ const [active, setActive] = useState({ borderBottom: '2px solid indigo' });
   /* A React component that is rendering a modal. */
   return (
     <>
-    
       <Head>
         <title>Configuracion</title>
       </Head>
       <h1>{session ? "" : <SignIn />}</h1>
-      
-      {session && (
-      <Box pb={70}>
-        <Header className={styles2.header__container} height={60} px="md">
-          <Group className={styles2.groupContainerMain} sx={{ height: "100%" }}>
-            <div>
-              <a href="/">
-              <Image className={styles2.logo}
-                alt="Dialight Logo"
-                src="/assets/img/logos/logo_siconmandial.png"
-                width={200}
-              ></Image>
-              </a>
-            </div>
 
-            <div className={styles2.groupContainer} >
+      {session && (
+        <Box pb={70}>
+          <Header className={styles2.header__container} height={60} px="md">
             <Group
+              className={styles2.groupContainerMain}
               sx={{ height: "100%" }}
-              spacing={30}
-              className={classes.hiddenMobile}
             >
-              <a href="/" aria-current="page" className={styles2.link}>
+              <div>
+                <a href="/">
+                  <Image
+                    className={styles2.logo}
+                    alt="Dialight Logo"
+                    src="/assets/img/logos/logo_siconmandial.png"
+                    width={200}
+                  ></Image>
+                </a>
+              </div>
+
+              <div className={styles2.groupContainer}>
+                <Group
+                  sx={{ height: "100%" }}
+                  spacing={30}
+                  className={classes.hiddenMobile}
+                >
+                  <a href="/" aria-current="page" className={styles2.link}>
+                    Inicio
+                  </a>
+
+                  <a href="/maintenance" className={styles2.link}>
+                    Mantenimientos
+                  </a>
+
+                  <a href="/calendarmaintenance" className={styles2.link}>
+                    Calendario
+                  </a>
+                  <a href="/inventory" className={styles2.link}>
+                    Inventario
+                  </a>
+                  <a href="/reports" className={styles2.link}>
+                    Reportes
+                  </a>
+                  <a href="/config" style={active} className={styles2.link}>
+                    Configuración
+                  </a>
+
+                  <Menu shadow="md" width={290}>
+                    <Menu.Target>
+                      <ActionIcon>
+                        <IconLogout color="black" />
+                      </ActionIcon>
+                    </Menu.Target>
+
+                    <Menu.Dropdown>
+                      <Menu.Label>Opciones</Menu.Label>
+                      <Menu.Item
+                        onClick={signOut}
+                        icon={<IconLogout size={14} />}
+                      >
+                        Cerrar Sesion
+                      </Menu.Item>
+                    </Menu.Dropdown>
+                  </Menu>
+                </Group>
+              </div>
+              <Group className={classes.hiddenMobile}></Group>
+
+              <Burger
+                opened={drawerOpened}
+                onClick={toggleDrawer}
+                className={classes.hiddenDesktop}
+              />
+            </Group>
+          </Header>
+
+          <Drawer
+            opened={drawerOpened}
+            onClose={closeDrawer}
+            size="100%"
+            padding="md"
+            title="Opciones"
+            className={classes.hiddenDesktop}
+            zIndex={1000000}
+          >
+            <ScrollArea sx={{ height: "calc(100vh - 60px)" }} mx="-md">
+              <Divider
+                my="sm"
+                color={theme.colorScheme === "dark" ? "dark.5" : "gray.1"}
+              />
+
+              <a href="/" className={classes.link}>
                 Inicio
               </a>
-              
-              <a href="/maintenance" className={styles2.link}>
+              <a href="/maintenance" className={classes.link}>
                 Mantenimientos
               </a>
 
-              <a href="/calendarmaintenance" className={styles2.link}>
-                Calendario
+              <a href="/calendarmaintenance" className={classes.link}>
+                <Box component="span" mr={5}>
+                  Calendario
+                </Box>
               </a>
-              <a href="/inventory" className={styles2.link}>
+              <a href="/inventory" className={classes.link}>
                 Inventario
               </a>
-              <a href="/reports"   className={styles2.link}>
+              <a href="reports" className={classes.link}>
                 Reportes
               </a>
-              <a href="/config" style={active} className={styles2.link}>
-              Configuración
+              <a href="/config" className={classes.link}>
+                Configuración
               </a>
-             
+
+              <Divider
+                my="sm"
+                color={theme.colorScheme === "dark" ? "dark.5" : "gray.1"}
+              />
               <Menu shadow="md" width={290}>
                 <Menu.Target>
-                    <ActionIcon>
-                      <IconLogout color="black"/>
-                    </ActionIcon>
-                    
-                </Menu.Target>
-
-                <Menu.Dropdown>
-                  <Menu.Label>Opciones</Menu.Label>
-                  <Menu.Item onClick={signOut} icon={<IconLogout size={14} />}>
-                    Cerrar Sesion
-                  </Menu.Item>
-                  
-                </Menu.Dropdown>
-              </Menu>
-            </Group>
-            </div>
-            <Group className={classes.hiddenMobile}>
-            </Group>
-
-            <Burger
-              opened={drawerOpened}
-              onClick={toggleDrawer}
-              className={classes.hiddenDesktop}
-            />
-          </Group>
-          
-        </Header>
-
-        <Drawer
-          opened={drawerOpened}
-          onClose={closeDrawer}
-          size="100%"
-          padding="md"
-          title="Opciones"
-          className={classes.hiddenDesktop}
-          zIndex={1000000}
-        >
-          <ScrollArea sx={{ height: "calc(100vh - 60px)" }} mx="-md">
-            <Divider
-              my="sm"
-              color={theme.colorScheme === "dark" ? "dark.5" : "gray.1"}
-            />
-
-            <a href="/" className={classes.link}>
-              Inicio
-            </a>
-            <a href="/maintenance" className={classes.link}>
-              Mantenimientos
-            </a>
-
-            <a href="/calendarmaintenance" className={classes.link}>
-              <Box component="span" mr={5}>
-                Calendario
-              </Box>
-            </a>
-            <a href="/inventory" className={classes.link}>
-              Inventario
-            </a>
-            <a href="reports" className={classes.link}>
-              Reportes
-            </a>
-            <a href="/config" className={classes.link}>
-            Configuración
-            </a>
-
-            <Divider
-              my="sm"
-              color={theme.colorScheme === "dark" ? "dark.5" : "gray.1"}
-            />
-            <Menu shadow="md" width={290}>
-                <Menu.Target>
                   <Button color="dark" variant="transparent">
-                      {/* {session.user.email}  */}
+                    {/* {session.user.email}  */}
                   </Button>
                 </Menu.Target>
 
@@ -401,183 +400,175 @@ const [active, setActive] = useState({ borderBottom: '2px solid indigo' });
                   <Menu.Item onClick={signOut} icon={<IconLogout size={14} />}>
                     Cerrar Sesion
                   </Menu.Item>
-                  
                 </Menu.Dropdown>
               </Menu>
-          </ScrollArea>
-        </Drawer>
-      </Box>
-       )}
+            </ScrollArea>
+          </Drawer>
+        </Box>
+      )}
+
+      <div className={styles.mainContainer}>
+        <Tabs defaultValue="users" className={styles.tabsContainer}>
+          <Tabs.List>
+            <Tabs.Tab value="users" icon={<IconUsers size={14} />}>
+              Usuarios
+            </Tabs.Tab>
+            <Tabs.Tab value="departments" icon={<IconPin size={14} />}>
+              Departamentos
+            </Tabs.Tab>
+            <Tabs.Tab value="production" icon={<IconWorld size={14} />}>
+              Produccion
+            </Tabs.Tab>
+          </Tabs.List>
+
+          <Tabs.Panel value="users" pt="xs">
+            <UsersList />
+          </Tabs.Panel>
+
+          <Tabs.Panel value="departments" pt="xs">
+            <div className={styles.iconContainer}>
+              <Tooltip label="Crear nuevo Departamento">
+                <ActionIcon
+                  onClick={() => setOpened(true)}
+                  className={styles.add__icon}
+                  variant="filled"
+                >
+                  <IconPlus size={30} />
+                </ActionIcon>
+              </Tooltip>
+            </div>
+            <Table highlightOnHover>
+              <thead>
+                <tr className={styles.table__titles}>
+                  <th>
+                    <Center>ID</Center>
+                  </th>
+                  <th>
+                    <Center>Departamento</Center>
+                  </th>
+                  <th>
+                    <Center>Acciones</Center>
+                  </th>
+                </tr>
+              </thead>
+              <tbody className={styles.tableBody}>
+                {arrayDep &&
+                  arrayDep.sort(compare_nameDep).map((data) => (
+                    <tr key={data.department_name}>
+                      <td>
+                        <Center>{data.id}</Center>
+                      </td>
+                      <td>
+                        <Center>{data.attributes.department_name}</Center>
+                      </td>
+                      <td>
+                        <Center>
+                          <div className={styles.icons}>
+                            <Tooltip label="Editar">
+                              <ActionIcon
+                                color="indigo"
+                                onClick={() => {
+                                  setOpened2(true);
+                                  setDepartmentToEdit(data);
+                                }}
+                              >
+                                <IconEdit size={18} />
+                              </ActionIcon>
+                            </Tooltip>
+                            <Tooltip label="Eliminar">
+                              <ActionIcon
+                                color="red"
+                                onClick={() => {
+                                  setOpened3(true);
+                                  setDepartmentToDelete(data.id);
+                                }}
+                              >
+                                <IconTrash size={18} />
+                              </ActionIcon>
+                            </Tooltip>
+                          </div>
+                        </Center>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </Table>
+          </Tabs.Panel>
+
+          <Tabs.Panel value="production" pt="xs">
+            <div className={styles.iconContainer}>
+              <Tooltip label="Crear nueva area de Produccion">
+                <ActionIcon
+                  onClick={() => setOpened5(true)}
+                  className={styles.add__icon}
+                  variant="filled"
+                >
+                  <IconPlus size={30} />
+                </ActionIcon>
+              </Tooltip>
+            </div>
+            <Table highlightOnHover>
+              <thead>
+                <tr className={styles.table__titles}>
+                  <th>
+                    <Center>ID</Center>
+                  </th>
+                  <th>
+                    <Center>Area de Produccion</Center>
+                  </th>
+                  <th>
+                    <Center>Acciones</Center>
+                  </th>
+                </tr>
+              </thead>
+              <tbody className={styles.tableBody}>
+                {arrayProd &&
+                  arrayProd.sort(compare_nameProd).map((data) => (
+                    <tr key={data.department_name}>
+                      <td>
+                        <Center>{data.id}</Center>
+                      </td>
+                      <td>
+                        <Center>{data.attributes.name}</Center>
+                      </td>
+                      <td>
+                        <Center>
+                          <div className={styles.icons}>
+                            <Tooltip label="Editar">
+                              <ActionIcon
+                                color="indigo"
+                                onClick={() => {
+                                  setOpened6(true);
+                                  setProductionToEdit(data);
+                                }}
+                              >
+                                <IconEdit size={18} />
+                              </ActionIcon>
+                            </Tooltip>
+
+                            <Tooltip label="Eliminar">
+                              <ActionIcon
+                                color="red"
+                                onClick={() => {
+                                  setOpened4(true);
+                                  setProductionToDelete(data.id);
+                                  setProductionName(data.attributes.name);
+                                }}
+                              >
+                                <IconTrash size={18} />
+                              </ActionIcon>
+                            </Tooltip>
+                          </div>
+                        </Center>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </Table>
+          </Tabs.Panel>
+        </Tabs>
+      </div>
       
-        <div className={styles.mainContainer}>
-          <Tabs defaultValue="users" className={styles.tabsContainer}>
-            <Tabs.List>
-              <Tabs.Tab value="users" icon={<IconUsers size={14} />}>
-                Usuarios
-              </Tabs.Tab>
-              <Tabs.Tab value="departments" icon={<IconPin size={14} />}>
-                Departamentos
-              </Tabs.Tab>
-              <Tabs.Tab value="production" icon={<IconWorld size={14} />}>
-                Produccion
-              </Tabs.Tab>
-            </Tabs.List>
-
-            <Tabs.Panel value="users" pt="xs">
-              <UsersList />
-            </Tabs.Panel>
-
-            <Tabs.Panel value="departments" pt="xs">
-              <div className={styles.iconContainer}>
-                <Tooltip label="Crear nuevo Departamento">
-                  <ActionIcon
-                    onClick={() => setOpened(true)}
-                    className={styles.add__icon}
-                    variant="filled"
-                  >
-                    <IconPlus size={30} />
-                  </ActionIcon>
-                </Tooltip>
-              </div>
-              <Table highlightOnHover>
-                <thead>
-                  <tr className={styles.table__titles}>
-                    <th>
-                      <Center>ID</Center>
-                    </th>
-                    <th>
-                      <Center>Departamento</Center>
-                    </th>
-                    <th>
-                      <Center>Acciones</Center>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className={styles.tableBody}>
-                  {arrayDep &&
-                    arrayDep.sort(compare_nameDep).map((data) => (
-                      <tr key={data.department_name}>
-                        <td>
-                          <Center>{data.id}</Center>
-                        </td>
-                        <td>
-                          <Center>{data.attributes.department_name}</Center>
-                        </td>
-                        <td>
-                          <Center>
-                            <div className={styles.icons}>
-                              <Tooltip label="Editar">
-                                <ActionIcon
-                                  color="indigo"
-                                  onClick={() => {
-                                    setOpened2(true);
-                                    setDepartmentToEdit(data);
-                                  }}
-                                >
-                                  <IconEdit size={18} />
-                                </ActionIcon>
-                              </Tooltip>
-                              <Tooltip label="Eliminar">
-                                <ActionIcon
-                                  color="red"
-                                  onClick={() => {
-                                    setOpened3(true);
-                                    setDepartmentToDelete(data.id);
-                                  }}
-                                >
-                                  <IconTrash size={18} />
-                                </ActionIcon>
-                              </Tooltip>
-                            </div>
-                          </Center>
-                        </td>
-                      </tr>
-                    ))}
-                </tbody>
-              </Table>
-            </Tabs.Panel>
-
-            <Tabs.Panel value="production" pt="xs">
-              <div className={styles.iconContainer}>
-                <Tooltip label="Crear nueva area de Produccion">
-                  <ActionIcon
-                    onClick={() => setOpened5(true)}
-                    className={styles.add__icon}
-                    variant="filled"
-                  >
-                    <IconPlus size={30} />
-                  </ActionIcon>
-                </Tooltip>
-              </div>
-              <Table highlightOnHover>
-                <thead>
-                  <tr className={styles.table__titles}>
-                    <th>
-                      <Center>ID</Center>
-                    </th>
-                    <th>
-                      <Center>Area de Produccion</Center>
-                    </th>
-                    <th>
-                      <Center>Acciones</Center>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className={styles.tableBody}>
-                  {arrayProd &&
-                    arrayProd.sort(compare_nameProd).map((data) => (
-                      <tr key={data.department_name}>
-                        <td>
-                          <Center>{data.id}</Center>
-                        </td>
-                        <td>
-                          <Center>{data.attributes.name}</Center>
-                        </td>
-                        <td>
-                          <Center>
-                            <div className={styles.icons}>
-                              <Tooltip label="Editar">
-                                <ActionIcon
-                                  color="indigo"
-                                  onClick={() => {
-                                    setOpened6(true);
-                                    setProductionToEdit(data);
-                                  }}
-                                >
-                                  <IconEdit size={18} />
-                                </ActionIcon>
-                              </Tooltip>
-
-                              <Tooltip label="Eliminar">
-                                <ActionIcon
-                                  color="red"
-                                  onClick={() => {
-                                    setOpened4(true);
-                                    setProductionToDelete(data.id);
-                                    setProductionName(data.attributes.name);
-                                  }}
-                                >
-                                  <IconTrash size={18} />
-                                </ActionIcon>
-                              </Tooltip>
-                            </div>
-                          </Center>
-                        </td>
-                      </tr>
-                    ))}
-                </tbody>
-              </Table>
-            </Tabs.Panel>
-          </Tabs>
-        </div>
-        <Tooltip label="Ayuda" className={styles.tooltipText}>
-      <ActionIcon 
-        onClick={()=> alert('')}
-        variant="transparent" className={styles.helpIcon}>
-        <IconHelp size={50} />
-      </ActionIcon>
-      </Tooltip>
-     
       {/* MODAL ADD DEPARTMENT */}
       <Modal
         centered
@@ -675,14 +666,24 @@ const [active, setActive] = useState({ borderBottom: '2px solid indigo' });
           </Button>
         </div>
       </Modal>
+      {/* MODAL MANUAL DE USUARIO */}
+      <Modal
+        className={styles.helpModal}
+        opened={openedHelp}
+        centered
+        onClose={() => setOpenedHelp(false)}
+        title="Manual de Usuario"
+      >
+        <Help />
+      </Modal>
     </>
   );
 };
 /**
  * If the user is not logged in, redirect them to the sign-in page
- * 
+ *
  * @param context The context object that Next.js provides to getInitialProps.
- * 
+ *
  * @return The return value is an object with a redirect property.
  */
 export const getServerSideProps = async (context) => {

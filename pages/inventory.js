@@ -279,11 +279,7 @@ const inventory = () => {
             </Drawer>
           </Box>
           <InventoryList />
-          <Tooltip label="Ayuda" className={styles.tooltipText}>
-      <ActionIcon variant="transparent" className={styles.helpIcon}>
-        <IconHelp size={40} />
-      </ActionIcon>
-      </Tooltip>
+        
           
         </>
       )}

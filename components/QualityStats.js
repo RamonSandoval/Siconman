@@ -24,8 +24,7 @@ const QualityStats = () => {
    */
   async function init() {
     const list = await api.devicesList(1);
-    const list2 = await api.devicesList(2);
-    setarrayDevices(list.data.concat(list2.data));
+    setarrayDevices(list.data);
   }
 
   //option #1

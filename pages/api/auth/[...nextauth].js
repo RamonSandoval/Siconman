@@ -7,9 +7,9 @@ export default NextAuth({
   // Configure one or more authentication providers
   providers: [
     CredentialsProvider({
-      name: 'Sign in with Email',
+      name: 'Sign in with username',
       credentials: {
-        email: { label: 'Email', type: 'text' },
+        username: { label: 'username', type: 'text' },
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials, req) {
@@ -21,11 +21,11 @@ export default NextAuth({
         if (credentials == null) return null;
         /**
          * credentials is defined in the config above.
-         * We can expect it contains two properties: `email` and `password`
+         * We can expect it contains two properties: `username` and `password`
          */
         try {
           const { user, jwt } = await signIn({
-            email: credentials.email,
+            username: credentials.username,
             password: credentials.password, 
           });
           return { ...user, jwt };

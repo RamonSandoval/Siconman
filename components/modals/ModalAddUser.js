@@ -11,22 +11,31 @@ import api from "../../services/api";
 import Notifications from "../Notifications";
 
 const ModalAddUser = () => {
+
   async function createUser() {
     const body = {
       data: {
-        username: form.values.username,
-        email: form.values.email,
-        password: form.values.password,
+       username: form.values.username,
+       email: form.values.email,
+       password: form.values.password
       },
     };
+
     try {
+     /* Calling the api.addDevice function, which is an asynchronous function. It is waiting for the
+     function to finish, and then it is calling the Notifications.success function, which is a
+     function that displays a notification. Then it is calling the closeModal function, which is a
+     function that closes the modal. Finally, it is calling the init function, which is a function
+     that gets the list of departments and the list of productions from the API, and stores them in
+     the state variables arrayDep and arrayProd. */
       await api.addUser(body);
-      Notifications.success("Se ha creado al usuario correctamente ");
+      Notifications.success("Se ha creado un nuevo usuario");
     } catch (error) {
-      Notifications.error("Error al crear el usuaro");
-      console.log(error)
+      Notifications.error("Error");
+      console.error(error);
     }
   }
+  
 
   const form = useForm({
     initialValues: {

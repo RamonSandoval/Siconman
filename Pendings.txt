@@ -97,8 +97,6 @@ fix api page bug
 
 
 
-
-
 <Tooltip label="Filtrar Mantenimientos">
 
 data.attributes.maintenance?.data?.attributes.next_maintenance != null ? (

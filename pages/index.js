@@ -281,11 +281,7 @@ const Home = () => {
           <TableDevices />
         </>
       )}{" "}
-      <Tooltip label="Ayuda" className={styles.tooltipText}>
-      <ActionIcon variant="transparent" className={styles.helpIcon}>
-        <IconHelp size={50} />
-      </ActionIcon>
-      </Tooltip>
+     
     </div>
   );
 };

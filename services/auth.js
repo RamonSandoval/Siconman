@@ -8,11 +8,12 @@ const strapiUrl = process.env.strapiUrl
  * 
  * @return The response from the server.
  */
-export async function signIn({ email, password }) {
+export async function signIn({ username, password }) {
   const res = await axios.post(`http://localhost:1337/api/auth/local`, {
-    identifier: email,
+    identifier: username,
     password,
   });
   return res.data;
 }
+
 export default signIn

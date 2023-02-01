@@ -36,3 +36,7 @@
 .tooltipText{
   font-style: italic;
 }
+.helpModal{
+  height: auto;
+  width: auto;
+}

@@ -264,11 +264,7 @@ const [active, setActive] = useState({ borderBottom: '2px solid indigo' });
         </Drawer>
       </Box>
       <MaintTableAll />
-      <Tooltip label="Ayuda" className={styles.tooltipText}>
-      <ActionIcon variant="transparent" className={styles.helpIcon}>
-        <IconHelp size={50} />
-      </ActionIcon>
-      </Tooltip>
+      
       </>
      }
     </div>
