@@ -71,12 +71,20 @@ const Postpone = ({ maintToPostpone, closeModal }) => {
             autosize
           />
         )}
+         {maintToPostpone.attributes.maintenance?.data?.attributes.next_maintenance == null ? 
+          <TextInput
+          disabled
+          label="Próximo Manteniemiento"
+          autosize
+          placeholder="Por asignar"
+        /> : 
         <TextInput
           disabled
-          label="Proximo Manteniemiento"
+          label="Próximo Manteniemiento"
           autosize
           {...form.getInputProps("next_maintenance")}
         />
+         }
 
         <DatePicker
           placeholder="Elegir Fecha"
