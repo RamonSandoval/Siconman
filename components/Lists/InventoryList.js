@@ -352,7 +352,7 @@ const InventoryList = () => {
         centered
         opened={opened3}
         onClose={() => setOpened3(false)}
-        title={<Text size="lg">Seguro que desea eliminar el Dispositivo?</Text>}
+        title={<Text size="lg">Seguro que desea eliminar el equipo?</Text>}
       >
         <div className={styles.modal__confirmation}>
           <Button onClick={() => setOpened3(false)} color="red">

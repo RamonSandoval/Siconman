@@ -22,13 +22,13 @@ const ModalAddProduction = ({ closeModal3 }) => {
       /* Sending the data to the API. */
       await api.addProduction(body);
       Notifications.success(
-        "Se ha agregado el área " + form.values.name + " correctamente"
+        "Se ha agregado el área de producción " + form.values.name + " correctamente"
       );
       closeModal3();
     } catch (error) {
      /* A notification that is being called in the Modal component. */
       Notifications.error(
-        "Error al crear el área, ya se encuentra registrado?"
+        "El area de producción ya se encuentra registrada "
       );
       console.error(error);
     }
@@ -50,7 +50,7 @@ const ModalAddProduction = ({ closeModal3 }) => {
   return (
     <form onSubmit={form.onSubmit(createProduction)}>
       <TextInput
-        label="Nombre del Area"
+        label="Nombre del Área"
         {...form.getInputProps("name")}
         icon={<IconPin />}
       />

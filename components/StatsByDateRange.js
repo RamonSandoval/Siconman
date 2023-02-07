@@ -135,7 +135,7 @@ const Stats = () => {
               <Center>
                 <TextInput
                   pr={10}
-                  placeholder="Buscar"
+                  placeholder="Nombre Deparamento"
                   value={search3}
                   onChange={dep}
                   icon={<IconSearch />}

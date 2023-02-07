@@ -584,7 +584,7 @@ const config = () => {
         centered
         opened={opened5}
         onClose={() => setOpened5(false)}
-        title="Agregar area de Produccion"
+        title="Agregar área de Producción"
       >
         <ModalAddProduction closeModal3={closeModal3} />
       </Modal>
@@ -593,7 +593,7 @@ const config = () => {
       {departmentToEdit && (
         <Modal
           centered
-          title={"Editar Departamento " + info}
+          title={"Editar Departamento"}
           opened={opened2}
           onClose={() => setOpened2(false)}
         >
@@ -625,7 +625,7 @@ const config = () => {
         opened={opened3}
         onClose={() => setOpened3(false)}
         title={
-          <Text size="lg">Seguro que desea eliminar el Departamento?</Text>
+          <Text size="lg">Seguro que desea eliminar el departamento?</Text>
         }
       >
         <div className={styles.modal__confirmation}>

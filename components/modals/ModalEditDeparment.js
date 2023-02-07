@@ -26,11 +26,11 @@ const ModalEditDeparment = ({ departmentToEdit, closeModal }) => {
     };
     try {
       await api.updateDepartment(id_department, body);
-      Notifications.success("Se ha editado el departamento con exito");
+      Notifications.success("Se ha editado el departamento correctamente");
       closeModal();
     } catch (error) {
       console.log(error);
-      Notifications.error("Error 107 al editar el departamento");
+      Notifications.error("Error al editar el departamento");
     }
   }
 

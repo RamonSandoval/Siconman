@@ -52,11 +52,11 @@ const ModalEditDevice = ({ deviceToEdit, closeModal2 }) => {
 
     try {
       await api.updateDevice(id_edit, body);
-      Notifications.success("Se ha editado el dispositivo correcatamente "+pcEdit);
+      Notifications.success("Se ha editado el equipo " +pcEdit+" correcatamente ");
       closeModal2();
       init();
     } catch (error) {
-      Notifications.error("Error al editar el dispositivo");
+      Notifications.error("Error al editar el equipo");
       console.log(error);
     }
   }
@@ -96,14 +96,14 @@ const ModalEditDevice = ({ deviceToEdit, closeModal2 }) => {
       <form onSubmit={form.onSubmit(updateDevice)}>
         <TextInput
           disabled
-          label="ID del Dispositivo"
+          label="ID del Equipo"
           {...form.getInputProps("device_id")}
           icon={<IconId />}
         />
         <Center>
           <Radio.Group
             pt={12}
-            label="Selecciona la nueva ubicacion del equipo"
+            label="Seleccione la nueva ubicacion del equipo"
             {...form.getInputProps("user_request".valueOf(Radio))}
           >
             <Radio

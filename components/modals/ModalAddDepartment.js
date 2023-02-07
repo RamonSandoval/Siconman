@@ -19,7 +19,7 @@ const ModalAddDepartment = ({ /* A function that closes the modal. */ closeModal
     };
     try {
       await api.addDepartment(body);
-      Notifications.success("Se ha agregado el departamento Correctamente");
+      Notifications.success("Se ha agregado el departamento de " +form.values.department_name+ " correctamente");
       closeModal2();
     } catch (error) {
       Notifications.error("El departamento ya se encuentra registrado");
