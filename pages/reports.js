@@ -190,7 +190,7 @@ const [active, setActive] = useState({ borderBottom: '2px solid indigo' });
                 <Menu.Dropdown>
                   <Menu.Label>Opciones</Menu.Label>
                   <Menu.Item onClick={signOut} icon={<IconLogout size={14} />}>
-                    Cerrar Sesion
+                    Cerrar Sesión
                   </Menu.Item>
                   
                 </Menu.Dropdown>
@@ -261,7 +261,7 @@ const [active, setActive] = useState({ borderBottom: '2px solid indigo' });
                 <Menu.Dropdown>
                   <Menu.Label>Opciones</Menu.Label>
                   <Menu.Item onClick={signOut} icon={<IconLogout size={14} />}>
-                    Cerrar Sesion
+                    Cerrar Sesión
                   </Menu.Item>
                   
                 </Menu.Dropdown>
@@ -285,7 +285,7 @@ const [active, setActive] = useState({ borderBottom: '2px solid indigo' });
             </Tabs.Tab>
 
             <Tabs.Tab icon={<IconStatusChange size={14} />} value="quality">
-              Calidad de Atencion
+              Calidad de Atención
             </Tabs.Tab>
 
             <Tabs.Tab icon={<IconStatusChange size={14} />} value="maintType">

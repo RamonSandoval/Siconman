@@ -95,6 +95,9 @@ Fix table all devices not working properly
 
 fix api page bug
 
+Cambiar color de todos lo botones a #00255b
+
+Loading igual para todos revisar porque falla al filtrar mantenimientos
 
 
 <Tooltip label="Filtrar Mantenimientos">

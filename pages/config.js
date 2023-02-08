@@ -210,13 +210,13 @@ const config = () => {
     try {
       await api.deleteProduction(id);
       Notifications.success(
-        "Se ha eliminado el area de Produccion " +
+        "Se ha eliminado el área de Producción " +
           productionName +
           " correctamente"
       );
       init();
     } catch (error) {
-      Notifications.error("Error al eliminar el area de Produccion" + id);
+      Notifications.error("Error al eliminar el área de Producción" + id);
     }
   }
 
@@ -331,7 +331,7 @@ const config = () => {
                         onClick={signOut}
                         icon={<IconLogout size={14} />}
                       >
-                        Cerrar Sesion
+                        Cerrar Sesión
                       </Menu.Item>
                     </Menu.Dropdown>
                   </Menu>
@@ -398,7 +398,7 @@ const config = () => {
                 <Menu.Dropdown>
                   <Menu.Label>Opciones</Menu.Label>
                   <Menu.Item onClick={signOut} icon={<IconLogout size={14} />}>
-                    Cerrar Sesion
+                    Cerrar Sesión
                   </Menu.Item>
                 </Menu.Dropdown>
               </Menu>
@@ -417,7 +417,7 @@ const config = () => {
               Departamentos
             </Tabs.Tab>
             <Tabs.Tab value="production" icon={<IconWorld size={14} />}>
-              Produccion
+              Producción
             </Tabs.Tab>
           </Tabs.List>
 
@@ -497,7 +497,7 @@ const config = () => {
 
           <Tabs.Panel value="production" pt="xs">
             <div className={styles.iconContainer}>
-              <Tooltip label="Crear nueva area de Produccion">
+              <Tooltip label="Crear nueva área de Producción">
                 <ActionIcon
                   onClick={() => setOpened5(true)}
                   className={styles.add__icon}
@@ -514,7 +514,7 @@ const config = () => {
                     <Center>ID</Center>
                   </th>
                   <th>
-                    <Center>Area de Produccion</Center>
+                    <Center> Área de Producción</Center>
                   </th>
                   <th>
                     <Center>Acciones</Center>
@@ -608,7 +608,7 @@ const config = () => {
       {productionToEdit && (
         <Modal
           centered
-          title={"Editar Departamento " + info}
+          title={"Editar Área de Producción"}
           opened={opened6}
           onClose={() => setOpened6(false)}
         >
@@ -632,7 +632,8 @@ const config = () => {
           <Button onClick={() => setOpened3(false)} color="red">
             Cancelar
           </Button>
-          <Button
+          <Button variant="gradient"
+              gradient={{ from: "#00255b", to: "#00255b", deg: 75 }}
             onClick={() =>
               deleteDepartment(departmentToDelete).then(() => setOpened3(false))
             }
@@ -649,7 +650,7 @@ const config = () => {
         onClose={() => setOpened4(false)}
         title={
           <Text size="lg">
-            Seguro que desea eliminar el area de Produccion "{productionName}"{" "}
+            Seguro que desea eliminar el área de Producción "{productionName}"{" "}
           </Text>
         }
       >
@@ -658,6 +659,8 @@ const config = () => {
             Cancelar
           </Button>
           <Button
+          variant="gradient"
+          gradient={{ from: "#00255b", to: "#00255b", deg: 75 }} type="submit"
             onClick={() =>
               deleteProduction(productionToDelete).then(() => setOpened4(false))
             }

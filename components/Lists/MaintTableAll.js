@@ -1,9 +1,6 @@
 import React, { createContext } from "react";
 import api from "../../services/api";
 import stylesModal from "../../styles/ModalRegisterNewMaint.module.css";
-
-import { signOut, useSession } from "next-auth/react";
-import { getSession } from 'next-auth/react';
 import {
   ScrollArea,
   Table,
@@ -41,7 +38,6 @@ import ModalCreateMaint from "../modals/ModalCreateMaint";
 import { Ce } from "tabler-icons-react";
 
 const MaintTableAll = () => {
-  const { data: session} = useSession();
   const [opened, setOpened] = useState(false);
   const [search, setSearch] = useState("");
   const [deviceToMaintNew, setDeviceToMaintNew] = useState({});
@@ -59,7 +55,6 @@ const MaintTableAll = () => {
   const [activePage, setPage] = useState(1);
   const [maintCompare, setMaintCompare] = useSetState("");
   const [ isLoading, setIsLoading ] = useState(false);
-
   /* Creating a style object that will be used by the Header component. */
   const useStyles = createStyles((theme) => ({
     header: {
@@ -90,11 +85,8 @@ const MaintTableAll = () => {
 
   /* Calling the init() function when the component mounts. */
   useEffect(() => {
-    if (session == null) return;
-    console.log("session.jwt", session.jwt);
-
     init();
-  }, [session]);
+  }, []);
 
   /**
    * When the page loads, get the list of devices from the API and store it in the arrayDevices
@@ -102,11 +94,20 @@ const MaintTableAll = () => {
    */
   async function init() {
     setIsLoading(true);
-    const list = await api.devicesList(activePage);
+    const list = await api.devicesList();
     setarrayDevices(list.data);
     setarrayDataDev(list.data);
-    setIsLoading(false)
+    setIsLoading(false);
   }
+
+  var arrayfiltrado = arrayDevices.filter(
+    (data) =>
+      data.attributes.maintenance?.data != null
+  );
+  var arrayfiltradoNull = arrayDevices.filter(
+    (data) =>
+      data.attributes.maintenance?.data == null
+  );
   /**
    * If the date of the first object is less than the date of the second object, return -1. If the date
    * of the first object is greater than the date of the second object, return 1. If the dates are equal,
@@ -118,13 +119,7 @@ const MaintTableAll = () => {
    * @return the result of the comparison.
    */
 
-   var arrayfiltrado = arrayDevices.filter(
-    (data) =>
-      data.attributes.maintenance?.data  != null
-  );
-  /* Creating a new array with the same values as the original array. */
-  //var deviceList = arrayDevices.sort((x, y) => x.attributes.maintenance?.data?.attributes?.next_maintenance  - y.attributes.maintenance?.data?.attributes?.next_maintenance );
-  var deviceList = arrayDevices.sort(function (x, y) {
+  var deviceList = arrayfiltrado.sort(function (x, y) {
     // ordenar primero por el campo 'name'
     const fechaA = x.attributes.maintenance?.data?.attributes?.next_maintenance
     const fechaB = y.attributes.maintenance?.data?.attributes?.next_maintenance
@@ -136,7 +131,6 @@ const MaintTableAll = () => {
     if (fechaA > fechaB) {
         return 1;
     }
- 
     // si los nombres son iguales, ordenar por 'year'
     return 0;
 });
@@ -237,13 +231,15 @@ const MaintTableAll = () => {
             </div>
           </div>
           <Divider variant="dashed" size="sm" my="sm" />
+          
+          
           <ScrollArea
-            sx={{ height: 710 }}
+            sx={{ height: 600 }}
             onScrollPositionChange={({ y }) => setScrolled(y !== 0)}
           >
             { isLoading ? 
               <Center className={styles.loading}>
-              <Loader size="xl" color="orange"/> 
+              <Loader variant="bars"/> 
               </Center>:
             <Table highlightOnHover>
               <thead
@@ -275,7 +271,7 @@ const MaintTableAll = () => {
               </thead>
               <tbody className={styles.tbody}>
                 {deviceList &&
-                  deviceList.map((data) => (
+                  deviceList.concat(arrayfiltradoNull).map((data) => (
                     <tr className={styles.table__data} key={data.device_id}>
                       <td bgcolor={maintCompare}>
                         <Center>{data.attributes.device_id}</Center>
@@ -329,7 +325,6 @@ const MaintTableAll = () => {
                       </td>
                       <td>
                         <div className={styles.icons}>
-                        {session.id != 9 ? 
                           <Tooltip label="Registrar Mantenimiento">
                             <ActionIcon
                               color="dark"
@@ -341,7 +336,7 @@ const MaintTableAll = () => {
                             >
                               <IconTool size={18} />
                             </ActionIcon>
-                          </Tooltip> : null }
+                          </Tooltip>
                           <Tooltip label="Historial Mantenimiento">
                             <ActionIcon
                               color="yellow"
@@ -353,7 +348,7 @@ const MaintTableAll = () => {
                               <IconHistory size={18} />
                             </ActionIcon>
                           </Tooltip>
-                          {session.id != 9 ?      
+
                           <Tooltip label="Posponer Fecha">
                             <ActionIcon
                               onClick={() => {
@@ -364,12 +359,9 @@ const MaintTableAll = () => {
                             >
                               <IconRotateClockwise2 color="green" size={18} />
                             </ActionIcon>
-                          </Tooltip> : null }
+                          </Tooltip>
 
-                          
-                          
-                          {data.attributes.maintenance?.data == null ? session.id != 9 ? (
-                            
+                          {data.attributes.maintenance?.data == null ? (
                             <Tooltip label="Crear Nuevo Mantenimiento">
                               <ActionIcon
                                 variant="light"
@@ -382,7 +374,7 @@ const MaintTableAll = () => {
                                 <IconCirclePlus size={18} />
                               </ActionIcon>
                             </Tooltip>
-                          ) : session.id != 9 ? (
+                          ) : (
                             <Tooltip label="Crear Nuevo Mantenimiento">
                               <ActionIcon
                                 variant="light"
@@ -396,24 +388,19 @@ const MaintTableAll = () => {
                                 <IconCirclePlus size={18} />
                               </ActionIcon>
                             </Tooltip>
-                          ):null :null}
+                          )}
                         </div>
                       </td>
                     </tr>
                   ))}
               </tbody>
-            </Table>}
+            </Table>
+            }
           </ScrollArea>
-          {/* <Center pt={30}>
-            <Pagination
-              grow
-              page={activePage}
-              initialPage={1}
-              onChange={setPage}
-              onClick={() => actualizar()}
-              total={7}
-            />
-          </Center> */}
+          
+          <Center pt={30}>
+           
+          </Center>
         </div>
       </Center>
 
@@ -492,23 +479,6 @@ const MaintTableAll = () => {
       )}
     </>
   );
-};
-
-export const getServerSideProps = async (context) => {
-  const session = await getSession(context);
-
-  // Check if session exists or not, if not, redirect
-  if (session == null || session.id === 9) {
-    return {
-      redirect: {
-        destination: "/auth/sign-in",
-        permanent: true,
-      },
-    };
-  }
-  return {
-    props: {},
-  };
 };
 
 export default MaintTableAll;

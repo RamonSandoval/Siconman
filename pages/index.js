@@ -199,7 +199,7 @@ const Home = () => {
                             onClick={signOut}
                             icon={<IconLogout size={14} />}
                           >
-                            Cerrar Sesion
+                            Cerrar Sesión
                           </Menu.Item>
                         </Menu.Dropdown>
                       </Menu>
@@ -270,7 +270,7 @@ const Home = () => {
                         onClick={signOut}
                         icon={<IconLogout size={14} />}
                       >
-                        Cerrar Sesion
+                        Cerrar Sesión
                       </Menu.Item>
                     </Menu.Dropdown>
                   </Menu>

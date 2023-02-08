@@ -212,7 +212,8 @@ const ModalAddDevice = ({ closeModal }) => {
       />
 
       <Center pt={20}>
-        <Button color="#002a5b" type="submit">
+        <Button variant="gradient"
+              gradient={{ from: "#00255b", to: "#00255b", deg: 75 }} type="submit">
           Agregar
         </Button>
       </Center>

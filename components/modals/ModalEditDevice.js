@@ -148,7 +148,10 @@ const ModalEditDevice = ({ deviceToEdit, closeModal2 }) => {
           icon={<IconClipboardList />}
         />
         <Center>
-          <Button color="#002a5b" type="submit">
+          <Button variant="gradient"
+              gradient={{ from: "#00255b", to: "#00255b", deg: 75 }}type="submit"
+          
+          >
             {" "}
             Aplicar{" "}
           </Button>

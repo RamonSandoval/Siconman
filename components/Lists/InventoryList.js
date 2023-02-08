@@ -221,7 +221,7 @@ const InventoryList = () => {
       >
         { isLoading ? 
               <Center pt={200} className={styles.loading}>
-              <Loader size="xl" color="orange" /> 
+               <Loader variant="bars"/> 
               </Center>:
         <Table highlightOnHover>
           <thead
@@ -359,6 +359,8 @@ const InventoryList = () => {
             Cancelar
           </Button>
           <Button
+          variant="gradient"
+          gradient={{ from: "#00255b", to: "#00255b", deg: 75 }}
             onClick={() =>
               deleteDevice(deviceToDelete).then(() => setOpened3(false))
             }

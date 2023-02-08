@@ -165,6 +165,7 @@ const Stats = () => {
                 </Button>
               </Tooltip>
               <Center>
+              <Tooltip label="Refrescar lista">
                 <ActionIcon
                   onClick={() => init()}
                   className={styles.refresh__icon}
@@ -172,6 +173,7 @@ const Stats = () => {
                 >
                   <IconRefresh size={30} />
                 </ActionIcon>
+                </Tooltip>
               </Center>
               {errorDateNull != "" && <Text color="red">{errorDateNull}</Text>}
             </div>
@@ -198,7 +200,7 @@ const Stats = () => {
                     <Center>Ultimo Mantenimiento</Center>
                   </th>
                   <th>
-                    <Center>Proximo Mantenimiento</Center>
+                    <Center>Próximo Mantenimiento</Center>
                   </th>
                   <th>
                     <Center>Tipo de Mantenimiento</Center>

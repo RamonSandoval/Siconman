@@ -198,7 +198,7 @@ const inventory = () => {
                           onClick={signOut}
                           icon={<IconLogout size={14} />}
                         >
-                          Cerrar Sesion
+                          Cerrar Sesión
                         </Menu.Item>
                       </Menu.Dropdown>
                     </Menu>
@@ -271,7 +271,7 @@ const inventory = () => {
                       onClick={signOut}
                       icon={<IconLogout size={14} />}
                     >
-                      Cerrar Sesion
+                      Cerrar Sesión
                     </Menu.Item>
                   </Menu.Dropdown>
                 </Menu>

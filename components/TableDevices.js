@@ -31,7 +31,8 @@ import Postpone from "./modals/ModalPostpone";
 import ModalMaint from "./modals/ModalMaint";
 
 const TableDevices = () => {
-  const [isLoading, setLoading] = useState(false);
+  const [ isLoading, setIsLoading ] = useState(false);
+
   const [opened, setOpened] = useState(false);
   const [search, setSearch] = useState("");
   const [arrayDataDev, setarrayDataDev] = useState([]);
@@ -63,10 +64,11 @@ const TableDevices = () => {
   }, []);
 
   async function init() {
-    setLoading(true);
+    setIsLoading(true);
     const list = await api.devicesList();
     setarrayDevices(list.data);
     setarrayDataDev(list.data);
+    setIsLoading(false);
     
     //console.log(arrayDevices[0].attributes.maintenance?.data?.attributes?.next_maintenance)
   }
@@ -220,7 +222,10 @@ const TableDevices = () => {
           </div>
           <ScrollArea>
             <Divider variant="dashed" size="sm" my="sm" />
-
+            { isLoading ? 
+              <Center className={styles.loading}>
+              <Loader variant="bars"/> 
+              </Center>:
             <Table highlightOnHover>
               <thead className={styles.table__columns}>
                 <tr>
@@ -368,6 +373,7 @@ const TableDevices = () => {
                   )}
               </tbody>
             </Table>
+}
           </ScrollArea>
         </div>
       </Center>

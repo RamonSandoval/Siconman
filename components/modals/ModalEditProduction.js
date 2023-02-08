@@ -50,12 +50,13 @@ const ModalEditProduction = ({ productionToEdit, closeModal4 }) => {
   return (
     <form onSubmit={form.onSubmit(updateProduction)}>
       <TextInput
-        label="Area de Produccion"
+        label="Área de Producción"
         {...form.getInputProps("name")}
         icon={<IconId />}
       />
       <Center pt={12}>
-        <Button color="#002a5b" type="submit">
+        <Button variant="gradient"
+              gradient={{ from: "#00255b", to: "#00255b", deg: 75 }} type="submit">
           {" "}
           Aplicar{" "}
         </Button>
