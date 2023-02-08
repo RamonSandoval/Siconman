@@ -100,6 +100,12 @@ const ModalEditDevice = ({ deviceToEdit, closeModal2 }) => {
           {...form.getInputProps("device_id")}
           icon={<IconId />}
         />
+        <TextInput
+          pb={20}
+          label="Modelo"
+          {...form.getInputProps("model")}
+          icon={<IconClipboardList />}
+        />
         <Center>
           <Radio.Group
             pt={12}
@@ -141,12 +147,7 @@ const ModalEditDevice = ({ deviceToEdit, closeModal2 }) => {
             return { value: f.id, label: f.attributes.name };
           })}
         />
-        <TextInput
-          pb={20}
-          label="Modelo"
-          {...form.getInputProps("model")}
-          icon={<IconClipboardList />}
-        />
+        
         <Center>
           <Button variant="gradient"
               gradient={{ from: "#00255b", to: "#00255b", deg: 75 }}type="submit"

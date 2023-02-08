@@ -36,17 +36,16 @@ const Stats = () => {
   const [openedMaint, setOpenedMaint] = useState(false);
   const [deviceToMaint, setDeviceToMaint] = useState({});
   const [errorDateNull, setErrorDateNull] = useState("");
-  const [ isLoading, setIsLoading ] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     init();
   }, []);
 
   async function init() {
     setIsLoading(true);
-    const list = await api.devicesList(1);
-    const list2 = await api.devicesList(2);
-    setarrayDevices(list.data.concat(list2.data));
-    setarrayDataDev(list.data.concat(list2.data));
+    const list = await api.devicesList();
+    setarrayDevices(list.data);
+    setarrayDataDev(list.data);
     setIsLoading(false);
   }
 
@@ -165,14 +164,14 @@ const Stats = () => {
                 </Button>
               </Tooltip>
               <Center>
-              <Tooltip label="Refrescar lista">
-                <ActionIcon
-                  onClick={() => init()}
-                  className={styles.refresh__icon}
-                  variant="filled"
-                >
-                  <IconRefresh size={30} />
-                </ActionIcon>
+                <Tooltip label="Refrescar lista">
+                  <ActionIcon
+                    onClick={() => init()}
+                    className={styles.refresh__icon}
+                    variant="filled"
+                  >
+                    <IconRefresh size={30} />
+                  </ActionIcon>
                 </Tooltip>
               </Center>
               {errorDateNull != "" && <Text color="red">{errorDateNull}</Text>}
@@ -180,95 +179,99 @@ const Stats = () => {
           </div>
           <ScrollArea>
             <Divider variant="dashed" size="sm" my="sm" />
-            { isLoading ? 
+            {isLoading ? (
               <Center className={styles.loading}>
-              <Loader variant="bars"/> 
-              </Center>:
-            <Table highlightOnHover>
-              <thead className={styles.table__columns}>
-                <tr>
-                  <th>
-                    <Center>ID Equipo</Center>
-                  </th>
-                  <th>
-                    <Center>Departamento</Center>
-                  </th>
-                  <th>
-                    <Center>Modelo</Center>
-                  </th>
-                  <th>
-                    <Center>Ultimo Mantenimiento</Center>
-                  </th>
-                  <th>
-                    <Center>Próximo Mantenimiento</Center>
-                  </th>
-                  <th>
-                    <Center>Tipo de Mantenimiento</Center>
-                  </th>
-                  {/* <th>
+                <Loader variant="bars" />
+              </Center>
+            ) : (
+              <Table highlightOnHover>
+                <thead className={styles.table__columns}>
+                  <tr>
+                    <th>
+                      <Center>ID Equipo</Center>
+                    </th>
+                    <th>
+                      <Center>Departamento</Center>
+                    </th>
+                    <th>
+                      <Center>Modelo</Center>
+                    </th>
+                    <th>
+                      <Center>Ultimo Mantenimiento</Center>
+                    </th>
+                    <th>
+                      <Center>Próximo Mantenimiento</Center>
+                    </th>
+                    <th>
+                      <Center>Tipo de Mantenimiento</Center>
+                    </th>
+                    {/* <th>
                     <Center>Acciones</Center>
                   </th> */}
-                </tr>
-              </thead>
-              <tbody>
-                {arrayDevices &&
-                  arrayDevices.sort(compare_date).map(
-                    (data, index) =>
-                      index < 15 && (
-                        <tr className={styles.table__data} key={data.device_id}>
-                          <td>
-                            <Center>{data.attributes.device_id}</Center>
-                          </td>
-                          {data.attributes.production?.data == null ? (
+                  </tr>
+                </thead>
+                <tbody>
+                  {arrayDevices &&
+                    arrayDevices.sort(compare_date).map(
+                      (data, index) =>
+                        index < 15 && (
+                          <tr
+                            className={styles.table__data}
+                            key={data.device_id}
+                          >
+                            <td>
+                              <Center>{data.attributes.device_id}</Center>
+                            </td>
+                            {data.attributes.production?.data == null ? (
+                              <td>
+                                <Center>
+                                  {
+                                    data.attributes.department?.data?.attributes
+                                      .department_name
+                                  }
+                                </Center>
+                              </td>
+                            ) : (
+                              <td>
+                                <Center>
+                                  Producción -{" "}
+                                  {
+                                    data.attributes.production?.data?.attributes
+                                      .name
+                                  }
+                                </Center>
+                              </td>
+                            )}
+                            <td>
+                              <Center>{data.attributes.model}</Center>
+                            </td>
                             <td>
                               <Center>
-                                {
-                                  data.attributes.department?.data?.attributes
-                                    .department_name
-                                }
+                                {data.attributes.maintenance?.data?.attributes
+                                  .maintenance_date == null
+                                  ? " Por asignar"
+                                  : Fecha(
+                                      data.attributes.maintenance?.data
+                                        ?.attributes.maintenance_date
+                                    )}
                               </Center>
                             </td>
-                          ) : (
                             <td>
-                              <Center>
-                                Producción -{" "}
-                                {
-                                  data.attributes.production?.data?.attributes
-                                    .name
-                                }
-                              </Center>
-                            </td>
-                          )}
-                          <td>
-                            <Center>{data.attributes.model}</Center>
-                          </td>
-                          <td>
-                            <Center>
                               {data.attributes.maintenance?.data?.attributes
-                                .maintenance_date == null
+                                .next_maintenance == null
                                 ? " Por asignar"
                                 : Fecha(
                                     data.attributes.maintenance?.data
-                                      ?.attributes.maintenance_date
+                                      ?.attributes.next_maintenance
                                   )}
-                            </Center>
-                          </td>
-                          <td>
-                            {data.attributes.maintenance?.data?.attributes
-                              .next_maintenance == null
-                              ? " Por asignar"
-                              : Fecha(
-                                  data.attributes.maintenance?.data?.attributes
-                                    .next_maintenance
-                                )}
-                          </td>
-                          <td>
-                            {
-                              data.attributes.maintenance?.data?.attributes
-                                .maintenance_type_next
-                            }
-                          </td>
-                          {/* <td>
+                            </td>
+                            <td>
+                              {
+                                data.attributes.maintenance?.data?.attributes
+                                  .maintenance_type_next
+                              }
+                            </td>
+                            {/* <td>
                             <div className={styles.icons}>
                               <ActionIcon
                                 color="indigo"
@@ -291,11 +294,12 @@ const Stats = () => {
                               </ActionIcon>
                             </div>
                           </td> */}
-                        </tr>
-                      )
-                  )}
-              </tbody>
-            </Table>}
+                          </tr>
+                        )
+                    )}
+                </tbody>
+              </Table>
+            )}
           </ScrollArea>
         </div>
       </Center>

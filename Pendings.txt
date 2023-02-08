@@ -99,7 +99,7 @@ Cambiar color de todos lo botones a #00255b
 
 Loading igual para todos revisar porque falla al filtrar mantenimientos
 
-
+Ordenar dropdowns de departamento y produccion por orden alfabetico
 <Tooltip label="Filtrar Mantenimientos">
 
 data.attributes.maintenance?.data?.attributes.next_maintenance != null ? (

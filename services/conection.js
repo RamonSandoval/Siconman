@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export default class Conection {
 
-    static bd_url = 'http://10.0.0.3:1337';
+    static bd_url = 'http://192.168.17.141:1337';
 
     static securityConfig() {
         const token = localStorage.getItem('token');

@@ -8,34 +8,27 @@ import {
   Modal,
   Center,
   Divider,
-  Pagination,
   Tooltip,
   Loader,
 } from "@mantine/core";
-import { usePagination, useSetState } from "@mantine/hooks";
+import { useSetState } from "@mantine/hooks";
 
 import { useState, useEffect } from "react";
 import {
   IconCirclePlus,
-  IconClearFormatting,
   IconHistory,
   IconListDetails,
   IconRotateClockwise2,
   IconSearch,
-  IconTool,
-  IconTools,
-  IconTooltip,
+  IconTool
 } from "@tabler/icons";
 import styles from "../../styles/TableMaint.module.css";
 import { ActionIcon, ThemeIcon, createStyles } from "@mantine/core";
-import Layout from "../Layout";
 import { Fecha } from "../../helpers";
 import Postpone from "../modals/ModalPostpone";
-import { IconList } from "@tabler/icons";
 import ModalMaint from "../modals/ModalMaint";
 import ModalMaintHistory from "../modals/ModalMaintHistory";
 import ModalCreateMaint from "../modals/ModalCreateMaint";
-import { Ce } from "tabler-icons-react";
 
 const MaintTableAll = () => {
   const [opened, setOpened] = useState(false);
@@ -51,8 +44,6 @@ const MaintTableAll = () => {
   const [deviceToMaint, setDeviceToMaint] = useState({});
   const [openedMaintNew, setOpenedMaintNew] = useState(false);
   const [maintColor, setMaintColor] = useState();
-  const pagination = usePagination({ total: 10, initialPage: 1 });
-  const [activePage, setPage] = useState(1);
   const [maintCompare, setMaintCompare] = useSetState("");
   const [ isLoading, setIsLoading ] = useState(false);
   /* Creating a style object that will be used by the Header component. */
@@ -195,17 +186,6 @@ const MaintTableAll = () => {
     });
     setarrayDevices(resultado);
   };
-
-  /**
-   * The function is called when the user clicks the button. It then calls the init() function, which is
-   * the function that creates the pagination.
-   */
-  function actualizar() {
-    console.log(activePage + 1);
-    init();
-  }
-
-  /* A React component that renders a table. */
   return (
     <>
       <Center>
