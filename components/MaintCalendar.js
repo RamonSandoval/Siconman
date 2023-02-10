@@ -15,15 +15,6 @@ const MaintCalendar = () => {
   //Normal Date
   /* Getting the current date and converting it to a string. */
   const date = new Date().toLocaleDateString("en-CA");
-  // Minus 3 days
-  var d3 = new Date();
-  d3.setDate(d3.getDate() + 3);
-  var date3 = d3.toLocaleDateString("en-CA");
-  //Minus 7 days
-  /* Subtracting 7 days from the current date. */
-  var d7 = new Date();
-  d7.setDate(d7.getDate() + 7);
-  var date7 = d7.toLocaleDateString("en-CA");
   /* */
 
   useEffect(() => {

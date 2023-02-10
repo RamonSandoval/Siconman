@@ -55,6 +55,9 @@ const TableDevices = () => {
   var d7 = new Date();
   d7.setDate(d7.getDate() + 7);
   var date7 = d7.toLocaleDateString("en-CA");
+  //
+
+
   /* */
 
   useEffect(() => {
