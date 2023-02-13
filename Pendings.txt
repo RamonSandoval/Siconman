@@ -85,17 +85,17 @@ Agregar pie chart de Mantenimientos correctivos y preventivos (Done)
 
 show in table next to production area "Produccion - Area Light" (Done)
 
-Fix max rows in table
+Fix max rows in table (Done)
 
 order maintTableAll por ultimo mantenimiento (Done)
 
-Revisar acentos
+Revisar acentos (Done?)
 
-Fix table all devices not working properly
+Fix table all devices not working properly (Done)
 
-fix api page bug
+fix api page bug (Done)
 
-Cambiar color de todos lo botones a #00255b
+Cambiar color de todos lo botones a #00255b (Done)
 
 Loading igual para todos revisar porque falla al filtrar mantenimientos
 

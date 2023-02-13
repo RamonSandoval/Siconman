@@ -2,7 +2,7 @@ import React from "react";
 import api from "../services/api";
 import stylesModal from "../styles/ModalRegisterNewMaint.module.css";
 import { signOut, useSession } from "next-auth/react";
-import { getSession } from 'next-auth/react';
+import { getSession } from "next-auth/react";
 import {
   ScrollArea,
   Table,
@@ -29,9 +29,10 @@ import Layout from "./Layout";
 import { Fecha } from "../helpers";
 import Postpone from "./modals/ModalPostpone";
 import ModalMaint from "./modals/ModalMaint";
+import Notifications from "./Notifications";
 
 const TableDevices = () => {
-  const [ isLoading, setIsLoading ] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [opened, setOpened] = useState(false);
   const [search, setSearch] = useState("");
@@ -40,7 +41,7 @@ const TableDevices = () => {
   const [maintToPostpone, setMaintToPostPone] = useState([]);
   const [openedMaint, setOpenedMaint] = useState(false);
   const [deviceToMaint, setDeviceToMaint] = useState({});
-  const { data: session} = useSession();
+  const { data: session } = useSession();
   /* DATE SUBSTRACTION */
   //Normal Date
   /* Creating a new date object and then converting it to a string in the Canadian format. */
@@ -57,7 +58,6 @@ const TableDevices = () => {
   var date7 = d7.toLocaleDateString("en-CA");
   //
 
-
   /* */
 
   useEffect(() => {
@@ -72,7 +72,7 @@ const TableDevices = () => {
     setarrayDevices(list.data);
     setarrayDataDev(list.data);
     setIsLoading(false);
-    
+
     //console.log(arrayDevices[0].attributes.maintenance?.data?.attributes?.next_maintenance)
   }
 
@@ -128,79 +128,31 @@ const TableDevices = () => {
     setarrayDevices(resultado);
   };
 
-
   var arrayfiltrado = arrayDevices.filter(
-    (data) =>
-      data.attributes.maintenance?.data  != null
+    (data) => data.attributes.maintenance?.data != null
   );
   /* Creating a new array with the same values as the original array. */
-  //var deviceList = arrayDevices.sort((x, y) => x.attributes.maintenance?.data?.attributes?.next_maintenance  - y.attributes.maintenance?.data?.attributes?.next_maintenance );
   var deviceList = arrayfiltrado.sort(function (x, y) {
     // ordenar primero por el campo 'name'
-    const fechaA = x.attributes.maintenance?.data?.attributes?.next_maintenance
-    const fechaB = y.attributes.maintenance?.data?.attributes?.next_maintenance
+    const fechaA = x.attributes.maintenance?.data?.attributes?.next_maintenance;
+    const fechaB = y.attributes.maintenance?.data?.attributes?.next_maintenance;
 
     if (fechaA < fechaB) {
-        return -1;
+      return -1;
     }
- 
+
     if (fechaA > fechaB) {
-        return 1;
+      return 1;
     }
- 
+
     // si los nombres son iguales, ordenar por 'year'
     return 0;
-});
-  //const deviceList = arrayDevices.sortBy('attributes.device_id');
-/*    const deviceList = ()  =>{
-    for (i = 0; i < arrayDevices.length; i++) 
-    {      //Loop over java Array  outer Loop use
-        for (j = i + 1; j < arrayDevices.length; j++) 
-        {  // Loop over java array
-            var tmp = 0;                            //tempraory variable in order 
-            if (arr[i].attributes.maintenance?.data?.attributes?.next_maintenance > arr[j].attributes.maintenance?.data?.attributes?.next_maintenance) 
-            {          //compare outer loop object with inner loop 
-                tmp = arr[i];               // if greater than swapping.
-                arr[i] = arr[j];            // Swaping code here.
-                arr[j] = tmp;
-            }
-        }
-    }
-
-   } */
-
-  /**
-   * If the next_maintenance date of the first object is less than the next_maintenance date of the
-   * second object, return -1. If the next_maintenance date of the first object is greater than the
-   * next_maintenance date of the second object, return 1. If the next_maintenance dates are equal,
-   * return 0.
-   *
-   * @param a the first object to compare
-   * @param b {
-   */
-/*   function compare_date(a, b) {
-    
-    
-    const fechaA =a.attributes.maintenance?.data?.attributes?.next_maintenance
-    const fechaB =b.attributes.maintenance?.data?.attributes?.next_maintenance
-    //return new Date(fechaA).getTime() > new Date(fechaB).getTime()
-    
-     if (fechaA<fechaB) {
-        return -1;
-      }
-      if (fechaA>fechaB) {
-        return 1;
-      }
-      // a debe ser igual b
-      return 0; 
-    
-    
-  } */
+  });
 
   /* A React component that is rendering a table with data from an API. */
   return (
     <>
-     {/*  <Layout tituloPagina="Inicio" /> */}
+      {/*  <Layout tituloPagina="Inicio" /> */}
       <Center>
         <div className={styles.table}>
           <div className={styles.table__title}>
@@ -225,41 +177,43 @@ const TableDevices = () => {
           </div>
           <ScrollArea>
             <Divider variant="dashed" size="sm" my="sm" />
-            { isLoading ? 
+            {isLoading ? (
               <Center className={styles.loading}>
-              <Loader variant="bars"/> 
-              </Center>:
-            <Table highlightOnHover>
-              <thead className={styles.table__columns}>
-                <tr>
-                  <th></th>
-                  <th>
-                    <Center>ID Equipo</Center>
-                  </th>
-                  <th>
-                    <Center>Departamento</Center>
-                  </th>
-                  <th>
-                    <Center>Modelo</Center>
-                  </th>
-                  <th>
-                    <Center>Ultimo Mantenimiento</Center>
-                  </th>
-                  <th>
-                    <Center>Próximo Mantenimiento</Center>
-                  </th>
-                  <th>
-                    <Center>Tipo de Mantenimiento</Center>
-                  </th>
-                  {session.id != 9 ? 
-                  <th>
-                    <Center>Acciones</Center>
-                  </th> : null }
-                </tr>
-              </thead>
-              <tbody>
-                {deviceList &&
-                  deviceList.map((data, index) =>
+                <Loader variant="bars" />
+              </Center>
+            ) : (
+              <Table highlightOnHover>
+                <thead className={styles.table__columns}>
+                  <tr>
+                    <th></th>
+                    <th>
+                      <Center>ID Equipo</Center>
+                    </th>
+                    <th>
+                      <Center>Departamento</Center>
+                    </th>
+                    <th>
+                      <Center>Modelo</Center>
+                    </th>
+                    <th>
+                      <Center>Ultimo Mantenimiento</Center>
+                    </th>
+                    <th>
+                      <Center>Próximo Mantenimiento</Center>
+                    </th>
+                    <th>
+                      <Center>Tipo de Mantenimiento</Center>
+                    </th>
+                    {session.id != 9 ? (
+                      <th>
+                        <Center>Acciones</Center>
+                      </th>
+                    ) : null}
+                  </tr>
+                </thead>
+                <tbody>
+                  {deviceList &&
+                    deviceList.map((data, index) => (
                       <tr className={styles.table__data} key={index}>
                         {data.attributes.maintenance?.data?.attributes
                           .next_maintenance < date ? (
@@ -291,26 +245,30 @@ const TableDevices = () => {
                         ) : (
                           <td></td>
                         )}
-                        
 
                         <td>
                           <Center>{data.attributes.device_id}</Center>
                         </td>
-                        {data.attributes.production?.data == null ? 
-                  <td>
-                    <Center>
-                      {
-                        data.attributes.department?.data?.attributes
-                          .department_name
-                      }
-                    </Center>
-                  </td> :
-                  <td>
-                  <Center>
-                  Produccion - {data.attributes.production?.data?.attributes.name}
-                    
-                  </Center>
-                </td>}
+                        {data.attributes.production?.data == null ? (
+                          <td>
+                            <Center>
+                              {
+                                data.attributes.department?.data?.attributes
+                                  .department_name
+                              }
+                            </Center>
+                          </td>
+                        ) : (
+                          <td>
+                            <Center>
+                              Produccion -{" "}
+                              {
+                                data.attributes.production?.data?.attributes
+                                  .name
+                              }
+                            </Center>
+                          </td>
+                        )}
                         <td>
                           <Center>{data.attributes.model}</Center>
                         </td>
@@ -342,41 +300,44 @@ const TableDevices = () => {
                             : data.attributes.maintenance?.data?.attributes
                                 .maintenance_type_next}
                         </td>
-                        {session.id != 9 ? 
-                        <td>
-                          <div className={styles.icons}>
-                            <Tooltip label="Registrar Mantenimiento">
-                              <ActionIcon
-                                color="indigo"
-                                variant="transparent"
-                                onClick={() => {
-                                  setOpenedMaint(true);
-                                  setDeviceToMaint(data);
-                                }}
-                              >
-                                <IconTool size={18} />
-                              </ActionIcon>
-                            </Tooltip>
+                        {session.id != 9 ? (
+                          <td>
+                            <div className={styles.icons}>
+                              <Tooltip label="Registrar Mantenimiento">
+                                <ActionIcon
+                                  color="indigo"
+                                  variant="transparent"
+                                  onClick={() => {
+                                    setOpenedMaint(true);
+                                    setDeviceToMaint(data);
+                                  }}
+                                >
+                                  <IconTool size={18} />
+                                </ActionIcon>
+                              </Tooltip>
 
-                            <Tooltip label="Posponer Fecha">
-                              <ActionIcon
-                                onClick={() => {
-                                  setMaintToPostPone(data);
-                                  setOpened(true);
-                                }}
-                                variant="transparent"
-                              >
-                                <IconRotateClockwise2 color="green" size={18} />
-                              </ActionIcon>
-                            </Tooltip>
-                          </div>
-                        </td> : null }
+                              <Tooltip label="Posponer Fecha">
+                                <ActionIcon
+                                  onClick={() => {
+                                    setMaintToPostPone(data);
+                                    setOpened(true);
+                                  }}
+                                  variant="transparent"
+                                >
+                                  <IconRotateClockwise2
+                                    color="green"
+                                    size={18}
+                                  />
+                                </ActionIcon>
+                              </Tooltip>
+                            </div>
+                          </td>
+                        ) : null}
                       </tr>
-                    
-                  )}
-              </tbody>
-            </Table>
-}
+                    ))}
+                </tbody>
+              </Table>
+            )}
           </ScrollArea>
         </div>
       </Center>
