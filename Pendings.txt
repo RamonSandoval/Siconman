@@ -105,3 +105,12 @@ Ordenar dropdowns de departamento y produccion por orden alfabetico
 data.attributes.maintenance?.data?.attributes.next_maintenance != null ? (
 
 {session.id != 9 ? 
+
+
+Links
+https://www.lareferencia.info/vufind/Record/PE_51bab64eb266482f583a1cd83a1577f4
+https://scholar.google.com/scholar?hl=es&as_sdt=0%2C5&q=importancia+de+un+mantenimiento+a+equipo+de+computo&btnG=
+https://dspace.ups.edu.ec/bitstream/123456789/13430/1/UPS%20-%20ST002929.pdf
+https://dspace.uclv.edu.cu/bitstream/handle/123456789/5231/Jaliesky%20Dom%c3%adnguez%20Rodr%c3%adguez.%2c%20Vitaly%20Marrero%20Shimk%c3%b3.pdf?sequence=1&isAllowed=y
+https://repositorio.unemi.edu.ec/bitstream/123456789/5122/1/DESARROLLO%20DE%20UN%20SISTEMA%20DE%20GESTION%20DE%20MANTENIMIENTO%20DE%20EQUIPOS%20DE%20COMPUTO%20EN%20LA%20UNIDAD%20EDUCATIVA%20EL%20TRIUNFO.pdf
+https://repositorio.utp.edu.co/server/api/core/bitstreams/7c294e46-a6d4-418f-9539-94f0196eed9a/content
