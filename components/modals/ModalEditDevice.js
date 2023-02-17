@@ -90,6 +90,32 @@ const ModalEditDevice = ({ deviceToEdit, closeModal2 }) => {
     setDepValue(null);
   }
 
+  function compare_nameDep(a, b) {
+    if (
+      a.attributes.department_name.toLowerCase() <
+      b.attributes.department_name.toLowerCase()
+    ) {
+      return -1;
+    }
+    if (
+      a.attributes.department_name.toLowerCase() >
+      b.attributes.department_name.toLowerCase()
+    ) {
+      return 1;
+    }
+    return 0;
+  }
+
+  function compare_nameProd(a, b) {
+    if (a.attributes.name.toLowerCase() < b.attributes.name.toLowerCase()) {
+      return -1;
+    }
+    if (a.attributes.name.toLowerCase() > b.attributes.name.toLowerCase()) {
+      return 1;
+    }
+    return 0;
+  }
+
   /* Returning a form with a submit button. */
   return (
     <>
@@ -132,7 +158,7 @@ const ModalEditDevice = ({ deviceToEdit, closeModal2 }) => {
           searchable
           {...form.getInputProps("department_name")}
           //data={departmentsListSelect}
-          data={arrayDep.map((d) => {
+          data={arrayDep.sort(compare_nameDep)&&arrayDep.map((d) => {
             return { value: d.id, label: d.attributes.department_name };
           })}
         />
@@ -143,12 +169,12 @@ const ModalEditDevice = ({ deviceToEdit, closeModal2 }) => {
           clearable
           searchable
           {...form.getInputProps("name")}
-          data={arrayProd.map((f) => {
+          data={arrayProd.sort(compare_nameProd)&&arrayProd.map((f) => {
             return { value: f.id, label: f.attributes.name };
           })}
         />
         
-        <Center>
+        <Center pt={15}>
           <Button variant="gradient"
               gradient={{ from: "#00255b", to: "#00255b", deg: 75 }}type="submit"
           
