@@ -13,6 +13,7 @@ import {
   Divider,
   Button,
   Tooltip,
+  Badge,
 } from "@mantine/core";
 import { useState, useEffect } from "react";
 import { ThemeIcon } from "@mantine/core";
@@ -45,17 +46,17 @@ const TableDevices = () => {
   /* DATE SUBSTRACTION */
   //Normal Date
   /* Creating a new date object and then converting it to a string in the Canadian format. */
-  const date = new Date().toLocaleDateString("en-CA");
+  const date = new Date().toLocaleDateString("sv-SE");
   // Minus 3 days
   /* Creating a new date object, setting the date to 3 days from now, and then converting it to a
   string. */
   var d3 = new Date();
   d3.setDate(d3.getDate() + 3);
-  var date3 = d3.toLocaleDateString("en-CA");
+  var date3 = d3.toLocaleDateString("sv-SE");
   //Minus 7 days
   var d7 = new Date();
   d7.setDate(d7.getDate() + 7);
-  var date7 = d7.toLocaleDateString("en-CA");
+  var date7 = d7.toLocaleDateString("sv-SE");
   //
 
   /* */
@@ -337,6 +338,7 @@ const TableDevices = () => {
                     ))}
                 </tbody>
               </Table>
+              
             )}
           </ScrollArea>
         </div>

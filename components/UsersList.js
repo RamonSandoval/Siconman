@@ -80,41 +80,30 @@ const UsersList = () => {
       <Table highlightOnHover>
         <thead>
           <tr className={styles.table__titles}>
-            <th>
-              <Center>ID</Center>
-            </th>
+           
             <th>
               <Center>Usuario</Center>
             </th>
             <th>
               <Center>Correo</Center>
             </th>
-            <th>
-              <Center>Rol</Center>
-            </th>
+           
             <th>
               <Center>Estatus</Center>
             </th>
-            <th>
-              <Center>Acciones</Center>
-            </th>
+           
           </tr>
         </thead>
         <tbody className={styles.tableBody}>
           {arrayUsers &&
             arrayUsers.map((data) => (
               <tr key={data.id}>
-                <td>
-                  <Center>{data.id}</Center>
-                </td>
+                
                 <td>
                   <Center>{data.username}</Center>
                 </td>
                 <td>
                   <Center>{data.email}</Center>
-                </td>
-                <td>
-                  <Center>{data.role.name}</Center>
                 </td>
                 <td>
                   {data.blocked == true ? (
@@ -123,35 +112,7 @@ const UsersList = () => {
                     <Center>Habilitado</Center>
                   )}
                 </td>
-                <td>
-                  <Center>
-                    <div className={styles.icons}>
-                      <Tooltip label="Editar">
-                        <ActionIcon
-                          color="indigo"
-                          onClick={() => {
-                            setOpened2(true);
-                            setUserToEdit(data);
-                          }}
-                        >
-                          <IconEdit size={18} />
-                        </ActionIcon>
-                      </Tooltip>
-
-                      <Tooltip label="Eliminar">
-                        <ActionIcon
-                          color="red"
-                          onClick={() => {
-                            setOpened3(true);
-                            setUserToDelete(data.id);
-                          }}
-                        >
-                          <IconTrash size={18} />
-                        </ActionIcon>
-                      </Tooltip>
-                    </div>
-                  </Center>
-                </td>
+                
               </tr>
             ))}
         </tbody>

@@ -4,7 +4,8 @@ import { ActionIcon, Center, ThemeIcon,TextInput,Tooltip,Divider,Table,ScrollAre
     Modal,
     Button,
     Text,
-    Loader, } from '@mantine/core';
+    Loader,
+    Badge, } from '@mantine/core';
 import React, { useEffect } from 'react'
 import styles from "../../styles/Inventory.module.css";
 import { signOut, useSession } from "next-auth/react";
@@ -195,6 +196,7 @@ const InventoryList = () => {
             <IconList />
           </ThemeIcon>
           <h3>Inventario</h3>
+          <Badge>Total de equipos: {arrayDevices.length}</Badge>
         </div>
 
         <TextInput
@@ -311,6 +313,8 @@ const InventoryList = () => {
               ))}
           </tbody>
         </Table>
+        
+        
 }
       </ScrollArea>
       {/* <Center>
