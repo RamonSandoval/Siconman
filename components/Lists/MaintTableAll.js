@@ -223,8 +223,7 @@ const MaintTableAll = () => {
               </Center>:
             <Table highlightOnHover>
               <thead
-                className={cx(classes.header, { [classes.scrolled]: scrolled })}
-              >
+                className={cx(classes.header, { [classes.scrolled]: scrolled })}>
                 <tr>
                   <th>
                     <Center>ID Equipo</Center>

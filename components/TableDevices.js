@@ -224,7 +224,7 @@ const TableDevices = () => {
                                 <IconAlertCircle color="red" />
                               </ThemeIcon>
                             </Tooltip>
-                          </td>
+                          </td> 
                         ) : data.attributes.maintenance?.data?.attributes
                             .next_maintenance < date3 ? (
                           <td>

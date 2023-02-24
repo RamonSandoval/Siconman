@@ -52,12 +52,6 @@ const ModalAddDevice = ({ closeModal }) => {
     };
 
     try {
-     /* Calling the api.addDevice function, which is an asynchronous function. It is waiting for the
-     function to finish, and then it is calling the Notifications.success function, which is a
-     function that displays a notification. Then it is calling the closeModal function, which is a
-     function that closes the modal. Finally, it is calling the init function, which is a function
-     that gets the list of departments and the list of productions from the API, and stores them in
-     the state variables arrayDep and arrayProd. */
       await api.addDevice(body);
       Notifications.success("Se ha agregado el dispositivo Correctamente");
       closeModal();

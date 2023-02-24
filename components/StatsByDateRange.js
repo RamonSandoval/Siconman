@@ -14,6 +14,7 @@ import {
   Button,
   Text,
   Tooltip,
+  createStyles
 } from "@mantine/core";
 import { useState, useEffect } from "react";
 import { ThemeIcon } from "@mantine/core";
@@ -28,6 +29,7 @@ const Stats = () => {
   const [opened, setOpened] = useState(false);
   const [search, setSearch] = useState("");
   const [search2, setSearch2] = useState("");
+  const [scrolled, setScrolled] = useState(false);
   const [search3, setSearch3] = useState("");
   const [search4, setSearch4] = useState("");
   const [arrayDataDev, setarrayDataDev] = useState([]);
@@ -40,6 +42,33 @@ const Stats = () => {
   useEffect(() => {
     init();
   }, []);
+/* Creating a style object that will be used by the Header component. */
+const useStyles = createStyles((theme) => ({
+  header: {
+    position: "sticky",
+    top: 0,
+    backgroundColor: theme.white,
+    transition: "box-shadow 150ms ease",
+    "&::after": {
+      content: '""',
+      position: "absolute",
+      left: 0,
+      right: 0,
+      bottom: 0,
+      borderBottom: `1px solid ${
+        theme.colorScheme === "dark"
+          ? theme.colors.dark[3]
+          : theme.colors.gray[2]
+      }`,
+    },
+  },
+
+  scrolled: {
+    boxShadow: theme.shadows.sm,
+  },
+}));
+
+const { classes, cx } = useStyles();
 
   async function init() {
     setIsLoading(true);
@@ -179,13 +208,17 @@ const Stats = () => {
           </div>
           <ScrollArea>
             <Divider variant="dashed" size="sm" my="sm" />
+            <ScrollArea
+            sx={{ height: 600 }}
+            onScrollPositionChange={({ y }) => setScrolled(y !== 0)}
+          >
             {isLoading ? (
               <Center className={styles.loading}>
                 <Loader variant="bars" />
               </Center>
             ) : (
               <Table highlightOnHover>
-                <thead className={styles.table__columns}>
+                <thead className={cx(classes.header, { [classes.scrolled]: scrolled })}>
                   <tr>
                     <th>
                       <Center>ID Equipo</Center>
@@ -214,7 +247,7 @@ const Stats = () => {
                   {arrayDevices &&
                     arrayDevices.sort(compare_date).map(
                       (data, index) =>
-                        index < 15 && (
+                        (
                           <tr
                             className={styles.table__data}
                             key={data.device_id}
@@ -298,8 +331,11 @@ const Stats = () => {
                         )
                     )}
                 </tbody>
+                
               </Table>
+              
             )}
+            </ScrollArea>
           </ScrollArea>
         </div>
       </Center>
